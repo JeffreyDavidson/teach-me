@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f3a67e1222c9d6c92562f11cd2ea8491",
+    "content-hash": "6350faf78634f7ba86368f1d291a7bc3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1533,6 +1533,70 @@
             "time": "2020-10-18T11:50:25+00:00"
         },
         {
+            "name": "mad-web/laravel-enum",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mad-web/laravel-enum.git",
+                "reference": "2aadb167dfad8d2c68c77eac330486dbb093a7b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mad-web/laravel-enum/zipball/2aadb167dfad8d2c68c77eac330486dbb093a7b3",
+                "reference": "2aadb167dfad8d2c68c77eac330486dbb093a7b3",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^7.0 || ^8.0",
+                "illuminate/support": "^7.0 || ^8.0",
+                "illuminate/translation": "^7.0 || ^8.0",
+                "myclabs/php-enum": "^1.7.0",
+                "php": "^7.2.5"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0.0",
+                "orchestra/testbench": "^5.0 || ^6.0",
+                "phpunit/phpunit": "^8.0 || ^9.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MadWeb\\Enum\\EnumServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MadWeb\\Enum\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "mad-web",
+                    "email": "madweb.dev@gmail.com",
+                    "homepage": "https://github.com/mad-web",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Elegant Enum implementation for Laravel. With make:enum command, ability to casting for Eloquent models and labels translations via lang files.",
+            "homepage": "https://github.com/mad-web/laravel-enum",
+            "keywords": [
+                "enum",
+                "laravel-enum",
+                "mad-web"
+            ],
+            "support": {
+                "issues": "https://github.com/mad-web/laravel-enum/issues",
+                "source": "https://github.com/mad-web/laravel-enum/tree/2.1.0"
+            },
+            "time": "2020-09-24T12:01:28+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "2.1.1",
             "source": {
@@ -1626,6 +1690,56 @@
                 }
             ],
             "time": "2020-07-23T08:41:23+00:00"
+        },
+        {
+            "name": "myclabs/php-enum",
+            "version": "1.7.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/myclabs/php-enum.git",
+                "reference": "5f36467c7a87e20fbdc51e524fd8f9d1de80187c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/myclabs/php-enum/zipball/5f36467c7a87e20fbdc51e524fd8f9d1de80187c",
+                "reference": "5f36467c7a87e20fbdc51e524fd8f9d1de80187c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7",
+                "squizlabs/php_codesniffer": "1.*",
+                "vimeo/psalm": "^3.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MyCLabs\\Enum\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP Enum contributors",
+                    "homepage": "https://github.com/myclabs/php-enum/graphs/contributors"
+                }
+            ],
+            "description": "PHP Enum implementation",
+            "homepage": "http://github.com/myclabs/php-enum",
+            "keywords": [
+                "enum"
+            ],
+            "support": {
+                "issues": "https://github.com/myclabs/php-enum/issues",
+                "source": "https://github.com/myclabs/php-enum/tree/master"
+            },
+            "time": "2020-02-14T08:15:52+00:00"
         },
         {
             "name": "nesbot/carbon",
