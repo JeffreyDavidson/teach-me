@@ -1,0 +1,19 @@
+name: teach-me
+recipe: laravel
+config:
+  webroot: /public
+  database: mysql
+  xdebug: true
+tooling:
+  reseed:
+    service: appserver
+    description: "Seed the database"
+    cmd: "php artisan db:seed"
+  tinker:
+    service: appserver
+    description: "Drop into a tinker console"
+    cmd: "php artisan tinker"
+  migrate:
+    service: appserver
+    description: "Quick migrate"
+    cmd: "php artisan migrate"
