@@ -13,4 +13,8 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .copy('resources/css/style.bundle.css', 'public/css/style.bundle.css')
-    .copy('resources/css/pages/login/login.css', 'public/css/pages/login.css');
+    .copy('resources/css/pages/login/login.css', 'public/css/pages/login.css')
+    .copy('resources/css/themes/layout/header/base/light.css', 'public/css/themes/layout/header/base/light.css')
+    .copy('resources/css/themes/layout/header/menu/light.css', 'public/css/themes/layout/header/menu/light.css')
+    .copy('resources/css/themes/layout/brand/dark.css', 'public/css/themes/layout/brand/dark.css')
+    .copy('resources/css/themes/layout/aside/dark.css', 'public/css/themes/layout/aside/dark.css');

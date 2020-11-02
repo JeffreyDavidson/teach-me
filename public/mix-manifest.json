@@ -1,5 +1,9 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/style.bundle.css": "/css/style.bundle.css",
-    "/css/pages/login.css": "/css/pages/login.css"
+    "/css/pages/login.css": "/css/pages/login.css",
+    "/css/themes/layout/header/base/light.css": "/css/themes/layout/header/base/light.css",
+    "/css/themes/layout/header/menu/light.css": "/css/themes/layout/header/menu/light.css",
+    "/css/themes/layout/brand/dark.css": "/css/themes/layout/brand/dark.css",
+    "/css/themes/layout/aside/dark.css": "/css/themes/layout/aside/dark.css"
 }
