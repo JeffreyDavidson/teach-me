@@ -43,4 +43,24 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'role' => UserRoleEnum::class,
     ];
+
+    /**
+    * Get the user's full name.
+    *
+    * @return string
+    */
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
+    /**
+    * Get the user's first name initial.
+    *
+    * @return string
+    */
+    public function getFirstNameInitialAttribute()
+    {
+        return substr($this->first_name, 0, 1);
+    }
 }
