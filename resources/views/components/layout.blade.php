@@ -4,7 +4,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Teach Me</title>
-
+        <!--begin::Fonts-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+        <!--end::Fonts-->
         <link rel="stylesheet" href="{{ asset('css/style.bundle.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/themes/layout/header/base/light.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/themes/layout/header/menu/light.css') }}" />
