@@ -16,6 +16,7 @@
         "laravel/fortify": "^1.6",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
+        "livewire/livewire": "^2.3",
         "mad-web/laravel-enum": "^2.1"
     },
     "require-dev": {

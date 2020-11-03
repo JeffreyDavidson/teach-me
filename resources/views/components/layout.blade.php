@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="{{ asset('css/themes/layout/header/menu/light.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/themes/layout/brand/dark.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/themes/layout/aside/dark.css') }}" />
+        @livewireStyles
     </head>
     <!--begin::Body-->
     <body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable">
@@ -83,6 +84,7 @@
                 <!--end::Page-->
             </div>
         <!--end::Main-->
+        @livewireScripts
     </body>
     <!--end::Body-->
 </html>
