@@ -17,4 +17,5 @@ mix.js('resources/js/app.js', 'public/js')
     .copy('resources/css/themes/layout/header/base/light.css', 'public/css/themes/layout/header/base/light.css')
     .copy('resources/css/themes/layout/header/menu/light.css', 'public/css/themes/layout/header/menu/light.css')
     .copy('resources/css/themes/layout/brand/dark.css', 'public/css/themes/layout/brand/dark.css')
-    .copy('resources/css/themes/layout/aside/dark.css', 'public/css/themes/layout/aside/dark.css');
+    .copy('resources/css/themes/layout/aside/dark.css', 'public/css/themes/layout/aside/dark.css')
+    .copy('resources/plugins/global/plugins.bundle.css', 'public/plugins/global/plugins.bundle.css');
