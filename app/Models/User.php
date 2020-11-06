@@ -47,11 +47,13 @@ class User extends Authenticatable
         'role' => UserRoleEnum::class,
     ];
 
+    /** @var array $childTypes */
     protected $childTypes = [
         UserRoleEnum::ADMINISTRATOR => Administrator::class,
         UserRoleEnum::TEACHER => Teacher::class
     ];
 
+    /** @var string $childColumn */
     protected $childColumn = 'role';
 
     /**
