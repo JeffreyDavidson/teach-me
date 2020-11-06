@@ -11,6 +11,8 @@ class TeachersController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Teacher::class);
+
         return view('teachers.index');
     }
 }
