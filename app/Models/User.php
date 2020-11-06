@@ -57,6 +57,16 @@ class User extends Authenticatable
     protected $childColumn = 'role';
 
     /**
+    * Get the user's name.
+    *
+    * @return string
+    */
+    public function getNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
+    /**
     * Get the user's full name.
     *
     * @return string
@@ -64,6 +74,16 @@ class User extends Authenticatable
     public function getFullNameAttribute()
     {
         return "{$this->title } {$this->first_name} {$this->last_name}";
+    }
+
+    /**
+    * Get the user's full name when being listed.
+    *
+    * @return string
+    */
+    public function getFullNameListingAttribute()
+    {
+        return "{$this->last_name}, {$this->title } {$this->first_name}";
     }
 
     /**
