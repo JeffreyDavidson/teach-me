@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3",
+        "calebporzio/parental": "^0.11.0",
         "doctrine/dbal": "^2.12",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
@@ -16,6 +17,7 @@
         "laravel/fortify": "^1.6",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
+        "livewire/livewire": "^2.3",
         "mad-web/laravel-enum": "^2.1"
     },
     "require-dev": {

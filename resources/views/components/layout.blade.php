@@ -7,11 +7,13 @@
         <!--begin::Fonts-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
         <!--end::Fonts-->
+        <link rel="stylesheet" href="{{ asset('plugins/global/plugins.bundle.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/style.bundle.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/themes/layout/header/base/light.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/themes/layout/header/menu/light.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/themes/layout/brand/dark.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/themes/layout/aside/dark.css') }}" />
+        @livewireStyles
     </head>
     <!--begin::Body-->
     <body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable">
@@ -26,18 +28,18 @@
                 <!--begin::Toolbar-->
                 <div class="d-flex align-items-center">
                     <!--begin::Aside Mobile Toggle-->
-                    <button class="btn p-0 burger-icon burger-icon-left" id="kt_aside_mobile_toggle">
+                    <button class="p-0 btn burger-icon burger-icon-left" id="kt_aside_mobile_toggle">
                         <span></span>
                     </button>
                     <!--end::Aside Mobile Toggle-->
                     <!--begin::Header Menu Mobile Toggle-->
-                    <button class="btn p-0 burger-icon ml-4" id="kt_header_mobile_toggle">
+                    <button class="p-0 ml-4 btn burger-icon" id="kt_header_mobile_toggle">
                         <span></span>
                     </button>
                     <!--end::Header Menu Mobile Toggle-->
                     <!--begin::Topbar Mobile Toggle-->
-                    <button class="btn btn-hover-text-primary p-0 ml-2" id="kt_header_mobile_topbar_toggle">
-                        <span class="svg-icon svg-icon-xl">
+                    <span class="svg-icon svg-icon-xl">
+                        <button class="p-0 ml-2 btn btn-hover-text-primary" id="kt_header_mobile_topbar_toggle">
                             <!--begin::Svg Icon | path:assets/media/svg/icons/General/User.svg-->
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -56,7 +58,7 @@
             <!--end::Header Mobile-->
             <div class="d-flex flex-column">
                 <!--begin::Page-->
-                <div class="d-flex flex-row flex-column-fluid page">
+                <div class="flex-row d-flex flex-column-fluid page">
                     <x-sidebar />
                     <!--begin::Wrapper-->
                     <div id="kt_wrapper" class="d-flex flex-column flex-row-fluid wrapper">
@@ -83,6 +85,7 @@
                 <!--end::Page-->
             </div>
         <!--end::Main-->
+        @livewireScripts
     </body>
     <!--end::Body-->
 </html>

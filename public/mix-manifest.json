@@ -5,5 +5,6 @@
     "/css/themes/layout/header/base/light.css": "/css/themes/layout/header/base/light.css",
     "/css/themes/layout/header/menu/light.css": "/css/themes/layout/header/menu/light.css",
     "/css/themes/layout/brand/dark.css": "/css/themes/layout/brand/dark.css",
-    "/css/themes/layout/aside/dark.css": "/css/themes/layout/aside/dark.css"
+    "/css/themes/layout/aside/dark.css": "/css/themes/layout/aside/dark.css",
+    "/plugins/global/plugins.bundle.css": "/plugins/global/plugins.bundle.css"
 }
