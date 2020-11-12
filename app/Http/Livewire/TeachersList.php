@@ -2,15 +2,13 @@
 
 namespace App\Http\Livewire;
 
-use App\Http\Livewire\DataTable\WithCachedRows;
-use App\Http\Livewire\DataTable\WithPerPagePagination;
-use App\Http\Livewire\DataTable\WithSorting;
 use App\Models\Teacher;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class TeachersList extends Component
 {
-    use WithSorting, WithCachedRows, WithPerPagePagination;
+    use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
 
