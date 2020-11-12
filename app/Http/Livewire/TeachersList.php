@@ -12,24 +12,17 @@ class TeachersList extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public function getRowsQueryProperty()
-    {
-        $query = Teacher::query();
+    public $perPage = 10;
 
-        return $this->applySorting($query);
-    }
-
-    public function getRowsProperty()
+    public function updatedPerPage($value)
     {
-        return $this->cache(function () {
-            return $this->applyPagination($this->rowsQuery);
-        });
+        $this->resetPage();
     }
 
     public function render()
     {
         return view('livewire.teachers.teachers-list', [
-            'teachers' => $this->rows,
+            'teachers' => Teacher::paginate($this->perPage),
         ]);
     }
 }
