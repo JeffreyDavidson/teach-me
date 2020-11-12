@@ -40,6 +40,7 @@
                 <option value="30">30</option>
                 <option value="50">50</option>
             </select>
+            <span class="datatable-pager-detail">Showing {{ $teachers->firstItem() }} - {{ $teachers->lastItem() }} of {{ $teachers->total() }}</span>
         </div>
     </div>
 </div>
