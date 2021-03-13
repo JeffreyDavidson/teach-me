@@ -1,6 +1,7 @@
 name: teach-me
 recipe: laravel
 config:
+  php: '8.0'
   webroot: /public
   database: mysql
   xdebug: true
