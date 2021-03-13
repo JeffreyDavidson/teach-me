@@ -3,10 +3,14 @@
 namespace App\Models;
 
 use App\Enums\UserRoleEnum;
+use App\Models\Administrator;
+use App\Models\Teacher;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Parental\HasChildren;
 
 class User extends Authenticatable
@@ -19,12 +23,19 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'title',
         'first_name',
         'last_name',
-        'title',
+        'suffix',
         'email',
+        'school_email',
+        'phone',
         'password',
         'role',
+        'street',
+        'city',
+        'state',
+        'zip',
     ];
 
     /**
@@ -47,52 +58,62 @@ class User extends Authenticatable
         'role' => UserRoleEnum::class,
     ];
 
-    /** @var array $childTypes */
+    /** @var array */
     protected $childTypes = [
         UserRoleEnum::ADMINISTRATOR => Administrator::class,
-        UserRoleEnum::TEACHER => Teacher::class
+        UserRoleEnum::TEACHER => Teacher::class,
     ];
 
-    /** @var string $childColumn */
+    /** @var string */
     protected $childColumn = 'role';
 
     /**
-    * Get the user's name.
-    *
-    * @return string
-    */
+     * Get the user's name.
+     *
+     * @return string
+     */
     public function getNameAttribute()
     {
         return "{$this->first_name} {$this->last_name}";
     }
 
     /**
-    * Get the user's full name.
-    *
-    * @return string
-    */
+     * Get the user's full name.
+     *
+     * @return string
+     */
     public function getFullNameAttribute()
     {
         return "{$this->title } {$this->first_name} {$this->last_name}";
     }
 
     /**
-    * Get the user's full name when being listed.
-    *
-    * @return string
-    */
+     * Get the user's full name when being listed.
+     *
+     * @return string
+     */
     public function getFullNameListingAttribute()
     {
         return "{$this->last_name}, {$this->title } {$this->first_name}";
     }
 
     /**
-    * Get the user's first name initial.
-    *
-    * @return string
-    */
+     * Get the user's first name initial.
+     *
+     * @return string
+     */
     public function getFirstNameInitialAttribute()
     {
         return substr($this->first_name, 0, 1);
+    }
+
+    public function setPasswordAttribute()
+    {
+        $this->attributes['password'] = Hash::make(Str::random(10));
+    }
+
+    public function setPhoneAttribute($value)
+    {
+        return $this->attributes['phone'] = preg_replace('/[^0-9]/', '', $value);
     }
 }
