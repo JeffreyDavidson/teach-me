@@ -18,12 +18,32 @@ class TeachersControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker, AdditionalAssertions;
 
+    private $attributes;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->attributes = [
+            'title' => $this->faker->optional(0.1)->title,
+            'first_name' => $this->faker->firstName,
+            'last_name' => $this->faker->lastName,
+            'suffix' => $this->faker->suffix,
+            'email' => $this->faker->safeEmail,
+            'phone' => '(123) 456-7890',
+            'street' => $this->faker->streetAddress,
+            'city' => $this->faker->city,
+            'state' => $this->faker->stateAbbr,
+            'zip' => Str::substr($this->faker->postcode, 0, 5),
+        ];
+    }
+
     /** @test */
     public function index_returns_a_view()
     {
         $response = $this->actingAs(Administrator::factory()->create())->get(route('teachers.index'));
 
-        $response->assertStatus(200);
+        $response->assertSuccessful();
         $response->assertViewIs('teachers.index');
     }
 
@@ -39,36 +59,26 @@ class TeachersControllerTest extends TestCase
     /** @test */
     public function store_creates_a_teacher_and_redirects()
     {
-        $this->withoutExceptionHandling();
-        Mail::fake();
-        $firstName = Str::lower($this->faker->firstName);
-        $lastName = Str::lower($this->faker->lastName);
-
-        $attributes = [
-            'title' => $this->faker->optional(0.1)->title,
-            'first_name' => $firstName,
-            'last_name' => $lastName,
-            'suffix' => $this->faker->suffix,
-            'email' => $this->faker->safeEmail,
-            'phone' => '(123) 456-7890',
-            'street' => $this->faker->streetAddress,
-            'city' => $this->faker->city,
-            'state' => $this->faker->stateAbbr,
-            'zip' => Str::substr($this->faker->postcode, 0, 5),
-        ];
-
-        $response = $this->actingAs(Administrator::factory()->create())->post(route('teachers.store'), $attributes);
+        $response = $this->actingAs(Administrator::factory()->create())->post(route('teachers.store'), $this->attributes);
 
         $response->assertRedirect(route('teachers.index'));
+        $this->assertDatabaseHas('users', array_merge($this->attributes, ['phone' => '1234567890', 'role' => 'teacher']));
+    }
 
-        $this->assertDatabaseHas('users', $attributes);
+    /** @test */
+    public function store_queues_welcome_teacher_email()
+    {
+        Mail::fake();
+        $this->actingAs(Administrator::factory()->create())->post(route('teachers.store'), $this->attributes);
+
         $teacher = Teacher::first();
+
+        Mail::assertQueued(WelcomeTeacher::class, 1);
         Mail::assertQueued(function (WelcomeTeacher $mail) use ($teacher) {
             return $mail->teacher->id === $teacher->id &&
                    $mail->hasTo($teacher->email) &&
                    $mail->hasTo($teacher->school_email);
         });
-        Mail::assertQueued(WelcomeTeacher::class, 1);
     }
 
     /** @test */
