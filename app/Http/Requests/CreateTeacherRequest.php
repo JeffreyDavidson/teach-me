@@ -29,7 +29,6 @@ class CreateTeacherRequest extends FormRequest
             'last_name' => ['required', 'string', 'max:255'],
             'suffix' => ['nullable', 'string', 'max:10'],
             'email' => ['required', 'string', 'email', 'unique:users'],
-            'phone' => ['required', 'string', 'regex:/^\([0-9]{3}\)\s[0-9]{3}-[0-9]{4}/', 'unique:users'],
             'phone' => ['required', 'string', 'size:10', 'unique:users'],
             'street' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],
