@@ -44,7 +44,7 @@ class CreateTeacherRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        $phone = preg_replace('/[^\(\)\- ]/', '', $this->phone);
+        $phone = preg_replace('/[\(\)\- ]/', '', $this->phone);
 
         $this->merge([
             'phone' => $phone,
