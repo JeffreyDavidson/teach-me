@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\PhoneNumber;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateTeacherRequest extends FormRequest
