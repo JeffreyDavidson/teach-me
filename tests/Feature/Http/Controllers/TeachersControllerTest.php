@@ -69,6 +69,7 @@ class TeachersControllerTest extends TestCase
     public function store_queues_welcome_teacher_email()
     {
         Mail::fake();
+
         $this->actingAs(Administrator::factory()->create())->post(route('teachers.store'), $this->attributes);
 
         $teacher = Teacher::first();
