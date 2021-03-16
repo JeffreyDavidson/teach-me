@@ -4,7 +4,7 @@
     <!--begin::Brand-->
     <div class="brand flex-column-auto" id="kt_brand" kt-hidden-height="65">
         <!--begin::Logo-->
-        <a href="/dashboard">
+        <a href="{{ route('dashboard') }}">
             <h4 class="font-weight-boldest text-white text-uppercase pt-2">{{ config('app.name') }}</h4>
         </a>
         <!--end::Logo-->
