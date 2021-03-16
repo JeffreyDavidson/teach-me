@@ -15,14 +15,14 @@ class WelcomeTeacher extends Mailable
     /**
      * The teacher instance.
      *
-     * @var Teacher
+     * @var App\Models\Teacher
      */
     public $teacher;
 
     /**
      * Create a new message instance.
      *
-     * @param  \App\Models\Teacher  $teacher
+     * @param  App\Models\Teacher  $teacher
      * @return void
      */
     public function __construct(Teacher $teacher)

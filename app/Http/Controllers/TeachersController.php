@@ -11,7 +11,7 @@ class TeachersController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -23,7 +23,7 @@ class TeachersController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -35,8 +35,9 @@ class TeachersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  App\Http\Requests\CreateTeacherRequest $request
+     * @param  App\Services\TeacherService $teacherService
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(CreateTeacherRequest $request, TeacherService $teacherService)
     {

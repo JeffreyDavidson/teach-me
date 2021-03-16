@@ -15,11 +15,17 @@ class TeacherCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    /**
+     * The teacher instance.
+     *
+     * @var App\Models\Teacher
+     */
     public $teacher;
 
     /**
      * Create a new event instance.
      *
+     * @param  App\Models\Teacher $teacher
      * @return void
      */
     public function __construct(Teacher $teacher)

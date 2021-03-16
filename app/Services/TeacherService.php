@@ -11,8 +11,19 @@ use Illuminate\Support\Str;
 
 class TeacherService
 {
+    /**
+     * The school email generator instance.
+     *
+     * @var App\SchoolEmailGenerator
+     */
     public $schoolEmail;
 
+    /**
+     * Create a new teacher service instance.
+     *
+     * @param  App\SchoolEmailGenerator $schoolEmail
+     * @return void
+     */
     public function __construct(SchoolEmailGenerator $schoolEmail)
     {
         $this->schoolEmail = $schoolEmail;
@@ -22,7 +33,7 @@ class TeacherService
      * Create a new teacher.
      *
      * @param  array $data
-     * @return \App\Models\Teacher
+     * @return App\Models\Teacher
      */
     public function create($data)
     {

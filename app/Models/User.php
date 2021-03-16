@@ -68,7 +68,7 @@ class User extends Authenticatable
     protected $childColumn = 'role';
 
     /**
-     * Get the user's name.
+     * Get the user's full name.
      *
      * @return string
      */
@@ -78,7 +78,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the user's full name.
+     * Get the user's full name with title.
      *
      * @return string
      */
@@ -107,11 +107,23 @@ class User extends Authenticatable
         return substr($this->first_name, 0, 1);
     }
 
+    /**
+     * Set the user's password.
+     *
+     * @param  void
+     * @return void
+     */
     public function setPasswordAttribute()
     {
         $this->attributes['password'] = Hash::make(Str::random(10));
     }
 
+    /**
+     * Remove specific characters from phone user's phone number.
+     *
+     * @param  string  $value
+     * @return void
+     */
     public function setPhoneAttribute($value)
     {
         return $this->attributes['phone'] = preg_replace('/[^0-9]/', '', $value);

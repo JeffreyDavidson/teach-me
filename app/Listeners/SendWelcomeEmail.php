@@ -13,7 +13,7 @@ class SendWelcomeEmail implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  \App\Events\TeacherCreated  $event
+     * @param  App\Events\TeacherCreated  $event
      * @return void
      */
     public function handle(TeacherCreated $event)

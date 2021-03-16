@@ -9,6 +9,8 @@ class SchoolEmailGenerator
     /**
      * Generates a school email for the model.
      *
+     * @param  string $firstName
+     * @param  string $lastName
      * @return string
      */
     public function generate($firstName, $lastName)
