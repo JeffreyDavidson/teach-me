@@ -26,11 +26,11 @@ class TeachersController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(Teacher $teacher)
     {
         $this->authorize('create', Teacher::class);
 
-        return view('teachers.create');
+        return view('teachers.create', compact('teacher'));
     }
 
     /**
