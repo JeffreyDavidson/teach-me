@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Teacher;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateTeacherRequest extends FormRequest
@@ -13,7 +14,7 @@ class CreateTeacherRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->user()->can('create', Teacher::class);
     }
 
     /**
