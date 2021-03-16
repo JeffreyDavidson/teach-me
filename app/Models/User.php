@@ -126,6 +126,6 @@ class User extends Authenticatable
      */
     public function setPhoneAttribute($value)
     {
-        return $this->attributes['phone'] = preg_replace('/[^0-9]/', '', $value);
+        $this->attributes['phone'] = preg_replace('/[^0-9]/', '', $value);
     }
 }
