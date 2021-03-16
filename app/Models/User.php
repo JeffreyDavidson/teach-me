@@ -128,4 +128,14 @@ class User extends Authenticatable
     {
         $this->attributes['phone'] = preg_replace('/[^0-9]/', '', $value);
     }
+
+    /**
+     * Get the user's formatted phone number.
+     *
+     * @return string
+     */
+    public function getFormattedPhoneAttribute()
+    {
+        return '('.substr($this->phone, 0, 3).') '.substr($this->phone, 3, 3).'-'.substr($this->phone, 6, 4);
+    }
 }

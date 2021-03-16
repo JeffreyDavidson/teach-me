@@ -57,4 +57,22 @@ class TeacherService
 
         return $teacher;
     }
+
+    public function update($teacher, $data)
+    {
+        $teacher->update([
+            'title' => $data['title'],
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'suffix' => $data['suffix'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'street' => $data['street'],
+            'city' => $data['city'],
+            'state' => $data['state'],
+            'zip' => $data['zip'],
+        ]);
+
+        return $teacher;
+    }
 }

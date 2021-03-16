@@ -5,7 +5,7 @@
                 <x-breadcrumb>
                     <li class="breadcrumb-item"><a class="text-muted" href="#">Administration</a></li>
                     <li class="breadcrumb-item"><a class="text-muted" href="#">Teachers</a></li>
-                    <li class="breadcrumb-item"><a class="text-muted" href="#">Add New</a></li>
+                    <li class="breadcrumb-item"><a class="text-muted" href="#">Edit {{ $teacher->name }}</a></li>
                 </x-breadcrumb>
             </x-slot>
         </x-subheader>
@@ -16,12 +16,13 @@
         <!--begin::Header-->
         <div class="card-header">
             <div class="card-title">
-                <h3 class="card-label">Hire Teacher Form
+                <h3 class="card-label">Edit Teacher Form
             </div>
         </div>
         <!--end::Header-->
-        <form method="post" action="{{ route('teachers.store') }}">
+        <form method="post" action="{{ route('teachers.update', $teacher) }}">
             @csrf
+            @method('PATCH')
             <!--begin::Body-->
             <div class="card-body">
                 @include('teachers.partials.form')

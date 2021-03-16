@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateTeacherRequest;
+use App\Http\Requests\UpdateTeacherRequest;
 use App\Models\Teacher;
 use App\Services\TeacherService;
 
@@ -42,6 +43,33 @@ class TeachersController extends Controller
     public function store(CreateTeacherRequest $request, TeacherService $teacherService)
     {
         $teacherService->create($request->validated());
+
+        return redirect()->route('teachers.index');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function edit(Teacher $teacher)
+    {
+        $this->authorize('update', $teacher);
+
+        return view('teachers.edit', compact('teacher'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  App\Http\Requests\UpdateTeacherRequest $request
+     * @param  App\Models\Teacher $teacher
+     * @param  App\Services\TeacherService $teacherService
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(UpdateTeacherRequest $request, Teacher $teacher, TeacherService $teacherService)
+    {
+        $teacherService->update($teacher, $request->validated());
 
         return redirect()->route('teachers.index');
     }
