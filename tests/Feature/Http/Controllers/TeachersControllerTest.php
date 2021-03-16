@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Http\Controllers\TeachersController;
 use App\Http\Requests\CreateTeacherRequest;
+use App\Http\Requests\UpdateTeacherRequest;
 use App\Mail\WelcomeTeacher;
 use App\Models\Administrator;
 use App\Models\Teacher;
@@ -139,5 +140,74 @@ class TeachersControllerTest extends TestCase
     public function store_uses_form_request()
     {
         $this->assertActionUsesFormRequest(TeachersController::class, 'store', CreateTeacherRequest::class);
+    }
+
+    /** @test */
+    public function edit_returns_a_view()
+    {
+        $teacher = Teacher::factory()->create();
+
+        $response = $this->actingAs(Administrator::factory()->create())->get(route('teachers.edit', $teacher));
+
+        $response->assertSuccessful();
+        $response->assertViewIs('teachers.edit');
+        $response->assertViewHas('teacher', $teacher);
+    }
+
+    /** @test */
+    public function edit_redirects_when_unauthenticated()
+    {
+        $teacher = Teacher::factory()->create();
+
+        $response = $this->get(route('teachers.edit', $teacher));
+
+        $response->assertRedirect();
+    }
+
+    /** @test */
+    public function edit_redirects_when_unauthorized()
+    {
+        $teacher = Teacher::factory()->create();
+
+        $response = $this->actingAs(Teacher::factory()->create())->get(route('teachers.edit', $teacher));
+
+        $response->assertForbidden();
+    }
+
+    /** @test */
+    public function update_updates_a_teacher_and_redirects()
+    {
+        $teacher = Teacher::factory()->create();
+
+        $response = $this->actingAs(Administrator::factory()->create())->patch(route('teachers.update', $teacher), $this->attributes);
+
+        $response->assertRedirect(route('teachers.index'));
+        $this->assertDatabaseHas('users', array_merge($this->attributes, ['phone' => '1234567890', 'role' => 'teacher']));
+    }
+
+    /** @test */
+    public function teachers_cannot_update_other_teachers()
+    {
+        $teacher = Teacher::factory()->create();
+
+        $response = $this->actingAs(Teacher::factory()->create())->patch(route('teachers.update', $teacher), $this->attributes);
+
+        $response->assertForbidden();
+    }
+
+    /** @test */
+    public function update_redirects_when_unauthenticated()
+    {
+        $teacher = Teacher::factory()->create();
+
+        $response = $this->patch(route('teachers.update', $teacher), $this->attributes);
+
+        $response->assertRedirect();
+    }
+
+    /** @test */
+    public function update_uses_form_request()
+    {
+        $this->assertActionUsesFormRequest(TeachersController::class, 'update', UpdateTeacherRequest::class);
     }
 }
