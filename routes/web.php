@@ -19,5 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', DashboardController::class);
-Route::resource('teachers', TeachersController::class);
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', DashboardController::class);
+    Route::resource('teachers', TeachersController::class);
+});
