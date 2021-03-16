@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TeachersController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', DashboardController::class);
-Route::resource('teachers', TeachersController::class);
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', DashboardController::class);
+    Route::resource('teachers', TeachersController::class);
+});

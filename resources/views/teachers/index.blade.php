@@ -13,11 +13,12 @@
     <!--begin::Card-->
     <div class="card card-custom">
         <!--begin::Header-->
-        <div class="flex-wrap pt-6 pb-0 border-0 card-header">
+        <div class="card-header">
             <div class="card-title">
-                <h3 class="card-label">Teacher Management
+                <h3 class="card-label">Teacher List
             </div>
             <div class="card-toolbar">
+                <a class="btn btn-primary font-weight-bolder" href="{{ route('teachers.create') }}">New Record</a>
             </div>
         </div>
         <!--end::Header-->
