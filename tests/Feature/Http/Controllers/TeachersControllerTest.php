@@ -9,6 +9,7 @@ use App\Models\Administrator;
 use App\Models\Teacher;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use JMac\Testing\Traits\AdditionalAssertions;
@@ -48,12 +49,36 @@ class TeachersControllerTest extends TestCase
     }
 
     /** @test */
+    public function index_redirects_when_unauthenticated()
+    {
+        $response = $this->get(route('teachers.index'));
+
+        $response->assertRedirect();
+    }
+
+    /** @test */
+    public function teachers_cannot_view_list_of_teachers()
+    {
+        $response = $this->actingAs(Teacher::factory()->create())->get(route('teachers.index'));
+
+        $response->assertForbidden();
+    }
+
+    /** @test */
     public function create_returns_a_view()
     {
         $response = $this->actingAs(Administrator::factory()->create())->get(route('teachers.create'));
 
-        $response->assertStatus(200);
+        $response->assertSuccessful();
         $response->assertViewIs('teachers.create');
+    }
+
+    /** @test */
+    public function create_redirects_when_unauthenticated()
+    {
+        $response = $this->get(route('teachers.create'));
+
+        $response->assertRedirect();
     }
 
     /** @test */
@@ -63,6 +88,18 @@ class TeachersControllerTest extends TestCase
 
         $response->assertRedirect(route('teachers.index'));
         $this->assertDatabaseHas('users', array_merge($this->attributes, ['phone' => '1234567890', 'role' => 'teacher']));
+    }
+
+    /** @test */
+    public function store_generates_a_school_email_for_created_teacher()
+    {
+        $this->attributes = data_set($this->attributes, 'first_name', 'John');
+        $this->attributes = data_set($this->attributes, 'last_name', 'Smith');
+        Config::set('school.domain', 'example.com');
+
+        $response = $this->actingAs(Administrator::factory()->create())->post(route('teachers.store'), $this->attributes);
+
+        $this->assertEquals('john.smith@example.com', Teacher::first()->school_email);
     }
 
     /** @test */
@@ -80,6 +117,22 @@ class TeachersControllerTest extends TestCase
                    $mail->hasTo($teacher->email) &&
                    $mail->hasTo($teacher->school_email);
         });
+    }
+
+    /** @test */
+    public function teachers_cannot_create_other_teachers()
+    {
+        $response = $this->actingAs(Teacher::factory()->create())->post(route('teachers.store'), $this->attributes);
+
+        $response->assertForbidden();
+    }
+
+    /** @test */
+    public function store_redirects_when_unauthenticated()
+    {
+        $response = $this->post(route('teachers.store'), $this->attributes);
+
+        $response->assertRedirect();
     }
 
     /** @test */
