@@ -4,8 +4,6 @@
             <x-table.heading>Name</x-table.heading>
             <x-table.heading>School Email</x-table.heading>
             <x-table.heading>Phone</x-table.heading>
-            <x-table.heading>Phone</x-table.heading>
-            <x-table.heading>Phone</x-table.heading>
             <x-table.heading>Actions</x-table.heading>
         </x-slot>
 
@@ -34,13 +32,6 @@
                     <span style="width: 137px;">{{ $teacher->formatted_phone }}</span>
                 </x-table.cell>
 
-                <x-table.cell>
-                    <span style="width: 137px;">{{ $teacher->formatted_phone }}</span>
-                </x-table.cell>
-
-                <x-table.cell>
-                    <span style="width: 137px;">{{ $teacher->formatted_phone }}</span>
-                </x-table.cell>
                 <x-table.cell>
                     <a href="{{ route('teachers.edit', $teacher) }}" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">
                         <span class="svg-icon svg-icon-md">
