@@ -16,14 +16,12 @@
         <span style="width: 130px">{{ $slot }}</span>
     @else
         <span {{ $attributes->except('class') }}>
-            <span>
-                {{ $slot }}
-                @if ($direction === 'asc')
-                    <i class="flaticon2-arrow-up"></i>
-                @elseif ($direction === 'desc')
-                    <i class="flaticon2-arrow-down"></i>
-                @endif
-            </span>
+            {{ $slot }}
+            @if ($direction === 'asc')
+                <i class="flaticon2-arrow-up"></i>
+            @elseif ($direction === 'desc')
+                <i class="flaticon2-arrow-down"></i>
+            @endif
         </span>
     @endif
 </th>
