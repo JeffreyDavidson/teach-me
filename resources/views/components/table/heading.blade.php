@@ -1,7 +1,6 @@
 @props([
     'sortable' => null,
     'direction' => null,
-    'multiColumn' => null,
 ])
 
 @if ($sortable)
@@ -16,23 +15,15 @@
     @unless ($sortable)
         <span style="width: 130px">{{ $slot }}</span>
     @else
-        <span {{ $attributes->except('class') }} class="">
-            <span>{{ $slot }}</span>
-            @if ($multiColumn)
+        <span {{ $attributes->except('class') }}>
+            <span>
+                {{ $slot }}
                 @if ($direction === 'asc')
                     <i class="flaticon2-arrow-up"></i>
                 @elseif ($direction === 'desc')
                     <i class="flaticon2-arrow-down"></i>
                 @endif
-            @else
-                @if ($direction === 'asc')
-                    <svg></svg>
-                @elseif ($direction === 'desc')
-                    <svg></svg>
-                @else
-                    <svg></svg>
-                @endif
-            @endif
+            </span>
         </span>
     @endif
 </th>
