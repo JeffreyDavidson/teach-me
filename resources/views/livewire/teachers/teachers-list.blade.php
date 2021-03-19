@@ -1,7 +1,7 @@
 <div id="kt_datatable" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded">
     <x-table>
         <x-slot name="head">
-            <x-table.heading>Name</x-table.heading>
+            <x-table.heading sortable wire:click="sortBy('full_name')" :direction="$sorts['full_name'] ?? null" class="w-full">Name</x-table.heading>
             <x-table.heading>School Email</x-table.heading>
             <x-table.heading>Phone</x-table.heading>
             <x-table.heading>Actions</x-table.heading>
