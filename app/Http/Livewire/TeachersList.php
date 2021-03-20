@@ -41,8 +41,10 @@ class TeachersList extends Component
             ->select('*')
             ->selectRaw("CONCAT(last_name, ', ', first_name) as full_name")
             ->when($this->filters['search'], function ($query, $search) {
-                return $query->where('first_name', 'like', '%'.$search.'%')
-                    ->orWhere('last_name', 'like', '%'.$search.'%');
+                $query->where(function ($query) use ($search) {
+                    $query->where('first_name', 'like', '%'.$search.'%')
+                        ->orWhere('last_name', 'like', '%'.$search.'%');
+                });
             });
 
         return $this->applySorting($query);
