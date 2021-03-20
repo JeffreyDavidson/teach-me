@@ -13,6 +13,11 @@ class TeachersList extends Component
 
     protected $paginationTheme = 'bootstrap';
 
+    public $showFilters = false;
+    public $filters = [
+        'search' => '',
+    ];
+
     protected $queryString = ['sorts'];
 
     public function updatedPerPage($value)
@@ -20,11 +25,27 @@ class TeachersList extends Component
         $this->resetPage();
     }
 
+    public function toggleShowFilters()
+    {
+        $this->showFilters = ! $this->showFilters;
+    }
+
+    public function resetFilters()
+    {
+        $this->reset('filters');
+    }
+
     public function getRowsQueryProperty()
     {
         $query = Teacher::query()
             ->select('*')
-            ->selectRaw("CONCAT(last_name, ', ', first_name) as full_name");
+            ->selectRaw("CONCAT(last_name, ', ', first_name) as full_name")
+            ->when($this->filters['search'], function ($query, $search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('first_name', 'like', '%'.$search.'%')
+                        ->orWhere('last_name', 'like', '%'.$search.'%');
+                });
+            });
 
         return $this->applySorting($query);
     }
