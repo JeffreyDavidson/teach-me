@@ -38,7 +38,7 @@
                         </div>
                         <div class="d-flex align-items-center justify-content-between">
                             <span class="font-weight-bold mr-2">Location:</span>
-                            <div>
+                            <div class="text-right">
                                 <span class="text-muted">
                                     {{ $teacher->address->street }}<br>
                                     {{ $teacher->address->city }}, {{ $teacher->address->state }} {{ $teacher->address->zip }}
