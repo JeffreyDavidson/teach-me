@@ -22,4 +22,5 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::resource('teachers', TeachersController::class);
+    Route::resource('students', StudentsController::class);
 });
