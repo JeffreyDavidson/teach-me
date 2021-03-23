@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\StudentCreated;
 use App\Events\TeacherCreated;
+use App\Listeners\SendStudentWelcomeEmail;
 use App\Listeners\SendWelcomeEmail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         TeacherCreated::class => [
             SendWelcomeEmail::class,
+        ],
+        StudentCreated::class => [
+            SendStudentWelcomeEmail::class,
         ],
     ];
 

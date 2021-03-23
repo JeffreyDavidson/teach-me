@@ -1,0 +1,1 @@
+{{ $student->school_email }}
