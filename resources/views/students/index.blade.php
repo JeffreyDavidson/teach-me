@@ -18,7 +18,7 @@
                 <h3 class="card-label">Student List
             </div>
             <div class="card-toolbar">
-
+                <a class="btn btn-primary font-weight-bolder" href="{{ route('students.create') }}">New Record</a>
             </div>
         </div>
         <!--end::Header-->
