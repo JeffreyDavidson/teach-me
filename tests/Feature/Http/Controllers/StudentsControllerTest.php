@@ -5,7 +5,6 @@ namespace Tests\Feature\Http\Controllers;
 use App\Events\StudentCreated;
 use App\Http\Controllers\StudentsController;
 use App\Http\Requests\CreateStudentRequest;
-use App\Mail\WelcomeStudent;
 use App\Models\Administrator;
 use App\Models\Student;
 use App\Models\Teacher;
@@ -13,7 +12,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use JMac\Testing\Traits\AdditionalAssertions;
 use Tests\TestCase;
@@ -137,25 +135,6 @@ class StudentsControllerTest extends TestCase
 
         Event::assertDispatched(function (StudentCreated $job) {
             return $job->student->id === Student::first()->id;
-        });
-    }
-
-    /** @test */
-    public function store_queues_welcome_student_email()
-    {
-        Mail::fake();
-
-        $this
-            ->actingAs(Administrator::factory()->create())
-            ->post(route('students.store'), $this->attributes);
-
-        $student = Student::first();
-
-        Mail::assertQueued(WelcomeStudent::class, 1);
-        Mail::assertQueued(function (WelcomeStudent $mail) use ($student) {
-            return $mail->student->id === $student->id &&
-                   $mail->hasTo($student->email) &&
-                   $mail->hasTo($student->school_email);
         });
     }
 
