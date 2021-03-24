@@ -64,6 +64,7 @@ class User extends Authenticatable
     protected $childTypes = [
         UserRoleEnum::ADMINISTRATOR => Administrator::class,
         UserRoleEnum::TEACHER => Teacher::class,
+        UserRoleEnum::STUDENT => Student::class,
     ];
 
     /** @var string */
