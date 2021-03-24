@@ -23,6 +23,18 @@ class TeacherPolicy
     }
 
     /**
+     * Determine whether the user can view the model.
+     *
+     * @param  App\Models\User  $user
+     * @param  App\Models\Teacher  $teacher
+     * @return mixed
+     */
+    public function view(User $user, Teacher $teacher)
+    {
+        return $user->role->is(UserRoleEnum::ADMINISTRATOR);
+    }
+
+    /**
      * Determine whether the user can view any models.
      *
      * @param  App\Models\User  $user

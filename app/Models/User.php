@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\AddressCast;
 use App\Enums\UserRoleEnum;
 use App\Models\Administrator;
 use App\Models\Teacher;
@@ -54,6 +55,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
+        'address' => AddressCast::class,
         'email_verified_at' => 'datetime',
         'role' => UserRoleEnum::class,
     ];

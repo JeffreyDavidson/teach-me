@@ -210,4 +210,36 @@ class TeachersControllerTest extends TestCase
     {
         $this->assertActionUsesFormRequest(TeachersController::class, 'update', UpdateTeacherRequest::class);
     }
+
+    /** @test */
+    public function show_returns_a_view()
+    {
+        $teacher = Teacher::factory()->create();
+
+        $response = $this->actingAs(Administrator::factory()->create())->get(route('teachers.show', $teacher));
+
+        $response->assertSuccessful();
+        $response->assertViewIs('teachers.show');
+        $response->assertViewHas('teacher', $teacher);
+    }
+
+    /** @test */
+    public function show_redirects_when_unauthenticated()
+    {
+        $teacher = Teacher::factory()->create();
+
+        $response = $this->get(route('teachers.show', $teacher));
+
+        $response->assertRedirect();
+    }
+
+    /** @test */
+    public function teachers_cannot_view_teacher_details_page()
+    {
+        $teacher = Teacher::factory()->create();
+
+        $response = $this->actingAs(Teacher::factory()->create())->get(route('teachers.show', $teacher));
+
+        $response->assertForbidden();
+    }
 }
