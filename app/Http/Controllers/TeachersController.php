@@ -55,7 +55,7 @@ class TeachersController extends Controller
      */
     public function show(Teacher $teacher)
     {
-        $this->authorize('update', $teacher);
+        $this->authorize('view', $teacher);
 
         return view('teachers.show', compact('teacher'));
     }
