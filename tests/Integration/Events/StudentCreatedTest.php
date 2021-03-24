@@ -13,7 +13,7 @@ class StudentCreatedTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function student_created_event_is_listed_by_send_welcome_email_listener()
+    public function student_created_event_is_listened_to_by_send_welcome_email_listener()
     {
         Event::fake();
 
