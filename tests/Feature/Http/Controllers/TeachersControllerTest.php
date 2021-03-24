@@ -5,13 +5,11 @@ namespace Tests\Feature\Http\Controllers;
 use App\Http\Controllers\TeachersController;
 use App\Http\Requests\CreateTeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
-use App\Mail\WelcomeTeacher;
 use App\Models\Administrator;
 use App\Models\Teacher;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use JMac\Testing\Traits\AdditionalAssertions;
 use Tests\TestCase;
@@ -101,23 +99,6 @@ class TeachersControllerTest extends TestCase
         $response = $this->actingAs(Administrator::factory()->create())->post(route('teachers.store'), $this->attributes);
 
         $this->assertEquals('john.smith@example.com', Teacher::first()->school_email);
-    }
-
-    /** @test */
-    public function store_queues_welcome_teacher_email()
-    {
-        Mail::fake();
-
-        $this->actingAs(Administrator::factory()->create())->post(route('teachers.store'), $this->attributes);
-
-        $teacher = Teacher::first();
-
-        Mail::assertQueued(WelcomeTeacher::class, 1);
-        Mail::assertQueued(function (WelcomeTeacher $mail) use ($teacher) {
-            return $mail->teacher->id === $teacher->id &&
-                   $mail->hasTo($teacher->email) &&
-                   $mail->hasTo($teacher->school_email);
-        });
     }
 
     /** @test */
