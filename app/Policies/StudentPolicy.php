@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Enums\UserRoleEnum;
+use App\Models\Student;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -31,4 +32,15 @@ class StudentPolicy
      {
          return $user->role->is(UserRoleEnum::ADMINISTRATOR);
      }
+    /**
+     * Determine whether the user can update the model.
+     *
+     * @param  App\Models\User  $user
+     * @param  App\Models\Student  $student
+     * @return mixed
+     */
+    public function update(User $user, Student $student)
+    {
+        return $user->role->is(UserRoleEnum::ADMINISTRATOR);
+    }
 }
