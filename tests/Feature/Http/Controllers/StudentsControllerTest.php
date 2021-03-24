@@ -43,26 +43,28 @@ class StudentsControllerTest extends TestCase
     /** @test */
     public function index_returns_a_view()
     {
-        $response = $this->actingAs(Administrator::factory()->create())->get(route('students.index'));
-
-        $response->assertSuccessful();
-        $response->assertViewIs('students.index');
+        $this
+            ->actingAs(Administrator::factory()->create())
+            ->get(route('students.index'))
+            ->assertSuccessful()
+            ->assertViewIs('students.index');
     }
 
     /** @test */
     public function index_redirects_when_unauthenticated()
     {
-        $response = $this->get(route('students.index'));
-
-        $response->assertRedirect();
+        $this
+            ->get(route('students.index'))
+            ->assertRedirect();
     }
 
     /** @test */
     public function teachers_cannot_view_list_of_students()
     {
-        $response = $this->actingAs(Teacher::factory()->create())->get(route('students.index'));
-
-        $response->assertForbidden();
+        $this
+            ->actingAs(Teacher::factory()->create())
+            ->get(route('students.index'))
+            ->assertForbidden();
     }
 
     /** @test */
@@ -86,7 +88,8 @@ class StudentsControllerTest extends TestCase
     /** @test */
     public function teachers_cannot_view_create_student_page()
     {
-        $this->actingAs(Teacher::factory()->create())
+        $this
+            ->actingAs(Teacher::factory()->create())
             ->get(route('students.create'), $this->attributes)
             ->assertForbidden();
     }
@@ -94,7 +97,8 @@ class StudentsControllerTest extends TestCase
     /** @test */
     public function students_cannot_view_create_student_page()
     {
-        $this->actingAs(Student::factory()->create())
+        $this
+            ->actingAs(Student::factory()->create())
             ->get(route('students.create'), $this->attributes)
             ->assertForbidden();
     }

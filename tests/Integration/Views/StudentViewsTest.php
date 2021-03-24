@@ -13,8 +13,9 @@ class StudentViewsTest extends TestCase
     /** @test */
     public function students_index_uses_students_list_livewire_component()
     {
-        $response = $this->actingAs(Administrator::factory()->create())->get(route('students.index'));
-
-        $response->assertSeeLivewire('students-list');
+        $this
+            ->actingAs(Administrator::factory()->create())
+            ->get(route('students.index'))
+            ->assertSeeLivewire('students-list');
     }
 }

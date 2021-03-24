@@ -41,51 +41,56 @@ class TeachersControllerTest extends TestCase
     /** @test */
     public function index_returns_a_view()
     {
-        $response = $this->actingAs(Administrator::factory()->create())->get(route('teachers.index'));
-
-        $response->assertSuccessful();
-        $response->assertViewIs('teachers.index');
+        $this
+            ->actingAs(Administrator::factory()->create())
+            ->get(route('teachers.index'))
+            ->assertSuccessful()
+            ->assertViewIs('teachers.index');
     }
 
     /** @test */
     public function index_redirects_when_unauthenticated()
     {
-        $response = $this->get(route('teachers.index'));
-
-        $response->assertRedirect();
+        $this
+            ->get(route('teachers.index'))
+            ->assertRedirect();
     }
 
     /** @test */
     public function teachers_cannot_view_list_of_teachers()
     {
-        $response = $this->actingAs(Teacher::factory()->create())->get(route('teachers.index'));
-
-        $response->assertForbidden();
+        $this
+            ->actingAs(Teacher::factory()->create())
+            ->get(route('teachers.index'))
+            ->assertForbidden();
     }
 
     /** @test */
     public function create_returns_a_view()
     {
-        $response = $this->actingAs(Administrator::factory()->create())->get(route('teachers.create'));
-
-        $response->assertSuccessful();
-        $response->assertViewIs('teachers.create');
+        $this
+            ->actingAs(Administrator::factory()->create())
+            ->get(route('teachers.create'))
+            ->assertSuccessful()
+            ->assertViewIs('teachers.create');
     }
 
     /** @test */
     public function create_redirects_when_unauthenticated()
     {
-        $response = $this->get(route('teachers.create'));
-
-        $response->assertRedirect();
+        $this
+            ->get(route('teachers.create'))
+            ->assertRedirect();
     }
 
     /** @test */
     public function store_creates_a_teacher_and_redirects()
     {
-        $response = $this->actingAs(Administrator::factory()->create())->post(route('teachers.store'), $this->attributes);
+        $this
+            ->actingAs(Administrator::factory()->create())
+            ->post(route('teachers.store'), $this->attributes)
+            ->assertRedirect(route('teachers.index'));
 
-        $response->assertRedirect(route('teachers.index'));
         $this->assertDatabaseHas('users', array_merge($this->attributes, ['phone' => '1234567890', 'role' => 'teacher']));
     }
 
@@ -96,7 +101,9 @@ class TeachersControllerTest extends TestCase
         $this->attributes = data_set($this->attributes, 'last_name', 'Smith');
         Config::set('school.domain', 'example.com');
 
-        $response = $this->actingAs(Administrator::factory()->create())->post(route('teachers.store'), $this->attributes);
+        $this
+            ->actingAs(Administrator::factory()->create())
+            ->post(route('teachers.store'), $this->attributes);
 
         $this->assertEquals('john.smith@example.com', Teacher::first()->school_email);
     }
@@ -104,17 +111,18 @@ class TeachersControllerTest extends TestCase
     /** @test */
     public function teachers_cannot_create_other_teachers()
     {
-        $response = $this->actingAs(Teacher::factory()->create())->post(route('teachers.store'), $this->attributes);
-
-        $response->assertForbidden();
+        $this
+            ->actingAs(Teacher::factory()->create())
+            ->post(route('teachers.store'), $this->attributes)
+            ->assertForbidden();
     }
 
     /** @test */
     public function store_redirects_when_unauthenticated()
     {
-        $response = $this->post(route('teachers.store'), $this->attributes);
-
-        $response->assertRedirect();
+        $this
+            ->post(route('teachers.store'), $this->attributes)
+            ->assertRedirect();
     }
 
     /** @test */
@@ -128,11 +136,12 @@ class TeachersControllerTest extends TestCase
     {
         $teacher = Teacher::factory()->create();
 
-        $response = $this->actingAs(Administrator::factory()->create())->get(route('teachers.edit', $teacher));
-
-        $response->assertSuccessful();
-        $response->assertViewIs('teachers.edit');
-        $response->assertViewHas('teacher', $teacher);
+        $this
+            ->actingAs(Administrator::factory()->create())
+            ->get(route('teachers.edit', $teacher))
+            ->assertSuccessful()
+            ->assertViewIs('teachers.edit')
+            ->assertViewHas('teacher', $teacher);
     }
 
     /** @test */
@@ -140,9 +149,9 @@ class TeachersControllerTest extends TestCase
     {
         $teacher = Teacher::factory()->create();
 
-        $response = $this->get(route('teachers.edit', $teacher));
-
-        $response->assertRedirect();
+        $this
+            ->get(route('teachers.edit', $teacher))
+            ->assertRedirect();
     }
 
     /** @test */
@@ -150,9 +159,10 @@ class TeachersControllerTest extends TestCase
     {
         $teacher = Teacher::factory()->create();
 
-        $response = $this->actingAs(Teacher::factory()->create())->get(route('teachers.edit', $teacher));
-
-        $response->assertForbidden();
+        $this
+            ->actingAs(Teacher::factory()->create())
+            ->get(route('teachers.edit', $teacher))
+            ->assertForbidden();
     }
 
     /** @test */
@@ -160,9 +170,11 @@ class TeachersControllerTest extends TestCase
     {
         $teacher = Teacher::factory()->create();
 
-        $response = $this->actingAs(Administrator::factory()->create())->patch(route('teachers.update', $teacher), $this->attributes);
+        $this
+            ->actingAs(Administrator::factory()->create())
+            ->patch(route('teachers.update', $teacher), $this->attributes)
+            ->assertRedirect(route('teachers.index'));
 
-        $response->assertRedirect(route('teachers.index'));
         $this->assertDatabaseHas('users', array_merge($this->attributes, ['phone' => '1234567890', 'role' => 'teacher']));
     }
 
@@ -171,9 +183,10 @@ class TeachersControllerTest extends TestCase
     {
         $teacher = Teacher::factory()->create();
 
-        $response = $this->actingAs(Teacher::factory()->create())->patch(route('teachers.update', $teacher), $this->attributes);
-
-        $response->assertForbidden();
+        $this
+            ->actingAs(Teacher::factory()->create())
+            ->patch(route('teachers.update', $teacher), $this->attributes)
+            ->assertForbidden();
     }
 
     /** @test */
@@ -181,9 +194,9 @@ class TeachersControllerTest extends TestCase
     {
         $teacher = Teacher::factory()->create();
 
-        $response = $this->patch(route('teachers.update', $teacher), $this->attributes);
-
-        $response->assertRedirect();
+        $this
+            ->patch(route('teachers.update', $teacher), $this->attributes)
+            ->assertRedirect();
     }
 
     /** @test */
@@ -197,11 +210,12 @@ class TeachersControllerTest extends TestCase
     {
         $teacher = Teacher::factory()->create();
 
-        $response = $this->actingAs(Administrator::factory()->create())->get(route('teachers.show', $teacher));
-
-        $response->assertSuccessful();
-        $response->assertViewIs('teachers.show');
-        $response->assertViewHas('teacher', $teacher);
+        $this
+            ->actingAs(Administrator::factory()->create())
+            ->get(route('teachers.show', $teacher))
+            ->assertSuccessful()
+            ->assertViewIs('teachers.show')
+            ->assertViewHas('teacher', $teacher);
     }
 
     /** @test */
@@ -209,9 +223,9 @@ class TeachersControllerTest extends TestCase
     {
         $teacher = Teacher::factory()->create();
 
-        $response = $this->get(route('teachers.show', $teacher));
-
-        $response->assertRedirect();
+        $this
+            ->get(route('teachers.show', $teacher))
+            ->assertRedirect();
     }
 
     /** @test */
@@ -219,8 +233,9 @@ class TeachersControllerTest extends TestCase
     {
         $teacher = Teacher::factory()->create();
 
-        $response = $this->actingAs(Teacher::factory()->create())->get(route('teachers.show', $teacher));
-
-        $response->assertForbidden();
+        $this
+            ->actingAs(Teacher::factory()->create())
+            ->get(route('teachers.show', $teacher))
+            ->assertForbidden();
     }
 }

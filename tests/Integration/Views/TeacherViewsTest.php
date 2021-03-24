@@ -13,8 +13,9 @@ class TeacherViewsTest extends TestCase
     /** @test */
     public function teachers_index_uses_teachers_list_livewire_component()
     {
-        $response = $this->actingAs(Administrator::factory()->create())->get(route('teachers.index'));
-
-        $response->assertSeeLivewire('teachers-list');
+        $this
+            ->actingAs(Administrator::factory()->create())
+            ->get(route('teachers.index'))
+            ->assertSeeLivewire('teachers-list');
     }
 }
