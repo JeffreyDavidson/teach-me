@@ -26,24 +26,26 @@ class StudentsController extends Controller
      *
      * @return \Illuminate\View\View
      */
-     public function create(Student $student)
-     {
-         $this->authorize('create', Student::class);
+    public function create(Student $student)
+    {
+        $this->authorize('create', Student::class);
 
-         return view('students.create', compact('student'));
-     }
+        return view('students.create', compact('student'));
+    }
 
-     /**
-      * Store a newly created resource in storage.
-      *
-      * @param  App\Http\Requests\CreateStudentRequest $request
-      * @param  App\Services\StudentService $studentService
-      * @return \Illuminate\Http\RedirectResponse
-      */
-     public function store(CreateStudentRequest $request, StudentService $studentService)
-     {
-         $studentService->create($request->validated());
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  App\Http\Requests\CreateStudentRequest $request
+     * @param  App\Services\StudentService $studentService
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(CreateStudentRequest $request, StudentService $studentService)
+    {
+        $studentService->create($request->validated());
 
+        return redirect()->route('students.index');
+    }
 
     /**
      * Show the form for editing the specified resource.

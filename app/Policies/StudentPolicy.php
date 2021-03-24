@@ -28,10 +28,11 @@ class StudentPolicy
      * @param  App\Models\User  $user
      * @return mixed
      */
-     public function create(User $user)
-     {
-         return $user->role->is(UserRoleEnum::ADMINISTRATOR);
-     }
+    public function create(User $user)
+    {
+        return $user->role->is(UserRoleEnum::ADMINISTRATOR);
+    }
+
     /**
      * Determine whether the user can update the model.
      *
