@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use App\Events\StudentCreated;
 use App\Http\Controllers\StudentsController;
 use App\Http\Requests\CreateStudentRequest;
+use App\Http\Requests\UpdateStudentRequest;
 use App\Models\Administrator;
 use App\Models\Student;
 use App\Models\Teacher;
@@ -63,6 +64,15 @@ class StudentsControllerTest extends TestCase
     {
         $this
             ->actingAs(Teacher::factory()->create())
+            ->get(route('students.index'))
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function students_cannot_view_list_of_students()
+    {
+        $this
+            ->actingAs(Student::factory()->create())
             ->get(route('students.index'))
             ->assertForbidden();
     }

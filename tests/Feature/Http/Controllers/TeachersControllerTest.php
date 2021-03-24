@@ -6,6 +6,7 @@ use App\Http\Controllers\TeachersController;
 use App\Http\Requests\CreateTeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
 use App\Models\Administrator;
+use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -66,6 +67,15 @@ class TeachersControllerTest extends TestCase
     }
 
     /** @test */
+    public function students_cannot_view_list_of_teachers()
+    {
+        $this
+            ->actingAs(Student::factory()->create())
+            ->get(route('teachers.index'))
+            ->assertForbidden();
+    }
+
+    /** @test */
     public function create_returns_a_view()
     {
         $this
@@ -81,6 +91,24 @@ class TeachersControllerTest extends TestCase
         $this
             ->get(route('teachers.create'))
             ->assertRedirect();
+    }
+
+    /** @test */
+    public function teachers_cannot_view_create_teacher_page()
+    {
+        $this
+            ->actingAs(Teacher::factory()->create())
+            ->get(route('teachers.create'))
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function students_cannot_view_create_teacher_page()
+    {
+        $this
+            ->actingAs(Student::factory()->create())
+            ->get(route('teachers.create'))
+            ->assertForbidden();
     }
 
     /** @test */
@@ -113,6 +141,15 @@ class TeachersControllerTest extends TestCase
     {
         $this
             ->actingAs(Teacher::factory()->create())
+            ->post(route('teachers.store'), $this->attributes)
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function students_cannot_create_teachers()
+    {
+        $this
+            ->actingAs(Student::factory()->create())
             ->post(route('teachers.store'), $this->attributes)
             ->assertForbidden();
     }
@@ -190,6 +227,17 @@ class TeachersControllerTest extends TestCase
     }
 
     /** @test */
+    public function students_cannot_update_teachers()
+    {
+        $teacher = Teacher::factory()->create();
+
+        $this
+            ->actingAs(Student::factory()->create())
+            ->patch(route('teachers.update', $teacher), $this->attributes)
+            ->assertForbidden();
+    }
+
+    /** @test */
     public function update_redirects_when_unauthenticated()
     {
         $teacher = Teacher::factory()->create();
@@ -235,6 +283,17 @@ class TeachersControllerTest extends TestCase
 
         $this
             ->actingAs(Teacher::factory()->create())
+            ->get(route('teachers.show', $teacher))
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function students_cannot_view_teacher_details_page()
+    {
+        $teacher = Teacher::factory()->create();
+
+        $this
+            ->actingAs(Student::factory()->create())
             ->get(route('teachers.show', $teacher))
             ->assertForbidden();
     }
