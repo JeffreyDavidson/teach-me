@@ -48,6 +48,19 @@ class StudentsController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  App\Models\Student  $student
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Student $student)
+    {
+        $this->authorize('view', $student);
+
+        return view('students.show', compact('student'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  App\Models\Student
