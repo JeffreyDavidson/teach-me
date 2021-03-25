@@ -11,30 +11,72 @@ class StudentsList extends Component
 {
     use WithPerPagePagination, WithSorting;
 
+    /**
+     * Define the pagination theme for the tables.
+     *
+     * @var string
+     */
     protected $paginationTheme = 'bootstrap';
 
+    /**
+     * Determine if filters should be displayed.
+     *
+     * @var bool
+     */
     public $showFilters = false;
+
+    /**
+     * Array of filters for querying database.
+     *
+     * @var array
+     */
     public $filters = [
         'search' => '',
     ];
 
+    /**
+     * Accept parameters in the query.
+     *
+     * @var araray
+     */
     protected $queryString = ['sorts'];
 
+    /**
+     * Tasks ran when page value is changed.
+     *
+     * @param  string $value
+     * @return void
+     */
     public function updatedPerPage($value)
     {
         $this->resetPage();
     }
 
+    /**
+     * Toggle visibility of filters.
+     *
+     * @return void
+     */
     public function toggleShowFilters()
     {
         $this->showFilters = ! $this->showFilters;
     }
 
+    /**
+     * Reset the filters array to empty.
+     *
+     * @return void
+     */
     public function resetFilters()
     {
         $this->reset('filters');
     }
 
+    /**
+     * Retrieve collection of resources.
+     *
+     * @return void
+     */
     public function getRowsQueryProperty()
     {
         $query = Student::query()
@@ -50,11 +92,21 @@ class StudentsList extends Component
         return $this->applySorting($query);
     }
 
+    /**
+     * Get the paginated collection of resources.
+     *
+     * @return \Illuminate\
+     */
     public function getRowsProperty()
     {
         return $this->applyPagination($this->rowsQuery);
     }
 
+    /**
+     * Display a list of resources.
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('livewire.students.students-list', [

@@ -24,6 +24,7 @@ class StudentsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param  App\Models\Student $student
      * @return \Illuminate\View\View
      */
     public function create(Student $student)
