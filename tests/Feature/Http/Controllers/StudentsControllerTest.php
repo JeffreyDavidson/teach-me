@@ -279,4 +279,49 @@ class StudentsControllerTest extends TestCase
     {
         $this->assertActionUsesFormRequest(StudentsController::class, 'update', UpdateStudentRequest::class);
     }
+
+    /** @test */
+    public function show_returns_a_view()
+    {
+        $student = Student::factory()->create();
+
+        $this
+            ->actingAs(Administrator::factory()->create())
+            ->get(route('students.show', $student))
+            ->assertSuccessful()
+            ->assertViewIs('students.show')
+            ->assertViewHas('student', $student);
+    }
+
+    /** @test */
+    public function show_redirects_when_unauthenticated()
+    {
+        $student = Student::factory()->create();
+
+        $this
+            ->get(route('students.show', $student))
+            ->assertRedirect();
+    }
+
+    /** @test */
+    public function teachers_cannot_view_student_details_page()
+    {
+        $student = Student::factory()->create();
+
+        $this
+            ->actingAs(Teacher::factory()->create())
+            ->get(route('students.show', $student))
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function students_cannot_view_students_details_page()
+    {
+        $student = Student::factory()->create();
+
+        $this
+            ->actingAs(Student::factory()->create())
+            ->get(route('students.show', $student))
+            ->assertForbidden();
+    }
 }
