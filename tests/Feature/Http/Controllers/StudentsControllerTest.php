@@ -321,7 +321,7 @@ class StudentsControllerTest extends TestCase
 
         $this
             ->actingAs(Student::factory()->create())
-            ->get(route('teachers.show', $student))
+            ->get(route('students.show', $student))
             ->assertForbidden();
     }
 }
