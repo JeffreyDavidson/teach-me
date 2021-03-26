@@ -3,8 +3,8 @@
         <x-subheader title="Courses">
             <x-slot name="breadcrumb">
                 <x-breadcrumb>
-                    <li class="breadcrumb-item"><a class="text-muted" href="#">Academics</a></li>
-                    <li class="breadcrumb-item"><a class="text-muted" href="#">Courses</a></li>
+                    <x-breadcrumb-item label="Academics" />
+                    <x-breadcrumb-item label="Courses" />
                 </x-breadcrumb>
             </x-slot>
         </x-subheader>
