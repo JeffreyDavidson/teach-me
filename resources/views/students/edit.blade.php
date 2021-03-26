@@ -3,9 +3,9 @@
         <x-subheader title="teachers">
             <x-slot name="breadcrumb">
                 <x-breadcrumb>
-                    <li class="breadcrumb-item"><a class="text-muted" href="#">Administration</a></li>
-                    <li class="breadcrumb-item"><a class="text-muted" href="#">Students</a></li>
-                    <li class="breadcrumb-item"><a class="text-muted" href="#">Edit {{ $student->name }}</a></li>
+                    <x-breadcrumb-item label="Administration" />
+                    <x-breadcrumb-item label="Students" />
+                    <x-breadcrumb-item label="Edit {{ $student->name }}" />
                 </x-breadcrumb>
             </x-slot>
         </x-subheader>
