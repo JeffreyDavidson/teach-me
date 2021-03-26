@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot name="subheader">
-        <x-subheader title="teachers">
+        <x-subheader title="Students">
             <x-slot name="breadcrumb">
                 <x-breadcrumb>
                     <x-breadcrumb-item label="Administration" />
