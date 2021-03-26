@@ -49,6 +49,19 @@ class CoursesController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  App\Models\Course  $course
+     * @return \Illuminate\Http\Response
+     */
+     public function show(Course $course)
+     {
+         $this->authorize('view', $course);
+
+         return view('courses.show', compact('course'));
+     }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  App\Models\Course

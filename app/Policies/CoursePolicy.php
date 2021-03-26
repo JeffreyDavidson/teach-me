@@ -23,6 +23,18 @@ class CoursePolicy
     }
 
     /**
+     * Determine whether the user can view the model.
+     *
+     * @param  App\Models\User  $user
+     * @param  App\Models\Course  $course
+     * @return mixed
+     */
+     public function view(User $user, Course $course)
+     {
+         return $user->role->is(UserRoleEnum::ADMINISTRATOR);
+     }
+
+    /**
      * Determine whether the user can create models.
      *
      * @param  App\Models\User  $user
