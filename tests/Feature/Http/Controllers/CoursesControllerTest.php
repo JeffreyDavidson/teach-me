@@ -4,7 +4,9 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Http\Controllers\CoursesController;
 use App\Http\Requests\CreateCourseRequest;
+use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Administrator;
+use App\Models\Course;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -141,5 +143,101 @@ class CoursesControllerTest extends TestCase
     public function store_uses_form_request()
     {
         $this->assertActionUsesFormRequest(CoursesController::class, 'store', CreateCourseRequest::class);
+    }
+
+    /** @test */
+    public function edit_returns_a_view()
+    {
+        $course = Course::factory()->create();
+
+        $this
+            ->actingAs(Administrator::factory()->create())
+            ->get(route('courses.edit', $course))
+            ->assertSuccessful()
+            ->assertViewIs('courses.edit')
+            ->assertViewHas('course', $course);
+    }
+
+    /** @test */
+    public function edit_redirects_when_unauthenticated()
+    {
+        $course = Course::factory()->create();
+
+        $this
+            ->get(route('students.edit', $course))
+            ->assertRedirect();
+    }
+
+    /** @test */
+    public function students_cannot_edit_courses()
+    {
+        $course = Course::factory()->create();
+
+        $this
+            ->actingAs(Student::factory()->create())
+            ->get(route('courses.edit', $course))
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function teachers_cannot_edit_courses()
+    {
+        $course = Course::factory()->create();
+
+        $this
+            ->actingAs(Teacher::factory()->create())
+            ->get(route('courses.edit', $course))
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function update_updates_a_course_and_redirects()
+    {
+        $course = Course::factory()->create();
+
+        $this
+            ->actingAs(Administrator::factory()->create())
+            ->patch(route('courses.update', $course), $this->attributes)
+            ->assertRedirect(route('courses.index'));
+
+        $this->assertDatabaseHas('courses', $this->attributes);
+    }
+
+    /** @test */
+    public function teachers_cannot_update_courses()
+    {
+        $course = Course::factory()->create();
+
+        $this
+            ->actingAs(Teacher::factory()->create())
+            ->patch(route('courses.update', $course), $this->attributes)
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function students_cannot_update_courses()
+    {
+        $course = Course::factory()->create();
+
+        $this
+            ->actingAs(Student::factory()->create())
+            ->patch(route('courses.update', $course), $this->attributes)
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function update_redirects_when_unauthenticated()
+    {
+        $course = Course::factory()->create();
+
+        $this
+            ->patch(route('courses.update', $course), $this->attributes)
+            ->assertRedirect(route('login'));
+    }
+
+    /** @test */
+    public function update_uses_form_request()
+    {
+        $this->assertActionUsesFormRequest(CoursesController::class, 'update', UpdateCourseRequest::class);
     }
 }
