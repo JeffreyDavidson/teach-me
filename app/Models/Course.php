@@ -18,4 +18,14 @@ class Course extends Model
         'name',
         'description'
     ];
+
+    /**
+     * Retrieve sections for the course.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sections()
+    {
+        return $this->hasMany(CourseSection::class);
+    }
 }

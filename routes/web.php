@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CoursesController;
+use App\Http\Controllers\CourseSectionsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TeachersController;
 use App\Http\Controllers\StudentsController;
@@ -26,4 +27,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('teachers', TeachersController::class);
     Route::resource('students', StudentsController::class);
     Route::resource('courses', CoursesController::class);
+    Route::resource('courses.course-sections', CourseSectionsController::class)->parameters(['course_section' => 'section']);
 });
