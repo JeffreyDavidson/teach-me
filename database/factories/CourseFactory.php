@@ -23,7 +23,7 @@ class CourseFactory extends Factory
     public function definition()
     {
         return [
-            'name' => Str::title($this->faker->unique()->word),
+            'name' => $this->faker->unique()->words(5, true),
             'description' => $this->faker->paragraph,
         ];
     }
