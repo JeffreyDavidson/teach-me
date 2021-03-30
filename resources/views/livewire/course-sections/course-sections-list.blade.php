@@ -17,14 +17,14 @@
                     :direction="$sorts['semester'] ?? null"
                     class="{{ isset($sorts['semester']) ? 'datatable-cell-sorted' : null }}"
                 >Semester</x-table.heading>
-                <x-table.heading sortable wire:click="sortBy('name')"
-                    :direction="$sorts['name'] ?? null"
-                    class="{{ isset($sorts['name']) ? 'datatable-cell-sorted' : null }}"
-                >Name</x-table.heading>
-                <x-table.heading sortable wire:click="sortBy('teacher_name')"
-                    :direction="$sorts['teacher_name'] ?? null"
-                    class="{{ isset($sorts['teacher_name']) ? 'datatable-cell-sorted' : null }}"
-                >Teacher</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('start_date')"
+                    :direction="$sorts['start_date'] ?? null"
+                    class="{{ isset($sorts['start_date']) ? 'datatable-cell-sorted' : null }}"
+                >Start Date</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('end_date')"
+                    :direction="$sorts['end_date'] ?? null"
+                    class="{{ isset($sorts['end_date']) ? 'datatable-cell-sorted' : null }}"
+                >End Date</x-table.heading>
                 <x-table.heading>Actions</x-table.heading>
             </x-slot>
 
@@ -36,12 +36,13 @@
                         </x-table.cell>
 
                         <x-table.cell>
-                            <span style="width: 137px;">{{ $section->name }}</span>
+                            <span style="width: 137px;">{{ $section->start_date->toDateString() }}</span>
                         </x-table.cell>
 
                         <x-table.cell>
-                            <a class="text-body" href="{{ route('teachers.show', $section->teacher) }}"><span style="width: 137px;">{{ $section->teacher_name }}</span></a>
+                            <span style="width: 137px;">{{ $section->end_date->toDateString() }}</span>
                         </x-table.cell>
+
                     </x-table.row>
                 @empty
                     <x-table.row>

@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use App\Models\Administrator;
 use App\Models\Course;
 use App\Models\CourseSection;
+use App\Models\Semester;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,7 +18,9 @@ class ClassSectionsControllerTest extends TestCase
     /** @test */
     public function index_returns_a_view()
     {
-        $course = Course::factory()->has(CourseSection::factory()->count(3), 'sections')->create();
+        $sections = CourseSection::factory()->count(3)
+                                ->for($course = Course::factory()->create())
+                                ->create();
 
         $this
             ->actingAs(Administrator::factory()->create())

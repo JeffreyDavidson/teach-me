@@ -47,19 +47,9 @@ class CourseSectionsList extends Component
     public function getRowsQueryProperty()
     {
         $query = CourseSection::query()
-            ->select('*')
-            ->selectRaw("CONCAT(users.first_name, ' ', users.last_name) as teacher_name")
-            ->join('users', 'users.id', '=', 'course_sections.teacher_id')
             ->where('course_id', $this->course->id)
             ->when($this->filters['search'], function ($query, $search) {
-                $query->where(function ($query) use ($search) {
-                    $query->where('semester', 'like', '%'.$search.'%')
-                        ->orWhere('name', 'like', '%'.$search.'%')
-                        ->orWhereHas('teacher', function (Builder $query) use ($search) {
-                            $query->where('first_name', 'like', '%'.$search.'%')
-                                ->orWhere('last_name', 'like', '%'.$search.'%');
-                        });
-                });
+                $query->where('semester', 'like', '%'.$search.'%');
             });
 
         return $this->applySorting($query);

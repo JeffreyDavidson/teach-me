@@ -15,8 +15,19 @@ class CourseSection extends Model
      * @var array
      */
     protected $fillable = [
-        'semester',
-        'name',
+        'semester_id',
+        'start_date',
+        'end_date',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'start_date' => 'date',
+        'end_date' => 'date',
     ];
 
     /**
@@ -27,15 +38,5 @@ class CourseSection extends Model
     public function course()
     {
         return $this->belongsTo(Course::class);
-    }
-
-    /**
-     * Get the teacher of the course section.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function teacher()
-    {
-        return $this->belongsTo(Teacher::class);
     }
 }
