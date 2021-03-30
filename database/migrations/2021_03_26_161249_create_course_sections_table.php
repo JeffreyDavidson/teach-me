@@ -16,6 +16,9 @@ class CreateCourseSectionsTable extends Migration
         Schema::create('course_sections', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_id')->constrained();
+            $table->foreignId('teacher_id')->constrained('users');
+            $table->string('semester');
+            $table->string('name');
             $table->timestamps();
         });
     }

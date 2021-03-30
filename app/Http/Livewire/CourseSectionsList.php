@@ -21,7 +21,7 @@ class CourseSectionsList extends Component
 
     protected $queryString = ['sorts'];
 
-    public $course;
+    public Course $course;
 
     public function mount(Course $course)
     {
@@ -46,7 +46,17 @@ class CourseSectionsList extends Component
     public function getRowsQueryProperty()
     {
         $query = CourseSection::query()
-            ->where('course_id', $this->course);
+            ->select('*')
+            ->selectRaw("CONCAT(users.first_name, ' ', users.last_name) as teacher_full_name")
+            ->join('users', 'users.id', '=', 'course_sections.teacher_id')
+            ->where('course_id', $this->course->id)
+            ->when($this->filters['search'], function ($query, $search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('semester', 'like', '%'.$search.'%')
+                        ->orWhere('name', 'like', '%'.$search.'%')
+                        ->orWhere('teacher_full_name', 'like', '%'.$search.'%');
+                });
+            });
 
         return $this->applySorting($query);
     }
@@ -59,7 +69,7 @@ class CourseSectionsList extends Component
     public function render()
     {
         return view('livewire.course-sections.course-sections-list', [
-            'course-sections' => $this->rows,
+            'courseSections' => $this->rows,
         ]);
     }
 }
