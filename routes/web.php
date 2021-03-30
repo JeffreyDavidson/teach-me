@@ -27,5 +27,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('teachers', TeachersController::class);
     Route::resource('students', StudentsController::class);
     Route::resource('courses', CoursesController::class);
-    Route::resource('courses.course-sections', CourseSectionsController::class)->parameters(['course_section' => 'section']);
+    Route::resource('courses.course-sections', CourseSectionsController::class)->parameters(
+        ['course-sections' => 'section']
+    );
 });
