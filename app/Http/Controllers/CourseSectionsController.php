@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ClassSection;
 use App\Models\Course;
 use App\Models\CourseSection;
 
