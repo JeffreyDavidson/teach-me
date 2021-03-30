@@ -21,9 +21,9 @@
                     :direction="$sorts['name'] ?? null"
                     class="{{ isset($sorts['name']) ? 'datatable-cell-sorted' : null }}"
                 >Name</x-table.heading>
-                <x-table.heading sortable wire:click="sortBy('teacher')"
-                    :direction="$sorts['teacher'] ?? null"
-                    class="{{ isset($sorts['teacher']) ? 'datatable-cell-sorted' : null }}"
+                <x-table.heading sortable wire:click="sortBy('teacher_name')"
+                    :direction="$sorts['teacher_name'] ?? null"
+                    class="{{ isset($sorts['teacher_name']) ? 'datatable-cell-sorted' : null }}"
                 >Teacher</x-table.heading>
                 <x-table.heading>Actions</x-table.heading>
             </x-slot>
@@ -40,7 +40,7 @@
                         </x-table.cell>
 
                         <x-table.cell>
-                            <span style="width: 137px;">{{ $section->teacher_full_name }}</span>
+                            <a class="text-body" href="{{ route('teachers.show', $section->teacher) }}"><span style="width: 137px;">{{ $section->teacher_name }}</span></a>
                         </x-table.cell>
                     </x-table.row>
                 @empty
