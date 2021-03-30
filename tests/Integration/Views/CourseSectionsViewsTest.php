@@ -20,6 +20,6 @@ class CourseSectionsViewsTest extends TestCase
         $this
             ->actingAs(Administrator::factory()->create())
             ->get(route('courses.course-sections.index', $course))
-            ->assertSeeLivewire('course-sections.course-sections-list');
+            ->assertSeeLivewire('course-sections-list');
     }
 }
