@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Administrator;
 use App\Models\Course;
+use App\Models\CourseSection;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Database\Seeder;
