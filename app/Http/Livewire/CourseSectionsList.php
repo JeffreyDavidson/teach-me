@@ -6,7 +6,6 @@ use App\Http\Livewire\DataTable\WithPerPagePagination;
 use App\Http\Livewire\DataTable\WithSorting;
 use App\Models\Course;
 use App\Models\CourseSection;
-use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 
 class CourseSectionsList extends Component
