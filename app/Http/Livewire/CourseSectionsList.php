@@ -49,7 +49,9 @@ class CourseSectionsList extends Component
             ->with('semester')
             ->where('course_id', $this->course->id)
             ->when($this->filters['search'], function ($query, $search) {
-                $query->where('semester', 'like', '%'.$search.'%');
+                $query->whereHas('semester', function ($query) use ($search) {
+                    $query->where('name', 'like', '%'.$search.'%');
+                });
             });
 
         return $this->applySorting($query);
