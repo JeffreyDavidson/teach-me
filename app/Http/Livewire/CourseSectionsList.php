@@ -46,6 +46,7 @@ class CourseSectionsList extends Component
     public function getRowsQueryProperty()
     {
         $query = CourseSection::query()
+            ->with('semester')
             ->where('course_id', $this->course->id)
             ->when($this->filters['search'], function ($query, $search) {
                 $query->where('semester', 'like', '%'.$search.'%');
