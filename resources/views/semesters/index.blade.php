@@ -15,7 +15,7 @@
         <!--begin::Header-->
         <div class="card-header">
             <div class="card-title">
-                <h3 class="card-label">Course List
+                <h3 class="card-label">Semester List
             </div>
             <div class="card-toolbar">
             </div>
