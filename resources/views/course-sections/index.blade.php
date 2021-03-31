@@ -3,6 +3,7 @@
         <x-subheader title="Course Sections">
             <x-slot name="breadcrumb">
                 <x-breadcrumb>
+                    <x-breadcrumb-item label="Academics" />
                     <x-breadcrumb-item label="Courses" />
                     <x-breadcrumb-item label="{{ $course->name }}" />
                     <x-breadcrumb-item label="Course Sections" />
