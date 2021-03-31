@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Course;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class CourseFactory extends Factory
 {
@@ -22,7 +23,7 @@ class CourseFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->unique()->words(5, true),
+            'name' => Str::title($this->faker->unique()->words(3, true)),
             'description' => $this->faker->paragraph,
         ];
     }
