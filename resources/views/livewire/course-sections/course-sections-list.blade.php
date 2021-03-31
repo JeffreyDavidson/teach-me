@@ -44,7 +44,7 @@
                         </x-table.cell>
 
                         <x-table.cell>
-                            <x-icon.details link="{{ route('semesters.course-sections.show', [$section->semester, $section]) }}" />
+
                         </x-table.cell>
 
                     </x-table.row>
