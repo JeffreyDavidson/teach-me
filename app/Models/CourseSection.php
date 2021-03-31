@@ -39,4 +39,14 @@ class CourseSection extends Model
     {
         return $this->belongsTo(Course::class);
     }
+
+    /**
+     * Get the semester of the course section.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class);
+    }
 }

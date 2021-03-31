@@ -32,7 +32,7 @@
                 @forelse ($courseSections as $section)
                     <x-table.row>
                         <x-table.cell>
-                            <span style="width: 137px;">{{ $section->semester }}</span>
+                            <span style="width: 137px;">{{ $section->semester->name }}</span>
                         </x-table.cell>
 
                         <x-table.cell>
@@ -43,10 +43,14 @@
                             <span style="width: 137px;">{{ $section->end_date->toDateString() }}</span>
                         </x-table.cell>
 
+                        <x-table.cell>
+                            <x-icon.details link="{{ route('semesters.course-sections.show', [$section->semester, $section]) }}" />
+                        </x-table.cell>
+
                     </x-table.row>
                 @empty
                     <x-table.row>
-                        <x-table.cell>No course sections found</x-table.cell>
+                        <x-table.cell>No course sections found for course.</x-table.cell>
                     </x-table.row>
                 @endforelse
             </x-slot>
