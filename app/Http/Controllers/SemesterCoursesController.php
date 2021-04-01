@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\Semester;
 
 class SemesterCoursesController extends Controller
@@ -14,6 +15,8 @@ class SemesterCoursesController extends Controller
      */
     public function index(Semester $semester)
     {
-        return view('semester-courses.index', compact('semester'));
+        $this->authorize('viewAny', Course::class);
+
+        return view('semesters.courses', compact('semester'));
     }
 }
