@@ -38,7 +38,7 @@
                     </x-table.row>
                 @empty
                     <x-table.row>
-                        <x-table.cell>No semesters found</x-table.cell>
+                        <x-table.cell>No semesters found.</x-table.cell>
                     </x-table.row>
                 @endforelse
             </x-slot>
