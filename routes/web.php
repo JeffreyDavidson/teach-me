@@ -3,6 +3,7 @@
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\CourseSectionsController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SemesterCourseSectionsController;
 use App\Http\Controllers\SemestersController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\TeachersController;
@@ -30,6 +31,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('courses', CoursesController::class);
     Route::resource('semesters', SemestersController::class);
     Route::resource('courses.course-sections', CourseSectionsController::class)->parameters(
+        ['course-sections' => 'section']
+    );
+
+    Route::resource('semesters.course-sections', SemesterCourseSectionsController::class)->parameters(
         ['course-sections' => 'section']
     );
 });
