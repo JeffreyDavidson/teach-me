@@ -4,8 +4,8 @@
             <x-slot name="breadcrumb">
                 <x-breadcrumb>
                     <x-breadcrumb-item label="Academics" />
-                    <x-breadcrumb-item label="Courses" />
-                    <x-breadcrumb-item label="{{ $course->name }}" />
+                    <x-breadcrumb-item label="Semesters" />
+                    <x-breadcrumb-item label="{{ $semester->name }}" />
                     <x-breadcrumb-item label="Course Sections" />
                 </x-breadcrumb>
             </x-slot>
