@@ -24,7 +24,7 @@
         <!--begin::Body-->
         <div class="card-body">
             <!--begin: Datatable-->
-            <livewire:course-sections-list :course="$course"/>
+            <livewire:semester-course-sections-list :semester="$semester" />
             <!--end: Datatable-->
         </div>
         <!--end::Body-->
