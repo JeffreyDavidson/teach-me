@@ -42,6 +42,7 @@ class SemestersTableSeeder extends Seeder
                 $endDate = Carbon::parse('first day of January '.(string) $yearInt);
             }
             Semester::factory()
+                ->hasAttached(Course::inRandomOrder()->take(5)->get(), ['start_date' => $startDate, 'end_date' => $endDate])
                 ->has(CourseSection::factory()->count(20)->state(new Sequence(
                     fn () => ['course_id' => Course::inRandomOrder()->first(), 'start_date' => $startDate, 'end_date' => $endDate],
                 )))
