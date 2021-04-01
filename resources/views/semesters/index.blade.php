@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot name="subheader">
-        <x-subheader title="Academics">
+        <x-subheader title="Semesters">
             <x-slot name="breadcrumb">
                 <x-breadcrumb>
                     <x-breadcrumb-item label="Academics" />
