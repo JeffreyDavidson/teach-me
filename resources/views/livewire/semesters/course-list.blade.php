@@ -44,7 +44,7 @@
                         </x-table.cell>
 
                         <x-table.cell>
-                            <span style="width: 137px;"><a href="#">View</a></span>
+                            <span style="width: 137px;"><a href="{{ route('semesters.courses.sections.index', [$semester, $course]) }}">View</a></span>
                         </x-table.cell>
 
                     </x-table.row>

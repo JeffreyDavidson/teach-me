@@ -13,40 +13,30 @@
     <div id="kt_datatable" class="datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded">
         <x-table>
             <x-slot name="head">
-                <x-table.heading sortable wire:click="sortBy('semester')"
-                    :direction="$sorts['semester'] ?? null"
-                    class="{{ isset($sorts['semester']) ? 'datatable-cell-sorted' : null }}"
-                >Semester</x-table.heading>
-                <x-table.heading sortable wire:click="sortBy('start_date')"
-                    :direction="$sorts['start_date'] ?? null"
-                    class="{{ isset($sorts['start_date']) ? 'datatable-cell-sorted' : null }}"
-                >Start Date</x-table.heading>
-                <x-table.heading sortable wire:click="sortBy('end_date')"
-                    :direction="$sorts['end_date'] ?? null"
-                    class="{{ isset($sorts['end_date']) ? 'datatable-cell-sorted' : null }}"
-                >End Date</x-table.heading>
-                <x-table.heading>Actions</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('day')"
+                    :direction="$sorts['day'] ?? null"
+                    class="{{ isset($sorts['day']) ? 'datatable-cell-sorted' : null }}"
+                >Day</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('start_time')"
+                    :direction="$sorts['start_time'] ?? null"
+                    class="{{ isset($sorts['start_time']) ? 'datatable-cell-sorted' : null }}"
+                >Time</x-table.heading>
             </x-slot>
 
             <x-slot name="body">
                 @forelse ($courseSections as $section)
                     <x-table.row>
                         <x-table.cell>
-                            <span style="width: 137px;">{{ $section->semester->name }}</span>
+                            <span style="width: 137px;">{{ $section->day }}</span>
                         </x-table.cell>
 
                         <x-table.cell>
-                            <span style="width: 137px;">{{ $section->start_date->toDateString() }}</span>
+                            <span style="width: 137px;">{{ $section->start_time }} to {{ $section->end_time }}</span>
                         </x-table.cell>
 
                         <x-table.cell>
-                            <span style="width: 137px;">{{ $section->end_date->toDateString() }}</span>
+                            <x-icon.details link="{{ route('semesters.courses.sections.show', [$semester, $course, $section]) }}" />
                         </x-table.cell>
-
-                        <x-table.cell>
-
-                        </x-table.cell>
-
                     </x-table.row>
                 @empty
                     <x-table.row>

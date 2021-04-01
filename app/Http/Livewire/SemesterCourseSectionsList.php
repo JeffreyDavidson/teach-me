@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Http\Livewire\DataTable\WithPerPagePagination;
 use App\Http\Livewire\DataTable\WithSorting;
+use App\Models\Course;
 use App\Models\CourseSection;
 use App\Models\Semester;
 use Livewire\Component;
@@ -22,10 +23,12 @@ class SemesterCourseSectionsList extends Component
     protected $queryString = ['sorts'];
 
     public Semester $semester;
+    public Course $course;
 
-    public function mount(Semester $semester)
+    public function mount(Semester $semester, Course $course)
     {
         $this->semester = $semester;
+        $this->course = $course;
     }
 
     public function updatedPerPage($value)
@@ -46,8 +49,8 @@ class SemesterCourseSectionsList extends Component
     public function getRowsQueryProperty()
     {
         $query = CourseSection::query()
-            ->with('course')
             ->where('semester_id', $this->semester->id)
+            ->where('course_id', $this->course->id)
             ->when($this->filters['search'], function ($query, $search) {
                 $query->whereHas('course', function ($query) use ($search) {
                     $query->where('name', 'like', '%'.$search.'%');
@@ -64,7 +67,7 @@ class SemesterCourseSectionsList extends Component
 
     public function render()
     {
-        return view('livewire.semester-course-sections.course-sections-list', [
+        return view('livewire.semesters.course-sections-list', [
             'courseSections' => $this->rows,
         ]);
     }
