@@ -17,6 +17,6 @@ class SemesterCourseSectionsController extends Controller
     {
         $this->authorize('viewAny', CourseSection::class);
 
-        return view('course-sections.index', compact('semester'));
+        return view('semester-course-sections.index', compact('semester'));
     }
 }
