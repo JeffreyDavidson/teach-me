@@ -4,14 +4,18 @@ namespace Database\Seeders;
 
 use App\Models\Course;
 use App\Models\CourseSection;
+use App\Models\CourseSemester;
 use App\Models\Semester;
+use App\Models\Teacher;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
 
 class SemestersTableSeeder extends Seeder
 {
+    use WithFaker;
+
     /**
      * Run the database seeds.
      *
@@ -19,6 +23,8 @@ class SemestersTableSeeder extends Seeder
      */
     public function run()
     {
+        $this->setUpFaker();
+
         $seasons = ['Spring', 'Summer', 'Fall'];
         $years = [date('Y'), date('Y', strtotime('-1 year')), date('Y', strtotime('-2 years'))];
         $semesters = [];
@@ -41,12 +47,25 @@ class SemestersTableSeeder extends Seeder
                 $yearInt = (int) $yearString + 1;
                 $endDate = Carbon::parse('first day of January '.(string) $yearInt);
             }
-            Semester::factory()
-                ->hasAttached(Course::inRandomOrder()->take(5)->get(), ['start_date' => $startDate, 'end_date' => $endDate])
-                ->has(CourseSection::factory()->count(20)->state(new Sequence(
-                    fn () => ['course_id' => Course::inRandomOrder()->first(), 'start_date' => $startDate, 'end_date' => $endDate],
-                )))
-                ->create(['name' => $semester]);
+
+            $semesterModel = Semester::factory()->create(['name' => $semester]);
+            $courses = Course::inRandomOrder()->take(5)->get();
+
+            foreach ($courses as $course) {
+                $courseSemester = CourseSemester::factory()->create([
+                    'semester_id' => $semesterModel,
+                    'course_id' => $course->id,
+                    'start_date' => $startDate,
+                    'end_date' => $endDate,
+                ]);
+
+                CourseSection::factory()->create([
+                    'course_semester_id' => $courseSemester->id,
+                    'teacher_id' => Teacher::inRandomOrder()->first()->id,
+                    'start_time' => $startTime = Carbon::parse($this->faker->time('H:00')),
+                    'end_time' => $startTime->copy()->addHour(),
+                ]);
+            }
         }
     }
 }
