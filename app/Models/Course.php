@@ -51,4 +51,14 @@ class Course extends Model
     {
         return $this->hasMany(CourseSection::class);
     }
+
+    /**
+     * Get semesters for the course.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function semesters()
+    {
+        return $this->belongsToMany(Semester::class)->withTimestamps()->withPivot(['start_date', 'end_date']);
+    }
 }

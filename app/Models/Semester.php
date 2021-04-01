@@ -40,4 +40,14 @@ class Semester extends Model
     {
         return $this->hasMany(CourseSection::class);
     }
+
+    /**
+     * Get courses offered for the semester.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class)->withTimestamps();
+    }
 }
