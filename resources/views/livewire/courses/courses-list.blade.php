@@ -17,7 +17,6 @@
                     :direction="$sorts['name'] ?? null"
                     class="{{ isset($sorts['name']) ? 'datatable-cell-sorted' : null }}"
                 >Name</x-table.heading>
-                <x-table.heading>Sections</x-table.heading>
                 <x-table.heading>Actions</x-table.heading>
             </x-slot>
 
@@ -26,10 +25,6 @@
                     <x-table.row>
                         <x-table.cell>
                             <span style="width: 137px;">{{ $course->name }}</span>
-                        </x-table.cell>
-
-                        <x-table.cell>
-                            <span style="width: 137px;"><a href="{{ route('courses.course-sections.index', $course) }}">View</a></span>
                         </x-table.cell>
 
                         <x-table.cell>
