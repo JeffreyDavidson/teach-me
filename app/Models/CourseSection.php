@@ -44,6 +44,16 @@ class CourseSection extends Model
     }
 
     /**
+     * Get the students of the course section.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'course_section_student', 'course_section_id', 'student_id')->withTimestamps();
+    }
+
+    /**
      * Get the formatted start time.
      *
      * @param  string  $value

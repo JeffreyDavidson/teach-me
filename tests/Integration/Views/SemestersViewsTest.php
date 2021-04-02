@@ -4,6 +4,7 @@ namespace Tests\Integration\Views;
 
 use App\Models\Administrator;
 use App\Models\Course;
+use App\Models\CourseSection;
 use App\Models\Semester;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -32,5 +33,20 @@ class SemestersViewsTest extends TestCase
             ->actingAs(Administrator::factory()->create())
             ->get(route('semesters.courses.index', $semester))
             ->assertSeeLivewire('semester-course-list');
+    }
+
+    /** @test */
+    public function semester_course_section_student_list_uses_semester_course_section_student_list_livewire_component()
+    {
+        $courseSection = CourseSection::factory()->create();
+
+        $this
+            ->actingAs(Administrator::factory()->create())
+            ->get(route('semesters.courses.sections.show', [
+                $courseSection->courseSemester->semester,
+                $courseSection->courseSemester->course,
+                $courseSection,
+            ]))
+            ->assertSeeLivewire('semester-course-section-student-list');
     }
 }
