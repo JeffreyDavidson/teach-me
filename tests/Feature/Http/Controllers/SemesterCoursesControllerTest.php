@@ -36,7 +36,7 @@ class SemesterCoursesControllerTest extends TestCase
     }
 
     /** @test */
-    public function teachers_cannot_view_list_of_semesters()
+    public function teachers_cannot_view_list_of_semester_courses()
     {
         $semester = Semester::factory()->create();
 
@@ -47,7 +47,7 @@ class SemesterCoursesControllerTest extends TestCase
     }
 
     /** @test */
-    public function students_cannot_view_list_of_semesters()
+    public function students_cannot_view_list_of_semester_courses()
     {
         $semester = Semester::factory()->create();
 

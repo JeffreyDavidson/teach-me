@@ -19,24 +19,7 @@
             </div>
         </div>
         <div class="flex-row-fluid ml-lg-8">
-            <!--begin::Card-->
-            <div class="card card-custom">
-                <!--begin::Header-->
-                <div class="card-header">
-                    <div class="card-title">
-                        <h3 class="card-label">Course Sections List</h3>
-                    </div>
-                </div>
-                <!--end::Header-->
-                <!--begin::Body-->
-                <div class="card-body">
-                    <!--begin: Datatable-->
-                    <livewire:course-sections-list :course="$course"/>
-                    <!--end: Datatable-->
-                </div>
-                <!--end::Body-->
-            </div>
-            <!--end::Card-->
+
         </div>
     </div>
 </x-layout>

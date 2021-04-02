@@ -31,13 +31,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('students', StudentsController::class);
     Route::resource('courses', CoursesController::class);
     Route::resource('semesters', SemestersController::class);
-    Route::resource('courses.course-sections', CourseSectionsController::class)->parameters(
-        ['course-sections' => 'section']
-    );
 
-    Route::resource('semesters.course-sections', SemesterCourseSectionsController::class)->parameters(
-        ['course-sections' => 'section']
-    );
-
+    Route::get('semesters/{semester}/courses/{course}/course-sections', [SemesterCourseSectionsController::class, 'index'])->name('semesters.courses.sections.index');
+    Route::get('semesters/{semester}/courses/{course}/course-sections/{section}', [SemesterCourseSectionsController::class, 'show'])->name('semesters.courses.sections.show');
     Route::get('semesters/{semester}/courses', [SemesterCoursesController::class, 'index'])->name('semesters.courses.index');
 });

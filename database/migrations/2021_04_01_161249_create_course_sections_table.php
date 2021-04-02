@@ -15,10 +15,10 @@ class CreateCourseSectionsTable extends Migration
     {
         Schema::create('course_sections', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_id')->constrained();
-            $table->foreignId('semester_id')->constrained();
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->foreignId('course_semester_id')->constrained('course_semester');
+            $table->foreignId('teacher_id')->constrained('users');
+            $table->time('start_time');
+            $table->time('end_time');
             $table->timestamps();
         });
     }

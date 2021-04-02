@@ -15,9 +15,10 @@ class CourseSection extends Model
      * @var array
      */
     protected $fillable = [
-        'semester_id',
-        'start_date',
-        'end_date',
+        'course_semester_id',
+        'teacher_id',
+        'start_time',
+        'end_time',
     ];
 
     /**
@@ -26,8 +27,8 @@ class CourseSection extends Model
      * @var array
      */
     protected $casts = [
-        'start_date' => 'date',
-        'end_date' => 'date',
+        // 'start_time' => 'time',
+        // 'end_time' => 'time',
     ];
 
     /**
@@ -35,18 +36,18 @@ class CourseSection extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function course()
+    public function courseSemester()
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsTo(CourseSemester::class);
     }
 
     /**
-     * Get the semester of the course section.
+     * Get the teacher of the course section.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function semester()
+    public function teacher()
     {
-        return $this->belongsTo(Semester::class);
+        return $this->belongsTo(User::class);
     }
 }
