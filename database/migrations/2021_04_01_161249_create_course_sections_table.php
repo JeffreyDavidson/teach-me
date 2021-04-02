@@ -17,6 +17,7 @@ class CreateCourseSectionsTable extends Migration
             $table->id();
             $table->foreignId('course_semester_id')->constrained('course_semester');
             $table->foreignId('teacher_id')->constrained('users');
+            $table->enum('day', ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']);
             $table->time('start_time');
             $table->time('end_time');
             $table->timestamps();

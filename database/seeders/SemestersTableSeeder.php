@@ -131,6 +131,7 @@ class SemestersTableSeeder extends Seeder
         CourseSection::factory()->create([
             'course_semester_id' => $courseSemester->id,
             'teacher_id' => Teacher::inRandomOrder()->first()->id,
+            'day' => $this->faker->randomElement(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']),
             'start_time' => $startTime = Carbon::parse($this->faker->time('H:00')),
             'end_time' => $startTime->copy()->addHour(),
         ]);
