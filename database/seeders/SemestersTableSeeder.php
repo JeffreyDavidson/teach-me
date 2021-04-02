@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\CourseSection;
 use App\Models\CourseSemester;
 use App\Models\Semester;
+use App\Models\Student;
 use App\Models\Teacher;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
@@ -128,13 +129,15 @@ class SemestersTableSeeder extends Seeder
      */
     protected function createCourseSection(CourseSemester $courseSemester)
     {
-        CourseSection::factory()->create([
+        $courseSection = CourseSection::factory()->create([
             'course_semester_id' => $courseSemester->id,
             'teacher_id' => Teacher::inRandomOrder()->first()->id,
             'day' => $this->faker->randomElement(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']),
             'start_time' => $startTime = Carbon::parse($this->faker->time('H:00')),
             'end_time' => $startTime->copy()->addHour(),
         ]);
+
+        $this->addStudentsToCourseSection($courseSection);
     }
 
     /**
@@ -154,5 +157,14 @@ class SemestersTableSeeder extends Seeder
             'start_date' => $startDate,
             'end_date' => $endDate,
         ]);
+    }
+
+    protected function addStudentsToCourseSection(CourseSection $courseSection)
+    {
+        $students = Student::inRandomOrder()->take(5)->get();
+
+        foreach ($students as $student) {
+            $courseSection->students()->attach($student);
+        }
     }
 }
