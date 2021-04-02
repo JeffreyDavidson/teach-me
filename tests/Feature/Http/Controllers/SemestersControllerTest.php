@@ -47,4 +47,40 @@ class SemestersControllerTest extends TestCase
             ->get(route('semesters.index'))
             ->assertForbidden();
     }
+
+    /** @test */
+    public function create_returns_a_view()
+    {
+        $this
+            ->actingAs(Administrator::factory()->create())
+            ->get(route('semesters.create'))
+            ->assertSuccessful()
+            ->assertViewIs('semesters.create');
+    }
+
+    /** @test */
+    public function create_redirects_when_unauthenticated()
+    {
+        $this
+            ->get(route('semesters.create'))
+            ->assertRedirect();
+    }
+
+    /** @test */
+    public function teachers_cannot_view_create_semester_page()
+    {
+        $this
+            ->actingAs(Teacher::factory()->create())
+            ->get(route('semesters.create'))
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function students_cannot_view_create_semester_page()
+    {
+        $this
+            ->actingAs(Student::factory()->create())
+            ->get(route('semesters.create'))
+            ->assertForbidden();
+    }
 }
