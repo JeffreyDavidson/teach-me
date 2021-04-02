@@ -3,7 +3,6 @@
 namespace Tests\Integration\Views;
 
 use App\Models\Administrator;
-use App\Models\Course;
 use App\Models\CourseSection;
 use App\Models\CourseSemester;
 use Illuminate\Foundation\Testing\RefreshDatabase;
