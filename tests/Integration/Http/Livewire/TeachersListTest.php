@@ -35,8 +35,8 @@ class TeachersListTest extends TestCase
         $maryWilliams = Teacher::factory()->create(['first_name' => 'Mary', 'last_name' => 'Williams']);
 
         Livewire::test(TeachersList::class)
-            ->assertSee($johnSmith->full_name)
-            ->assertSee($maryWilliams->full_name);
+            ->assertSee($johnSmith->full_name_listing)
+            ->assertSee($maryWilliams->full_name_listing);
     }
 
     /** @test */
@@ -48,9 +48,9 @@ class TeachersListTest extends TestCase
 
         Livewire::test(TeachersList::class)
             ->set('filters.search', 'John')
-            ->assertSee($johnSmith->full_name)
-            ->assertSee($johnWilliams->full_name)
-            ->assertDontSee($maryWilliams->full_name);
+            ->assertSee($johnSmith->full_name_listing)
+            ->assertSee($johnWilliams->full_name_listing)
+            ->assertDontSee($maryWilliams->full_name_listing);
     }
 
     /** @test */
