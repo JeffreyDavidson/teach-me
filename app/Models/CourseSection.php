@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,16 +24,6 @@ class CourseSection extends Model
     ];
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        // 'start_time' => 'time',
-        // 'end_time' => 'time',
-    ];
-
-    /**
      * Get the course of the course section.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -50,5 +41,27 @@ class CourseSection extends Model
     public function teacher()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the formatted start time.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getStartTimeAttribute($value)
+    {
+        return Carbon::createFromTimeString($value)->format('H:ia');
+    }
+
+    /**
+     * Get the formatted end time.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getEndTimeAttribute($value)
+    {
+        return Carbon::createFromTimeString($value)->format('H:ia');
     }
 }
