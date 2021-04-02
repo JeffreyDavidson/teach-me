@@ -20,4 +20,15 @@ class CourseSectionPolicy
     {
         return $user->role->is(UserRoleEnum::ADMINISTRATOR);
     }
+
+    /**
+     * Determine whether the user can view the model.
+     *
+     * @param  \App\Models\User  $user
+     * @return mixed
+     */
+    public function view(User $user)
+    {
+        return $user->role->is(UserRoleEnum::ADMINISTRATOR);
+    }
 }
