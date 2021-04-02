@@ -64,4 +64,15 @@ class CourseSection extends Model
     {
         return Carbon::createFromTimeString($value)->format('H:ia');
     }
+
+    /**
+     * Get the formatted start time.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getNameAttribute($value)
+    {
+        return "{$this->day} {$this->start_time } - {$this->end_time}";
+    }
 }
