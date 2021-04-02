@@ -21,6 +21,10 @@
                     :direction="$sorts['start_time'] ?? null"
                     class="{{ isset($sorts['start_time']) ? 'datatable-cell-sorted' : null }}"
                 >Time</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('teacher')"
+                    :direction="$sorts['teacher'] ?? null"
+                    class="{{ isset($sorts['teacher']) ? 'datatable-cell-sorted' : null }}"
+                >Teacher</x-table.heading>
             </x-slot>
 
             <x-slot name="body">
@@ -32,6 +36,10 @@
 
                         <x-table.cell>
                             <span style="width: 137px;">{{ $section->start_time }} to {{ $section->end_time }}</span>
+                        </x-table.cell>
+
+                        <x-table.cell>
+                            <span style="width: 137px;">{{ $section->teacher->full_name }}</span>
                         </x-table.cell>
 
                         <x-table.cell>

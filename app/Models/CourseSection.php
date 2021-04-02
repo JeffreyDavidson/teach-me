@@ -40,4 +40,14 @@ class CourseSection extends Model
     {
         return $this->belongsTo(CourseSemester::class);
     }
+
+    /**
+     * Get the teacher of the course section.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function teacher()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
