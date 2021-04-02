@@ -17,6 +17,7 @@ class CourseSection extends Model
     protected $fillable = [
         'course_semester_id',
         'teacher_id',
+        'day',
         'start_time',
         'end_time',
     ];
