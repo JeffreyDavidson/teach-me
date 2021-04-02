@@ -19,6 +19,13 @@ class StudentsList extends Component
     protected $paginationTheme = 'bootstrap';
 
     /**
+     * Accept parameters in the query.
+     *
+     * @var array
+     */
+    protected $queryString = ['sorts'];
+
+    /**
      * Determine if filters should be displayed.
      *
      * @var bool
@@ -33,13 +40,6 @@ class StudentsList extends Component
     public $filters = [
         'search' => '',
     ];
-
-    /**
-     * Accept parameters in the query.
-     *
-     * @var araray
-     */
-    protected $queryString = ['sorts'];
 
     /**
      * Tasks ran when page value is changed.
@@ -95,7 +95,7 @@ class StudentsList extends Component
     /**
      * Get the paginated collection of resources.
      *
-     * @return \Illuminate\
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getRowsProperty()
     {
