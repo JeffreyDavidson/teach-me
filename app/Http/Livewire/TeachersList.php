@@ -80,8 +80,6 @@ class TeachersList extends Component
     public function getRowsQueryProperty()
     {
         $query = Teacher::query()
-            ->select('*')
-            ->selectRaw("CONCAT(last_name, ', ', first_name) as full_name")
             ->when($this->filters['search'], function ($query, $search) {
                 $query->where(function ($query) use ($search) {
                     $query->where('first_name', 'like', '%'.$search.'%')

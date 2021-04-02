@@ -60,6 +60,15 @@ class User extends Authenticatable
         'role' => UserRoleEnum::class,
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'full_name',
+    ];
+
     /** @var array */
     protected $childTypes = [
         UserRoleEnum::ADMINISTRATOR => Administrator::class,
