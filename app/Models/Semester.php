@@ -12,6 +12,17 @@ class Semester extends Model
     use HasFactory, HasSlug;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'start_date',
+        'end_date',
+    ];
+
+    /**
      * Get the route key for the model.
      *
      * @return string

@@ -7,6 +7,7 @@ use App\Http\Requests\CreateSemesterRequest;
 use App\Models\Administrator;
 use App\Models\Student;
 use App\Models\Teacher;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use JMac\Testing\Traits\AdditionalAssertions;
@@ -22,9 +23,13 @@ class SemestersControllerTest extends TestCase
     {
         parent::setUp();
 
+        $date = Carbon::parse('January 1, 2020');
+
         $this->attributes = [
-            'term' => $this->faker->randomElement(['Spring', 'Summer', 'Fall']),
-            'year' => $this->faker->year,
+            'term' => 'Fall',
+            'year' => $date->year,
+            'start_date' => $date->toDateString(),
+            'end_date' => $date->addMonths(3)->toDateString(),
         ];
     }
 
@@ -103,12 +108,15 @@ class SemestersControllerTest extends TestCase
     /** @test */
     public function store_creates_a_semester_and_redirects()
     {
+        data_set($this->attributes, 'term', 'Fall');
+        data_set($this->attributes, 'year', 2020);
+
         $this
             ->actingAs(Administrator::factory()->create())
             ->post(route('semesters.store'), $this->attributes)
             ->assertRedirect(route('semesters.index'));
 
-        $this->assertDatabaseHas('semesters', $this->attributes);
+        $this->assertDatabaseHas('semesters', ['name' => 'Fall 2020']);
     }
 
     /** @test */

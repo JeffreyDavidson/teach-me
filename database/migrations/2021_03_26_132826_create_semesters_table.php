@@ -17,6 +17,8 @@ class CreateSemestersTable extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('slug')->unique();
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }
