@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\SemesterCreated;
 use App\Events\StudentCreated;
 use App\Events\TeacherCreated;
+use App\Listeners\GenerateSemesterSchedule;
 use App\Listeners\SendStudentWelcomeEmail;
 use App\Listeners\SendWelcomeEmail;
 use Illuminate\Auth\Events\Registered;
@@ -27,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         StudentCreated::class => [
             SendStudentWelcomeEmail::class,
+        ],
+        SemesterCreated::class => [
+            GenerateSemesterSchedule::class,
         ],
     ];
 
