@@ -17,6 +17,8 @@ class CreateCourseSectionSemesterTable extends Migration
             $table->id();
             $table->foreignId('course_section_id')->constrained();
             $table->foreignId('semester_id')->constrained();
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }
