@@ -26,6 +26,8 @@ class SemesterFactory extends Factory
 
         return [
             'name' => $randomSemester.' '.$this->faker->numberBetween(1111, 2021),
+            'start_date' => today(),
+            'end_date' => today()->addDay(),
         ];
     }
 }

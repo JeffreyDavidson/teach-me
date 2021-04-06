@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Course;
 use App\Models\CourseSection;
-use App\Models\CourseSemester;
 use App\Models\Teacher;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -26,7 +25,7 @@ class CourseSectionFactory extends Factory
     public function definition()
     {
         return [
-            'course_semester_id' => CourseSemester::factory(),
+            'course_id' => Course::factory(),
             'teacher_id' => Teacher::factory(),
             'day' => $this->faker->randomElement(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']),
             'start_time' => $startTime = Carbon::parse($this->faker->time('H:00')),
