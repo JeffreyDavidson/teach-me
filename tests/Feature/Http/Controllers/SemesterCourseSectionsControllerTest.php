@@ -4,7 +4,9 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Administrator;
 use App\Models\CourseSection;
+use App\Models\CourseSectionSemester;
 use App\Models\CourseSemester;
+use App\Models\Semester;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,93 +19,109 @@ class SemesterCourseSectionsControllerTest extends TestCase
     /** @test */
     public function index_returns_a_view()
     {
-        $courseSemester = CourseSemester::factory()->create();
+        $courseSectionSemester = CourseSectionSemester::factory()->create();
 
         $this
             ->actingAs(Administrator::factory()->create())
-            ->get(route('semesters.courses.sections.index', [$courseSemester->semester, $courseSemester->course]))
+            ->get(route('semesters.courses.sections.index', [$courseSectionSemester->semester, $courseSectionSemester->courseSection->course]))
             ->assertSuccessful()
-            ->assertViewHas('semester', $courseSemester->semester)
-            ->assertViewHas('course', $courseSemester->course)
+            ->assertViewHas('semester', $courseSectionSemester->semester)
+            ->assertViewHas('course', $courseSectionSemester->courseSection->course)
             ->assertViewIs('semesters.course-sections');
     }
 
     /** @test */
     public function index_redirects_when_unauthenticated()
     {
-        $courseSemester = CourseSemester::factory()->create();
+        $courseSectionSemester = CourseSectionSemester::factory()->create();
 
         $this
-            ->get(route('semesters.courses.sections.index', [$courseSemester->semester, $courseSemester->course]))
+            ->get(route('semesters.courses.sections.index', [$courseSectionSemester->semester, $courseSectionSemester->courseSection->course]))
             ->assertRedirect();
     }
 
     /** @test */
     public function teachers_cannot_view_list_of_semester_courses()
     {
-        $courseSemester = CourseSemester::factory()->create();
+        $courseSectionSemester = CourseSectionSemester::factory()->create();
 
         $this
             ->actingAs(Teacher::factory()->create())
-            ->get(route('semesters.courses.sections.index', [$courseSemester->semester, $courseSemester->course]))
+            ->get(route('semesters.courses.sections.index', [$courseSectionSemester->semester, $courseSectionSemester->courseSection->course]))
             ->assertForbidden();
     }
 
     /** @test */
     public function students_cannot_view_list_of_semester_courses()
     {
-        $courseSemester = CourseSemester::factory()->create();
+        $courseSectionSemester = CourseSectionSemester::factory()->create();
 
         $this
             ->actingAs(Student::factory()->create())
-            ->get(route('semesters.courses.sections.index', [$courseSemester->semester, $courseSemester->course]))
+            ->get(route('semesters.courses.sections.index', [$courseSectionSemester->semester, $courseSectionSemester->courseSection->course]))
             ->assertForbidden();
     }
 
     /** @test */
     public function show_returns_a_view()
     {
-        $section = CourseSection::factory()->create();
+        $courseSectionSemester = CourseSectionSemester::factory()->create();
 
         $this
             ->actingAs(Administrator::factory()->create())
-            ->get(route('semesters.courses.sections.show', [$section->courseSemester->semester, $section->courseSemester->course, $section]))
+            ->get(route('semesters.courses.sections.show', [
+                $courseSectionSemester->semester,
+                $courseSectionSemester->courseSection->course,
+                $courseSectionSemester->courseSection,
+            ]))
             ->assertSuccessful()
             ->assertViewIs('semesters.course-section-details')
-            ->assertViewHas('semester', $section->courseSemester->semester)
-            ->assertViewHas('course', $section->courseSemester->course)
-            ->assertViewHas('section', $section);
+            ->assertViewHas('semester', $courseSectionSemester->semester)
+            ->assertViewHas('course', $courseSectionSemester->courseSection->course)
+            ->assertViewHas('section', $courseSectionSemester->section);
     }
 
     /** @test */
     public function show_redirects_when_unauthenticated()
     {
-        $section = CourseSection::factory()->create();
+        $courseSectionSemester = CourseSectionSemester::factory()->create();
 
         $this
-            ->get(route('semesters.courses.sections.show', [$section->courseSemester->semester, $section->courseSemester->course, $section]))
+            ->get(route('semesters.courses.sections.show', [
+                $courseSectionSemester->semester,
+                $courseSectionSemester->courseSection->course,
+                $courseSectionSemester->courseSection,
+            ]))
             ->assertRedirect();
     }
 
     /** @test */
     public function teachers_cannot_view_semester_course_section_details_page()
     {
-        $section = CourseSection::factory()->create();
+        $courseSectionSemester = CourseSectionSemester::factory()->create();
 
         $this
             ->actingAs(Teacher::factory()->create())
-            ->get(route('semesters.courses.sections.show', [$section->courseSemester->semester, $section->courseSemester->course, $section]))
+            ->get(route('semesters.courses.sections.show', [
+                $courseSectionSemester->semester,
+                $courseSectionSemester->courseSection->course,
+                $courseSectionSemester->courseSection,
+            ]))
             ->assertForbidden();
     }
 
     /** @test */
     public function students_cannot_view_semester_course_section_details_page()
     {
-        $section = CourseSection::factory()->create();
+        $courseSectionSemester = CourseSectionSemester::factory()->create();
 
         $this
             ->actingAs(Student::factory()->create())
-            ->get(route('semesters.courses.sections.show', [$section->courseSemester->semester, $section->courseSemester->course, $section]))
+            ->get(route('semesters.courses.sections.show', [
+                $courseSectionSemester->semester,
+                $courseSectionSemester->courseSection->course,
+                $courseSectionSemester->courseSection,
+            ]))
             ->assertForbidden();
     }
 }

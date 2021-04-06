@@ -34,6 +34,16 @@ class CourseSection extends Model
     }
 
     /**
+     * Get the semesters of the course section.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function semesters()
+    {
+        return $this->belongsToMany(Semester::class);
+    }
+
+    /**
      * Get the teacher of the course section.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
