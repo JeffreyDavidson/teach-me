@@ -38,6 +38,6 @@ class Semester extends Model
      */
     public function courseSections()
     {
-        return $this->belongsToMany(CourseSection::class)->using(CourseSectionSeemster::class);
+        return $this->belongsToMany(CourseSection::class)->using(CourseSectionSemester::class);
     }
 }
