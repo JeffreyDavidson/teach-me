@@ -19,7 +19,8 @@
         "laravel/tinker": "^2.0",
         "livewire/livewire": "^2.3",
         "mad-web/laravel-enum": "^2.1",
-        "spatie/laravel-sluggable": "^3.0"
+        "spatie/laravel-sluggable": "^3.0",
+        "staudenmeir/eloquent-has-many-deep": "^1.7"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
