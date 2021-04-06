@@ -15,7 +15,7 @@ class CreateCourseSectionsTable extends Migration
     {
         Schema::create('course_sections', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_semester_id')->constrained('course_semester');
+            $table->foreignId('course_id')->constrained();
             $table->foreignId('teacher_id')->constrained('users');
             $table->enum('day', ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']);
             $table->time('start_time');

@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Http\Livewire\DataTable\WithPerPagePagination;
 use App\Http\Livewire\DataTable\WithSorting;
 use App\Models\CourseSection;
+use App\Models\CourseSectionSemester;
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
@@ -44,21 +45,21 @@ class SemesterCourseSectionStudentList extends Component
     ];
 
     /**
-     * Course to be used for gathering course sections.
+     * Course section semester to be used for gathering students.
      *
-     * @var App\Models\CourseSection
+     * @var App\Models\CourseSectionSemester
      */
-    public CourseSection $section;
+    public CourseSectionSemester $courseSectionSemester;
 
     /**
      * Apply properties to the instance.
      *
-     * @param  App\Models\Course $course
+     * @param  App\Models\CourseSectionSemester $courseSectionSemester
      * @return void
      */
-    public function mount(CourseSection $section)
+    public function mount(CourseSectionSemester $courseSectionSemester)
     {
-        $this->section = $section;
+        $this->courseSectionSemester = $courseSectionSemester;
     }
 
     /**
@@ -100,8 +101,8 @@ class SemesterCourseSectionStudentList extends Component
     public function getRowsQueryProperty()
     {
         $query = Student::query()
-            ->whereHas('courseSections', function (Builder $query) {
-                $query->where('course_section_id', $this->section->id);
+            ->whereHas('courseSectionSemesters', function (Builder $query) {
+                $query->where('section_semester_id', $this->courseSectionSemester->id);
             })
             ->when($this->filters['search'], function ($query, $search) {
                 $query->where('first_name', 'like', '%'.$search.'%')->orWhere('last_name', 'like', '%'.$search.'%');
