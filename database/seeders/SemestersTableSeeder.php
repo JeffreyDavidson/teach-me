@@ -2,14 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Course;
 use App\Models\CourseSection;
-use App\Models\CourseSemester;
+use App\Models\CourseSectionSemester;
 use App\Models\Semester;
 use App\Models\Student;
-use App\Models\Teacher;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Seeder;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
@@ -38,10 +35,17 @@ class SemestersTableSeeder extends Seeder
     protected function generateSemesters()
     {
         foreach ($this->generateSemesterNames() as $semesterName) {
-            $semester = Semester::factory()->create(['name' => $semesterName]);
-            $courses = Course::inRandomOrder()->take(5)->get();
+            $dates = $this->generateSemesterDates($semesterName);
 
-            $this->createCourseRequirements($semester, $courses);
+            $semester = Semester::factory()->create([
+                'name' => $semesterName,
+                'start_date' => $dates['startDate'],
+                'end_date' => $dates['endDate'],
+            ]);
+
+            foreach (CourseSection::all() as $courseSection) {
+                $this->createCourseSectionSemester($courseSection, $semester);
+            }
         }
     }
 
@@ -53,7 +57,11 @@ class SemestersTableSeeder extends Seeder
     protected function generateSemesterNames()
     {
         $seasons = ['Spring', 'Summer', 'Fall'];
-        $years = [date('Y'), date('Y', strtotime('-1 year')), date('Y', strtotime('-2 years'))];
+        $years = [
+            date('Y', strtotime('-2 years')),
+            date('Y', strtotime('-1 year')),
+            date('Y'),
+        ];
         $semesterNames = [];
 
         foreach ($years as $year) {
@@ -66,12 +74,12 @@ class SemestersTableSeeder extends Seeder
     }
 
     /**
-     * Creates dates for each course during the semester.
+     * Creates dates for each semester.
      *
      * @param  string $semesterName
      * @return array
      */
-    protected function generateCourseDates($semesterName)
+    protected function generateSemesterDates($semesterName)
     {
         $dates = [];
 
@@ -92,79 +100,59 @@ class SemestersTableSeeder extends Seeder
     }
 
     /**
-     * Create course requirements during a semester.
+     * Create a course section semester.
      *
+     * @param  \App\Models\CourseSection $courseSection
      * @param  \App\Models\Semester $semester
-     * @param  \App\Models\Course $course
      * @return void
      */
-    protected function createCourseRequirement($semester, $course)
+    protected function createCourseSectionSemester($courseSection, $semester)
     {
-        $courseDates = $this->generateCourseDates($semester->name);
+        $courseSectionDates = $this->generateCourseSectionSemesterDates($courseSection->day, $semester->start_date, $semester->end_date);
 
-        $courseSemester = $this->createCourseSemester($semester, $course, $courseDates['startDate'], $courseDates['endDate']);
-
-        $this->createCourseSection($courseSemester);
-    }
-
-    /**
-     * Create coure requirements for each course in a semester.
-     *
-     * @param  \App\Models\Semester $semester
-     * @param  \Illuminate\Database\Eloquent\Collection $courses
-     * @return void
-     */
-    protected function createCourseRequirements(Semester $semester, Collection $courses)
-    {
-        foreach ($courses as $course) {
-            $this->createCourseRequirement($semester, $course);
-        }
-    }
-
-    /**
-     * Create a course section for a course in a semester.
-     *
-     * @param  \App\Models\CourseSemester $courseSemester
-     * @return void
-     */
-    protected function createCourseSection(CourseSemester $courseSemester)
-    {
-        $courseSection = CourseSection::factory()->create([
-            'course_semester_id' => $courseSemester->id,
-            'teacher_id' => Teacher::inRandomOrder()->first()->id,
-            'day' => $this->faker->randomElement(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']),
-            'start_time' => $startTime = Carbon::parse($this->faker->time('H:00')),
-            'end_time' => $startTime->copy()->addHour(),
-        ]);
-
-        $this->addStudentsToCourseSection($courseSection);
-    }
-
-    /**
-     * Create a course semester.
-     *
-     * @param  \App\Models\Semester $semester
-     * @param  \App\Models\Course $course
-     * @param  string $startDate
-     * @param  string $endDate
-     * @return \App\Models\CourseSemester
-     */
-    protected function createCourseSemester($semester, $course, $startDate, $endDate)
-    {
-        return CourseSemester::factory()->create([
+        $courseSectionSemester = CourseSectionSemester::factory()->create([
+            'course_section_id' => $courseSection->id,
             'semester_id' => $semester->id,
-            'course_id' => $course->id,
-            'start_date' => $startDate,
-            'end_date' => $endDate,
+            'start_date' => $courseSectionDates['startDate'],
+            'end_date' => $courseSectionDates['endDate'],
         ]);
+
+        $this->addStudentsToCourseSectionSemester($courseSectionSemester);
     }
 
-    protected function addStudentsToCourseSection(CourseSection $courseSection)
+    /**
+     * Create course section semester dates from semester start dates.
+     *
+     * @param  string $dayOfTheWeek
+     * @param  string $semesteStartDate
+     * @param  string $semesterEndDate
+     * @return array
+     */
+    protected function generateCourseSectionSemesterDates($dayOfTheWeek, $semesteStartDate, $semesterEndDate)
+    {
+        $dates = [];
+        $dates['startDate'] = Carbon::parse($semesteStartDate)->is($dayOfTheWeek) ?
+            Carbon::parse($semesteStartDate) :
+            Carbon::parse($semesteStartDate)->next($dayOfTheWeek);
+        $dates['endDate'] = Carbon::parse($semesterEndDate)->is($dayOfTheWeek) ?
+            Carbon::parse($semesterEndDate) :
+            Carbon::parse($semesterEndDate)->previous($dayOfTheWeek);
+
+        return $dates;
+    }
+
+    /**
+     * Add students to a course section semester.
+     *
+     * @param  \App\Models\CourseSectionSemester $courseSectionSemester
+     * @return void
+     */
+    protected function addStudentsToCourseSectionSemester(CourseSectionSemester $courseSectionSemester)
     {
         $students = Student::inRandomOrder()->take(5)->get();
 
         foreach ($students as $student) {
-            $courseSection->students()->attach($student);
+            $courseSectionSemester->students()->attach($student);
         }
     }
 }
