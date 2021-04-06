@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class CourseSemester extends Pivot
+class CourseSectionSemester extends Pivot
 {
     use HasFactory;
 
@@ -27,12 +27,22 @@ class CourseSemester extends Pivot
     }
 
     /**
-     * Get the semester for the course sememester.
+     * Get the course section for the course semester.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function course()
+    public function courseSection()
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsTo(CourseSection::class);
+    }
+
+    /**
+     * Get the students of the course section.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'course_section_semester_student', 'section_semester_id', 'student_id')->withTimestamps();
     }
 }

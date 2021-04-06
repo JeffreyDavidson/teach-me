@@ -4,6 +4,7 @@ namespace Tests\Integration\Http\Livewire;
 
 use App\Http\Livewire\SemesterCourseList;
 use App\Models\Course;
+use App\Models\CourseSection;
 use App\Models\Semester;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -30,30 +31,50 @@ class SemesterCourseListTest extends TestCase
     }
 
     /** @test */
-    public function returns_only_courses_for_specific_semester()
+    public function returns_only_courses_taken_for_specific_semester()
     {
-        $semester = Semester::factory()->create();
-        $semesterCourse = Course::factory()->hasAttached($semester, ['start_date' => now(), 'end_date' => now()])->create();
-        $otherCourse = Course::factory()->create();
+        $philosophy = Course::factory()->create(['name' => 'Philosophy']);
+        $history = Course::factory()->create(['name' => 'History']);
+        $science = Course::factory()->create(['name' => 'Science']);
 
-        Livewire::test(SemesterCourseList::class, ['semester' => $semester])
-            ->assertSee($semesterCourse->name)
-            ->assertDontSee($otherCourse->name);
+        $courseSectionOne = CourseSection::factory()->create(['course_id' => $philosophy->id]);
+        $courseSectionTwo = CourseSection::factory()->create(['course_id' => $history->id]);
+
+        $semester = Semester::factory()
+                        ->hasAttached($courseSectionOne, ['start_date' => now(), 'end_date' => now()->addDay()])
+                        ->hasAttached($courseSectionTwo, ['start_date' => now(), 'end_date' => now()->addDay()])
+                        ->create();
+
+        Livewire::test(SemesterCourseList::class, [
+            'semester' => $semester,
+        ])
+            ->assertSee($philosophy->name)
+            ->assertSee($history->name)
+            ->assertDontSee($science->name);
     }
 
     /** @test */
-    public function filters_semester_courses_by_name()
+    public function filters_courses_sections_by_course_name()
     {
-        $semester = Semester::factory()->create();
-        $chemistry101Course = Course::factory()->hasAttached($semester, ['start_date' => now(), 'end_date' => now()])->create(['name' => 'Chemistry 101']);
-        $chemistry102Course = Course::factory()->hasAttached($semester, ['start_date' => now(), 'end_date' => now()])->create(['name' => 'Chemistry 102']);
-        $lawCourse = Course::factory()->hasAttached($semester, ['start_date' => now(), 'end_date' => now()])->create(['name' => 'Law']);
+        $philosophy101 = Course::factory()->create(['name' => 'Philosophy 101']);
+        $philosophy102 = Course::factory()->create(['name' => 'Philosophy 102']);
+        $science = Course::factory()->create(['name' => 'Science']);
 
-        Livewire::test(SemesterCourseList::class, ['semester' => $semester])
-            ->set('filters.search', 'Chemistry')
-            ->assertSee($chemistry101Course->name)
-            ->assertSee($chemistry102Course->name)
-            ->assertDontSee($lawCourse->name);
+        $courseSectionOne = CourseSection::factory()->create(['course_id' => $philosophy101->id]);
+        $courseSectionTwo = CourseSection::factory()->create(['course_id' => $philosophy102->id]);
+
+        $semester = Semester::factory()
+                        ->hasAttached($courseSectionOne, ['start_date' => now(), 'end_date' => now()->addDay()])
+                        ->hasAttached($courseSectionTwo, ['start_date' => now(), 'end_date' => now()->addDay()])
+                        ->create();
+
+        Livewire::test(SemesterCourseList::class, [
+            'semester' => $semester,
+        ])
+            ->set('filters.search', 'Philosophy')
+            ->assertSee($philosophy101->name)
+            ->assertSee($philosophy101->name)
+            ->assertDontSee($science->name);
     }
 
     /** @test */
@@ -67,7 +88,7 @@ class SemesterCourseListTest extends TestCase
     }
 
     /** @test */
-    public function restting_filters_make_keys_reset_to_default()
+    public function resetting_filters_make_keys_reset_to_default()
     {
         Livewire::test(SemesterCourseList::class)
                  ->set('filters.search', 'TestFilter')

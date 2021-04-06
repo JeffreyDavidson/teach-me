@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCourseSectionStudentTable extends Migration
+class CreateCourseSectionSemesterStudentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateCourseSectionStudentTable extends Migration
      */
     public function up()
     {
-        Schema::create('course_section_student', function (Blueprint $table) {
+        Schema::create('course_section_semester_student', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_section_id')->constrained();
+            $table->foreignId('section_semester_id')->constrained('course_section_semester');
             $table->foreignId('student_id')->constrained('users');
             $table->timestamps();
         });

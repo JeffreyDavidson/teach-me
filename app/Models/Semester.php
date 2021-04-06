@@ -45,20 +45,10 @@ class Semester extends Model
     /**
      * Get course sections for the semester.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function courseSections()
     {
-        return $this->hasMany(CourseSection::class);
-    }
-
-    /**
-     * Get courses offered for the semester.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function courses()
-    {
-        return $this->belongsToMany(Course::class)->withTimestamps();
+        return $this->belongsToMany(CourseSection::class)->using(CourseSectionSemester::class);
     }
 }

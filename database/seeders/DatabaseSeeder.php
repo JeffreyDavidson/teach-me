@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         Course::factory()->count(30)->create();
 
         $this->call([
+            CourseSectionsTableSeeder::class,
             SemestersTableSeeder::class,
         ]);
     }

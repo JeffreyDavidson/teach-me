@@ -11,12 +11,12 @@ class Student extends User
     use HasFactory, HasParent;
 
     /**
-     * Get the course sections of the student.
+     * Get the course sections semesters of the student.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function courseSections()
+    public function courseSectionSemesters()
     {
-        return $this->belongsToMany(CourseSection::class, 'course_section_student', 'student_id');
+        return $this->belongsToMany(CourseSectionSemester::class, 'course_section_semester_student', 'student_id', 'section_semester_id');
     }
 }

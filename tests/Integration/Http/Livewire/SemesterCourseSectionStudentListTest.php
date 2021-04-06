@@ -3,7 +3,7 @@
 namespace Tests\Integration\Http\Livewire;
 
 use App\Http\Livewire\SemesterCourseSectionStudentList;
-use App\Models\CourseSection;
+use App\Models\CourseSectionSemester;
 use App\Models\Student;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -32,13 +32,15 @@ class SemesterCourseSectionStudentListTest extends TestCase
     /** @test */
     public function returns_only_students_specific_to_course_section()
     {
-        $courseSection = CourseSection::factory()->create();
-        $johnSmith = Student::factory()->hasAttached($courseSection)->create(['first_name' => 'John', 'last_name' => 'Smith']);
-        $johnWilliams = Student::factory()->hasAttached($courseSection)->create(['first_name' => 'John', 'last_name' => 'Williams']);
+        $courseSectionSemester = CourseSectionSemester::factory()
+                                    ->hasAttached($johnSmith = Student::factory()->create(['first_name' => 'John', 'last_name' => 'Smith']))
+                                    ->hasAttached($johnWilliams = Student::factory()->create(['first_name' => 'John', 'last_name' => 'Williams']))
+                                    ->create();
+
         $maryWilliams = Student::factory()->create(['first_name' => 'Mary', 'last_name' => 'Williams']);
 
         Livewire::test(SemesterCourseSectionStudentList::class, [
-            'section' => $courseSection,
+            'courseSectionSemester' => $courseSectionSemester,
         ])
             ->assertSee($johnSmith->full_name_listing)
             ->assertSee($johnWilliams->full_name_listing)
@@ -48,13 +50,15 @@ class SemesterCourseSectionStudentListTest extends TestCase
     /** @test */
     public function filters_students_by_name()
     {
-        $courseSection = CourseSection::factory()->create();
-        $johnSmith = Student::factory()->hasAttached($courseSection)->create(['first_name' => 'John', 'last_name' => 'Smith']);
-        $johnWilliams = Student::factory()->hasAttached($courseSection)->create(['first_name' => 'John', 'last_name' => 'Williams']);
+        $courseSectionSemester = CourseSectionSemester::factory()
+                                    ->hasAttached($johnSmith = Student::factory()->create(['first_name' => 'John', 'last_name' => 'Smith']))
+                                    ->hasAttached($johnWilliams = Student::factory()->create(['first_name' => 'John', 'last_name' => 'Williams']))
+                                    ->create();
+
         $maryWilliams = Student::factory()->create(['first_name' => 'Mary', 'last_name' => 'Williams']);
 
         Livewire::test(SemesterCourseSectionStudentList::class, [
-            'section' => $courseSection,
+            'courseSectionSemester' => $courseSectionSemester,
         ])
             ->set('filters.search', 'John')
             ->assertSee($johnSmith->full_name_listing)

@@ -3,8 +3,8 @@
 namespace Tests\Integration\Http\Livewire;
 
 use App\Http\Livewire\SemesterCourseSectionsList;
+use App\Models\Course;
 use App\Models\CourseSection;
-use App\Models\CourseSemester;
 use App\Models\Semester;
 use App\Models\Teacher;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -32,34 +32,58 @@ class SemesterCourseSectionsListTest extends TestCase
     }
 
     /** @test */
-    public function returns_only_courses_sections_specific_to_semester_course()
+    public function returns_only_course_sections_specific_to_semester_course()
     {
-        $courseSemester = CourseSemester::factory()->create();
-        $courseSectionOne = CourseSection::factory()->create(['course_semester_id' => $courseSemester->id, 'start_time' => '07:00']);
-        $courseSectionTwo = CourseSection::factory()->create(['start_time' => '08:00']);
+        $course = Course::factory()->create();
+        $semester = Semester::factory()
+                    ->hasAttached(
+                        $courseSectionOne = CourseSection::factory()->create(['course_id' => $course->id, 'day' => 'Tuesday', 'start_time' => '07:00']),
+                        ['start_date' => now(), 'end_date' => now()->addDay()]
+                    )
+                    ->hasAttached(
+                        $courseSectionTwo = CourseSection::factory()->create(['course_id' => $course->id, 'day' => 'Tuesday', 'start_time' => '10:00']),
+                        ['start_date' => now(), 'end_date' => now()->addDay()]
+                    )
+                    ->create();
+
+        $courseSectionTwo = CourseSection::factory()->create(['course_id' => $course->id, 'day' => 'Friday', 'start_time' => '09:00']);
 
         Livewire::test(SemesterCourseSectionsList::class, [
-            'semester' => $courseSemester->semester,
-            'course' => $courseSemester->course,
+            'semester' => $semester,
+            'course' => $course,
         ])
             ->assertSee($courseSectionOne->start_time)
             ->assertDontSee($courseSectionTwo->start_time);
     }
 
     /** @test */
-    public function filters_courses_sections_by_teacher_name()
+    public function filters_courses_semester_sections_by_teacher_name()
     {
-        $courseSemester = CourseSemester::factory()->create();
+        $course = Course::factory()->create();
         $johnSmith = Teacher::factory()->create(['first_name' => 'John', 'last_name' => 'Smith']);
         $johnWilliams = Teacher::factory()->create(['first_name' => 'John', 'last_name' => 'Williams']);
         $maryWilliams = Teacher::factory()->create(['first_name' => 'Mary', 'last_name' => 'Williams']);
-        CourseSection::factory()->create(['course_semester_id' => $courseSemester->id, 'teacher_id' => $johnSmith->id]);
-        CourseSection::factory()->create(['course_semester_id' => $courseSemester->id, 'teacher_id' => $johnWilliams->id]);
-        CourseSection::factory()->create(['course_semester_id' => $courseSemester->id, 'teacher_id' => $maryWilliams->id]);
+        $semester = Semester::factory()
+                    ->hasAttached(
+                        CourseSection::factory()
+                            ->create(['course_id' => $course->id, 'day' => 'Tuesday', 'teacher_id' => $johnSmith->id]),
+                        ['start_date' => now(), 'end_date' => now()->addDay()]
+                    )
+                    ->hasAttached(
+                        CourseSection::factory()
+                            ->create(['course_id' => $course->id, 'day' => 'Tuesday', 'teacher_id' => $johnWilliams->id]),
+                        ['start_date' => now(), 'end_date' => now()->addDay()]
+                    )
+                    ->hasAttached(
+                        CourseSection::factory()
+                            ->create(['course_id' => $course->id, 'day' => 'Tuesday', 'teacher_id' => $maryWilliams->id]),
+                        ['start_date' => now(), 'end_date' => now()->addDay()]
+                    )
+                    ->create();
 
         Livewire::test(SemesterCourseSectionsList::class, [
-            'semester' => $courseSemester->semester,
-            'course' => $courseSemester->course,
+            'semester' => $semester,
+            'course' => $course,
         ])
             ->set('filters.search', 'John')
             ->assertSee($johnSmith->full_name)
