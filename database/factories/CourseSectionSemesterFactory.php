@@ -24,18 +24,11 @@ class CourseSectionSemesterFactory extends Factory
      */
     public function definition()
     {
-        $courseSection = CourseSection::factory()->create();
-        $semester = Semester::factory()->create();
-
         return [
-            'course_section_id' => $courseSection->id,
-            'semester_id' => $semester->id,
-            'start_date' => Carbon::parse($semester->start_date)->is($courseSection->day) ?
-                Carbon::parse($semester->start_date) :
-                Carbon::parse($semester->start_date)->next($courseSection->day),
-            'end_date' => Carbon::parse($semester->end_date)->is($courseSection->day) ?
-                Carbon::parse($semester->end_date) :
-                Carbon::parse($semester->end_date)->previous($courseSection->day),
+            'course_section_id' => CourseSection::factory(),
+            'semester_id' => Semester::factory(),
+            'start_date' => today(),
+            'end_date' => today()->addDay(),
         ];
     }
 }
