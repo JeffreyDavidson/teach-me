@@ -76,7 +76,9 @@ class SemestersControllerTest extends TestCase
             ->actingAs(Administrator::factory()->create())
             ->get(route('semesters.create'))
             ->assertSuccessful()
-            ->assertViewIs('semesters.create');
+            ->assertViewIs('semesters.create')
+            ->assertViewHas('semester')
+            ->assertViewHas('courses');
     }
 
     /** @test */

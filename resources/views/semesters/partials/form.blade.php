@@ -1,5 +1,35 @@
 <div>
-    <x-input.group label="Name" for="name" :error="$errors->first('name')">
-        <x-input.text id="name" placeholder="Enter name" name="name" value="{{ old('name', $semester->exists ? $semester->name : null) }}" />
+    <div class="row">
+        <div class="col-md-6">
+            <x-input.group label="Term" for="term" :error="$errors->first('term')">
+                <x-input.select id="term" name="term" :options="$terms" />
+            </x-input.group>
+        </div>
+        <div class="col-md-6">
+            <x-input.group label="Year" for="year" :error="$errors->first('year')">
+                <x-input.number id="year" name="year" />
+            </x-input.group>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <x-input.group label="Start Date" for="start_date" :error="$errors->first('start_date')">
+                <x-input.date id="example-date-input" placeholder="" name="start_date" value="{{ old('start_date', $semester->exists ? $semester->start_date : today()->format('Y-m-d')) }}" />
+            </x-input.group>
+        </div>
+        <div class="col-md-6">
+            <x-input.group label="End Date" for="end_date" :error="$errors->first('end_date')">
+                <x-input.date id="example-date-input" placeholder="" name="end_date" value="{{ old('end_date', $semester->exists ? $semester->end_date : today()->format('Y-m-d')) }}" />
+            </x-input.group>
+        </div>
+    </div>
+
+    <x-input.group label="Make Default Semester Courses" for="default" :error="$errors->first('default')">
+        <x-input.checkbox id="default" name="default" label="Yes" value="{{ old('default', $semester->exists ? $semester->is_default : null) }}" />
+    </x-input.group>
+
+    <x-input.group label="Courses" for="kt_dual_listbox_1" :error="$errors->first('courses')">
+        <x-input.dual-listbox id="kt_dual_listbox_1" name="courses" class="dual-listbox" :options="$courses" />
     </x-input.group>
 </div>

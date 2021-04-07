@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateSemesterRequest;
+use App\Models\Course;
 use App\Models\Semester;
 use App\Services\SemesterService;
 
@@ -30,7 +31,20 @@ class SemestersController extends Controller
     {
         $this->authorize('create', Semester::class);
 
-        return view('semesters.create', compact('semester'));
+        $terms = collect([
+            ['label' => 'Please choose a company', 'value' => '0'],
+            ['label' => 'Spring', 'value' => 'Spring'],
+            ['label' => 'Summer', 'value' => 'Summer'],
+            ['label' => 'Fall', 'value' => 'Fall'],
+        ])->toArray();
+
+        // dd($terms);
+
+        return view('semesters.create', [
+            'semester' => $semester,
+            'terms' => $terms,
+            'courses' => Course::allForDropdown(),
+        ]);
     }
 
     /**
