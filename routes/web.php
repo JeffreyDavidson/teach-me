@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\CoursesController;
-use App\Http\Controllers\CourseSectionsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SemesterCoursesController;
 use App\Http\Controllers\SemesterCourseSectionsController;
