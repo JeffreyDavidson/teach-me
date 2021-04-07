@@ -14,22 +14,7 @@
         </x-subheader>
     </x-slot>
 
-    <!--begin::Card-->
-    <div class="card card-custom">
-        <!--begin::Header-->
-        <div class="card-header">
-            <div class="card-title">
-                <h3 class="card-label">Course Sections List</h3>
-            </div>
-        </div>
-        <!--end::Header-->
-        <!--begin::Body-->
-        <div class="card-body">
-            <!--begin: Datatable-->
-            <livewire:semester-course-sections-list :semester="$semester" :course="$course" />
-            <!--end: Datatable-->
-        </div>
-        <!--end::Body-->
-    </div>
-    <!--end::Card-->
+    <x-card title="Course Sections List">
+        <livewire:semester-course-sections-list :semester="$semester" :course="$course" />
+    </x-card>
 </x-layout>

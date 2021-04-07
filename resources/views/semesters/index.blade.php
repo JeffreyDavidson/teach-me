@@ -10,24 +10,7 @@
         </x-subheader>
     </x-slot>
 
-    <!--begin::Card-->
-    <div class="card card-custom">
-        <!--begin::Header-->
-        <div class="card-header">
-            <div class="card-title">
-                <h3 class="card-label">Semester List
-            </div>
-            <div class="card-toolbar">
-            </div>
-        </div>
-        <!--end::Header-->
-        <!--begin::Body-->
-        <div class="card-body">
-            <!--begin: Datatable-->
-            <livewire:semesters-list />
-            <!--end: Datatable-->
-        </div>
-        <!--end::Body-->
-    </div>
-    <!--end::Card-->
+    <x-card title="Semester List">
+        <livewire:semesters-list />
+    </x-card>
 </x-layout>
