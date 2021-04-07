@@ -15,7 +15,6 @@
         @csrf
         <x-card hasFooter title="Add Course Form">
             @include('courses.partials.form')
-
             <x-slot name="footer">
                 <button type="submit" class="btn btn-primary font-weight-bold">Submit</button>
                 <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
