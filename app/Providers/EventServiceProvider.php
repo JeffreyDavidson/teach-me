@@ -30,9 +30,6 @@ class EventServiceProvider extends ServiceProvider
         StudentCreated::class => [
             SendStudentWelcomeEmail::class,
         ],
-        SemesterCreated::class => [
-            GenerateSemesterSchedule::class,
-        ],
     ];
 
     /**
