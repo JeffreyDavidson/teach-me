@@ -67,7 +67,7 @@ class Course extends Model
         return static::orderBy('name')->get()->map(function ($course) {
             return [
                 'label' => $course->name,
-                'value' => $course->name,
+                'value' => $course->id,
             ];
         });
     }
