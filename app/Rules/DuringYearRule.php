@@ -41,7 +41,7 @@ class DuringYearRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        return Carbon::parse($value)->year === $this->year;
+        return Carbon::parse($value)->year == $this->year;
     }
 
     /**
