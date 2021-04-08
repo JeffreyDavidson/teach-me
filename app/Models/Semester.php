@@ -49,6 +49,6 @@ class Semester extends Model
      */
     public function courseSections()
     {
-        return $this->belongsToMany(CourseSection::class)->using(CourseSectionSemester::class);
+        return $this->belongsToMany(CourseSection::class)->using(CourseSectionSemester::class)->withTimestamps();
     }
 }
