@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Semester;
+use App\Rules\DuringYearRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -28,8 +29,10 @@ class CreateSemesterRequest extends FormRequest
         return [
             'term' => ['required', 'string', Rule::in(['Spring', 'Summer', 'Fall'])],
             'year' => ['required', 'numeric', 'digits:4'],
-            'start_date' => ['required', 'date', 'before:end_date', 'during_year:'.$this->input('year')],
+            'start_date' => ['required', 'date', 'before:end_date', new DuringYearRule($this->input('year'))],
             'end_date' => ['required', 'date'],
+            'default' => ['boolean'],
+            'courses' => ['required_if:default,1', 'array'],
         ];
     }
 
@@ -42,5 +45,17 @@ class CreateSemesterRequest extends FormRequest
                 $validator->errors()->add('term', 'There is already a '.$concatenatedName.' semester.');
             }
         });
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'start_date' => 'start date',
+        ];
     }
 }
