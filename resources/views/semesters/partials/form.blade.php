@@ -29,7 +29,7 @@
         <x-input.checkbox id="default" name="default" label="Yes" />
     </x-input.group>
 
-    <x-input.group label="Courses" for="kt_dual_listbox_1" :error="$errors->first('courses')">
-        <x-input.dual-listbox id="kt_dual_listbox_1" name="courses[]" class="dual-listbox" :options="$courses" multiple />
+    <x-input.group label="Courses" for="courses_listbox" :error="$errors->first('courses')">
+        <x-input.dual-listbox id="courses_listbox" name="courses[]" class="dual-listbox" :options="$courses" :selectedOptions="old('courses', $semester->courses ? $semester->courses : [])" multiple />
     </x-input.group>
 </div>

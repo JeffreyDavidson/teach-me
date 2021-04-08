@@ -93,9 +93,9 @@
         // Class definition
         var KTDualListbox = function() {
             // Private functions
-            var demo1 = function () {
+            var coursesListBox = function () {
                 // Dual Listbox
-                var _this = document.getElementById('kt_dual_listbox_1');
+                var _this = document.getElementById('courses_listbox');
 
                 // init dual listbox
                 var dualListBox = new DualListbox(_this, {
@@ -105,24 +105,24 @@
                     removeEvent: function (value) {
                         console.log(value);
                     },
-                    availableTitle: 'Available options',
-                    selectedTitle: 'Selected options',
+                    availableTitle: 'Available courses',
+                    selectedTitle: 'Selected courses',
                     addButtonText: 'Add',
                     removeButtonText: 'Remove',
                     addAllButtonText: 'Add All',
-                    removeAllButtonText: 'Remove All'
+                    removeAllButtonText: 'Remove All',
                 });
             };
 
             return {
                 // public functions
                 init: function() {
-                    demo1();
+                    coursesListBox();
                 },
             };
         }();
 
-        jQuery(document).ready(function() {
+        window.addEventListener('load', function(){
             KTDualListbox.init();
         });
         </script>
