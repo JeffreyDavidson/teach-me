@@ -31,18 +31,26 @@ class SemestersController extends Controller
     {
         $this->authorize('create', Semester::class);
 
-        $terms = collect([
-            ['label' => 'Please choose a company', 'value' => '0'],
-            ['label' => 'Spring', 'value' => 'Spring'],
-            ['label' => 'Summer', 'value' => 'Summer'],
-            ['label' => 'Fall', 'value' => 'Fall'],
-        ])->toArray();
+        $terms = [
+            '0' => 'Please choose a term',
+            'Spring' => 'Spring',
+            'Summer' => 'Summer',
+            'Fall' => 'Fall',
+        ];
 
-        // dd($terms);
+        $years = [
+            '0' => 'Please choose a year',
+            '2021' => '2021',
+            '2022' => '2022',
+            '2023' => '2023',
+            '2024' => '2024',
+            '2025' => '2025',
+        ];
 
         return view('semesters.create', [
             'semester' => $semester,
             'terms' => $terms,
+            'years' => $years,
             'courses' => Course::allForDropdown(),
         ]);
     }
