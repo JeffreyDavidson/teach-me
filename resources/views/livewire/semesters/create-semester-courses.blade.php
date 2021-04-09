@@ -15,7 +15,7 @@
             name="courses[]"
             class="dual-listbox"
             :options="$courses"
-            :selectedOptions="old('courses', $semester->courses ? $semester->courses : $courses)"
+            :selectedOptions="$selectedCourses"
             multiple
         />
     </x-input.group>
