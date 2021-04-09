@@ -3,7 +3,6 @@
         <x-input.select
             id="default"
             wire:model="default"
-            name="default"
             :options="$semesters"
             selectedOption="{{ old('default', $semester->exists ? $semester->default : '')  }}"
         />

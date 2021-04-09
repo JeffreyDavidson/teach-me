@@ -31,7 +31,6 @@ class CreateSemesterRequest extends FormRequest
             'year' => ['required', 'numeric', 'digits:4'],
             'start_date' => ['required', 'date', 'before:end_date', new DuringYearRule($this->input('year'))],
             'end_date' => ['required', 'date'],
-            'default' => ['boolean'],
             'courses' => ['required', 'array', 'min:1'],
             'courses.*' => ['integer', 'min:1', 'distinct'],
         ];
