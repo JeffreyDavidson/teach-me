@@ -19,7 +19,6 @@ class CreateSemestersTable extends Migration
             $table->string('slug')->unique();
             $table->date('start_date');
             $table->date('end_date');
-            $table->boolean('is_default')->default(false);
             $table->timestamps();
         });
     }
