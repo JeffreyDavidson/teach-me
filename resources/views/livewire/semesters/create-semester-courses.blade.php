@@ -1,10 +1,10 @@
 <div>
-    <x-input.group label="Make Duplicate Of" for="duplicate" :error="$errors->first('duplicate')">
+    <x-input.group label="Make Duplicate Of" for="semesterIdToDuplicate" :error="$errors->first('duplicate')">
         <x-input.select
-            id="default"
+            id="semesterIdToDuplicate"
             wire:model="default"
             :options="$semesters"
-            selectedOption="{{ old('default', $semester->exists ? $semester->default : '')  }}"
+            selectedOption="{{ old('semesterIdToDuplicate', $semester->exists ? $semester->default : '')  }}"
         />
     </x-input.group>
 
