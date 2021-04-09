@@ -24,6 +24,15 @@ class SemestersViewsTest extends TestCase
     }
 
     /** @test */
+    public function semesters_create_uses_semesters_list_livewire_component()
+    {
+        $this
+            ->actingAs(Administrator::factory()->create())
+            ->get(route('semesters.create'))
+            ->assertSeeLivewire('create-semester-courses');
+    }
+
+    /** @test */
     public function semester_course_section_student_list_uses_semester_course_section_student_list_livewire_component()
     {
         $courseSectionSemester = CourseSectionSemester::factory()->create();
