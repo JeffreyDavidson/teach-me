@@ -15,7 +15,9 @@ class CreateSemesterCourses extends Component
     public function mount(Semester $semester)
     {
         $this->semester = $semester;
-        $this->courses = Course::allForDropdown()->prepend(['label' => 'Please choose a course', 'value' => 0]);
+        $this->courses = Course::allForDropdown()
+                            ->prepend(['label' => 'Please choose a course', 'value' => 0])
+                            ->toArray();
     }
 
     /**
