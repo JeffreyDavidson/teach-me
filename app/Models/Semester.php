@@ -11,6 +11,12 @@ class Semester extends Model
 {
     use HasFactory, HasSlug;
 
+    public static $terms = [
+        'Spring',
+        'Summer',
+        'Fall',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *

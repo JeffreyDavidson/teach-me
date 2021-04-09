@@ -24,7 +24,10 @@
             @csrf
             <!--begin::Body-->
             <div class="card-body">
-                @include('semesters.partials.form')
+                @include('semesters.partials.form', [
+                    'terms' => ['Please Choose a Term'] + array_combine(App\Models\Semester::$terms, App\Models\Semester::$terms),
+                    'years' => ['Please Choose A Year'] + array_combine($years = range(now()->year, now()->year + 5), $years)
+                ])
             </div>
             <!--end::Body-->
             <!--begin::Footer-->
