@@ -25,11 +25,5 @@
         </div>
     </div>
 
-    <x-input.group label="Make Default Semester Courses" for="default" :error="$errors->first('default')">
-        <x-input.checkbox id="default" name="default" label="Yes" />
-    </x-input.group>
-
-    <x-input.group label="Courses" for="courses_listbox" :error="$errors->first('courses')">
-        <x-input.dual-listbox id="courses_listbox" name="courses[]" class="dual-listbox" :options="$courses" :selectedOptions="old('courses', $semester->courses ? $semester->courses : [])" multiple />
-    </x-input.group>
+    <livewire:create-semester-courses :semester="$semester" />
 </div>

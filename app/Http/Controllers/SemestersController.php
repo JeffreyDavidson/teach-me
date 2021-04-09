@@ -51,7 +51,6 @@ class SemestersController extends Controller
             'semester' => $semester,
             'terms' => $terms,
             'years' => $years,
-            'courses' => Course::allForDropdown(),
         ]);
     }
 
