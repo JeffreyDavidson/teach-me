@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use App\Http\Controllers\SemestersController;
 use App\Http\Requests\CreateSemesterRequest;
 use App\Models\Administrator;
+use App\Models\Course;
 use App\Models\Student;
 use App\Models\Teacher;
 use Carbon\Carbon;
@@ -19,17 +20,21 @@ class SemestersControllerTest extends TestCase
 
     private $attributes;
 
+    private $courses;
+
     protected function setUp(): void
     {
         parent::setUp();
 
         $date = Carbon::parse('January 1, 2020');
+        $this->courses = Course::factory()->count(2)->create();
 
         $this->attributes = [
             'term' => 'Fall',
             'year' => $date->year,
             'start_date' => $date->toDateString(),
             'end_date' => $date->addMonths(3)->toDateString(),
+            'courses' => $this->courses->pluck('id')->toArray(),
         ];
     }
 
@@ -77,8 +82,7 @@ class SemestersControllerTest extends TestCase
             ->get(route('semesters.create'))
             ->assertSuccessful()
             ->assertViewIs('semesters.create')
-            ->assertViewHas('semester')
-            ->assertViewHas('courses');
+            ->assertViewHas('semester');
     }
 
     /** @test */
@@ -110,15 +114,18 @@ class SemestersControllerTest extends TestCase
     /** @test */
     public function store_creates_a_semester_and_redirects()
     {
-        data_set($this->attributes, 'term', 'Fall');
-        data_set($this->attributes, 'year', 2020);
-
         $this
             ->actingAs(Administrator::factory()->create())
-            ->post(route('semesters.store'), $this->attributes)
+            ->post(route('semesters.store'), [
+                'term' => 'Fall',
+                'year' => 2021,
+                'start_date' => '2021-08-04',
+                'end_date' => '2022-01-03',
+                'courses' => $this->courses->pluck('id')->toArray(),
+            ])
             ->assertRedirect(route('semesters.index'));
 
-        $this->assertDatabaseHas('semesters', ['name' => 'Fall 2020']);
+        $this->assertDatabaseHas('semesters', ['name' => 'Fall 2021', 'start_date' => '2021-08-04', 'end_date' => '2022-01-03']);
     }
 
     /** @test */
