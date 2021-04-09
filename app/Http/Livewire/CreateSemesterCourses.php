@@ -12,12 +12,14 @@ class CreateSemesterCourses extends Component
 
     public $courses;
 
+    public $default;
+
+    public $selectedCourses;
+
     public function mount(Semester $semester)
     {
         $this->semester = $semester;
-        $this->courses = Course::allForDropdown()
-                            ->prepend(['label' => 'Please choose a course', 'value' => 0])
-                            ->toArray();
+        $this->courses = Course::allForDropdown()->toArray();
     }
 
     /**
@@ -28,7 +30,7 @@ class CreateSemesterCourses extends Component
     public function render()
     {
         return view('livewire.semesters.create-semester-courses', [
-            'semesters' => Semester::orderBy('start_date')->pluck('name', 'id'),
+            'semesters' => Semester::orderBy('start_date')->pluck('name', 'id')->prepend('Please choose a semester', '0'),
             'semester' => $this->semester,
             'courses' => $this->courses,
         ]);
@@ -36,6 +38,12 @@ class CreateSemesterCourses extends Component
 
     public function updatedDefault($value)
     {
+        if ($value == 0) {
+            $this->dispatchBrowserEvent('livewire:load');
+
+            return $this->selectedCourses = [];
+        }
+
         $duplicateSemester = Semester::find($value);
 
         $courses = $duplicateSemester->courseSections->map(function ($section) {
@@ -46,11 +54,15 @@ class CreateSemesterCourses extends Component
             return $course->name;
         });
 
-        $this->courses = $uniqueCourses->map(function ($course) {
+        $uniqueCourses->map(function ($course) {
             return [
                 'label' => $course->name,
                 'value' => $course->id,
             ];
         })->toArray();
+
+        $this->selectedCourses = $uniqueCourses->pluck('id')->toArray();
+
+        $this->dispatchBrowserEvent('livewire:load');
     }
 }
