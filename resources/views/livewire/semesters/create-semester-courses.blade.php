@@ -12,7 +12,6 @@
     <x-input.group label="Courses" for="courses_listbox" :error="$errors->first('courses')">
         <x-input.dual-listbox
             id="courses_listbox"
-            wire:model="courses"
             name="courses[]"
             class="dual-listbox"
             :options="$courses"
