@@ -34,7 +34,7 @@ class CreateSemesterCourses extends Component
         ]);
     }
 
-    public function changeEvent($value)
+    public function updatedDefault($value)
     {
         $duplicateSemester = Semester::find($value);
 
@@ -46,6 +46,11 @@ class CreateSemesterCourses extends Component
             return $course->name;
         });
 
-        $this->courses = $uniqueCourses;
+        $this->courses = $uniqueCourses->map(function ($course) {
+            return [
+                'label' => $course->name,
+                'value' => $course->id,
+            ];
+        })->toArray();
     }
 }
