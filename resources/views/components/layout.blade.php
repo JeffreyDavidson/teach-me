@@ -89,44 +89,8 @@
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('plugins/global/plugins.bundle.js') }}"></script>
         <script src="{{ asset('js/scripts.bundle.js') }}"></script>
-        <script>
-        // Class definition
-        var KTDualListbox = function() {
-            // Private functions
-            var coursesListBox = function () {
-                // Dual Listbox
-                var _this = document.getElementById('courses_listbox');
-
-                // init dual listbox
-                var dualListBox = new DualListbox(_this, {
-                    addEvent: function (value) {
-                        console.log(value);
-                    },
-                    removeEvent: function (value) {
-                        console.log(value);
-                    },
-                    availableTitle: 'Available courses',
-                    selectedTitle: 'Selected courses',
-                    addButtonText: 'Add',
-                    removeButtonText: 'Remove',
-                    addAllButtonText: 'Add All',
-                    removeAllButtonText: 'Remove All',
-                });
-            };
-
-            return {
-                // public functions
-                init: function() {
-                    coursesListBox();
-                },
-            };
-        }();
-
-        window.addEventListener('load', function(){
-            KTDualListbox.init();
-        });
-        </script>
         @livewireScripts
+        @stack('scripts')
     </body>
     <!--end::Body-->
 </html>
