@@ -8,14 +8,38 @@ use Livewire\Component;
 
 class CreateSemesterCourses extends Component
 {
+    /**
+     *  @var App\Models\Semester
+     */
     public Semester $semester;
 
+    /**
+     * List of all courses.
+     *
+     * @var [type]
+     */
     public $courses;
 
-    public $default;
+    /**
+     * Semester that will duplicated.
+     *
+     * @var int
+     */
+    public $semesterIdToDuplicate;
 
+    /**
+     * List of courses of semester to duplicate.
+     *
+     * @var array
+     */
     public $selectedCourses;
 
+    /**
+     * Apply properties to the instance.
+     *
+     * @param  App\Models\Semester $semester
+     * @return void
+     */
     public function mount(Semester $semester)
     {
         $this->semester = $semester;
@@ -36,7 +60,13 @@ class CreateSemesterCourses extends Component
         ]);
     }
 
-    public function updatedDefault($value)
+    /**
+     * Updates selected courses of semester to duplicate.
+     *
+     * @param  int $value
+     * @return array
+     */
+    public function updatedSemesterIdToDuplicate($value)
     {
         if ($value == 0) {
             $this->dispatchBrowserEvent('livewire:load');
