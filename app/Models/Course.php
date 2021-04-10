@@ -61,4 +61,14 @@ class Course extends Model
     {
         return $this->belongsToMany(Semester::class)->withTimestamps()->withPivot(['start_date', 'end_date']);
     }
+
+    public static function allForDropdown()
+    {
+        return static::orderBy('name')->get()->map(function ($course) {
+            return [
+                'label' => $course->name,
+                'value' => $course->id,
+            ];
+        });
+    }
 }

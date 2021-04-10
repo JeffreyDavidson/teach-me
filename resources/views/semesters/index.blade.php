@@ -11,6 +11,9 @@
     </x-slot>
 
     <x-card title="Semester List">
+        <x-slot name="toolbar">
+            <a class="btn btn-primary font-weight-bolder" href="{{ route('semesters.create') }}">New Record</a>
+        </x-slot>
         <livewire:semesters-list />
     </x-card>
 </x-layout>

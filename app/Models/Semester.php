@@ -11,6 +11,23 @@ class Semester extends Model
 {
     use HasFactory, HasSlug;
 
+    public static $terms = [
+        'Spring',
+        'Summer',
+        'Fall',
+    ];
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'start_date',
+        'end_date',
+    ];
+
     /**
      * Get the route key for the model.
      *
@@ -38,6 +55,6 @@ class Semester extends Model
      */
     public function courseSections()
     {
-        return $this->belongsToMany(CourseSection::class)->using(CourseSectionSemester::class);
+        return $this->belongsToMany(CourseSection::class)->using(CourseSectionSemester::class)->withTimestamps();
     }
 }
