@@ -6,6 +6,7 @@ use App\Http\Controllers\SemestersController;
 use App\Http\Requests\CreateSemesterRequest;
 use App\Models\Administrator;
 use App\Models\Course;
+use App\Models\Semester;
 use App\Models\Student;
 use App\Models\Teacher;
 use Carbon\Carbon;
@@ -158,5 +159,50 @@ class SemestersControllerTest extends TestCase
     public function store_uses_form_request()
     {
         $this->assertActionUsesFormRequest(SemestersController::class, 'store', CreateSemesterRequest::class);
+    }
+
+    /** @test */
+    public function edit_returns_a_view()
+    {
+        $semester = Semester::factory()->create();
+
+        $this
+            ->actingAs(Administrator::factory()->create())
+            ->get(route('semesters.edit', $semester))
+            ->assertSuccessful()
+            ->assertViewIs('semesters.edit')
+            ->assertViewHas('semester', $semester);
+    }
+
+    /** @test */
+    public function edit_redirects_when_unauthenticated()
+    {
+        $semester = Semester::factory()->create();
+
+        $this
+            ->get(route('semesters.edit', $semester))
+            ->assertRedirect();
+    }
+
+    /** @test */
+    public function teachers_cannot_edit_semesters()
+    {
+        $semester = Semester::factory()->create();
+
+        $this
+            ->actingAs(Teacher::factory()->create())
+            ->get(route('semesters.edit', $semester))
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function students_cannot_edit_semesters()
+    {
+        $semester = Semester::factory()->create();
+
+        $this
+            ->actingAs(Student::factory()->create())
+            ->get(route('semesters.edit', $semester))
+            ->assertForbidden();
     }
 }

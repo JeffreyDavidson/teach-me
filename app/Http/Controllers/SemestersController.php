@@ -49,4 +49,17 @@ class SemestersController extends Controller
 
         return redirect()->route('semesters.index');
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  App\Models\Semester
+     * @return \Illuminate\View\View
+     */
+    public function edit(Semester $semester)
+    {
+        $this->authorize('update', $semester);
+
+        return view('semesters.edit', compact('semester'));
+    }
 }
