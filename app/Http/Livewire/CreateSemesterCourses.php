@@ -8,6 +8,8 @@ use Livewire\Component;
 
 class CreateSemesterCourses extends Component
 {
+    protected $listeners = ['courseRemoved' => 'countRemainingCourses'];
+
     /**
      *  @var App\Models\Semester
      */
@@ -16,7 +18,7 @@ class CreateSemesterCourses extends Component
     /**
      * List of all courses.
      *
-     * @var [type]
+     * @var array
      */
     public $courses;
 
@@ -70,28 +72,35 @@ class CreateSemesterCourses extends Component
     {
         if ($value == 0) {
             $this->dispatchBrowserEvent('livewire:load');
+        } else {
+            $duplicateSemester = Semester::find($value);
 
-            return $this->selectedCourses = [];
-        }
+            $courses = $duplicateSemester->courseSections->map(function ($section) {
+                return $section->course;
+            });
 
-        $duplicateSemester = Semester::find($value);
+            $uniqueCourses = $courses->unique(function ($course) {
+                return $course->name;
+            });
 
-        $courses = $duplicateSemester->courseSections->map(function ($section) {
-            return $section->course;
-        });
-
-        $uniqueCourses = $courses->unique(function ($course) {
-            return $course->name;
-        });
-
-        $uniqueCourses->map(function ($course) {
-            return [
+            $uniqueCourses->map(function ($course) {
+                return [
                 'label' => $course->name,
                 'value' => $course->id,
             ];
-        })->toArray();
+            })->toArray();
 
-        $this->selectedCourses = $uniqueCourses->pluck('id')->toArray();
+            $this->selectedCourses = $uniqueCourses->pluck('id')->toArray();
+
+            $this->dispatchBrowserEvent('livewire:load');
+        }
+    }
+
+    public function countRemainingCourses()
+    {
+        if ($this->semesterIdToDuplicate != 0 && count($this->selectedCourses) != 0) {
+            $this->semesterIdToDuplicate = 0;
+        }
 
         $this->dispatchBrowserEvent('livewire:load');
     }

@@ -32,10 +32,10 @@
             // init dual listbox
             var dualListBox = new DualListbox(_this, {
                 addEvent: function (value) {
-                    console.log(value);
+
                 },
                 removeEvent: function (value) {
-                    console.log(value);
+                    Livewire.emit('courseRemoved')
                 },
                 availableTitle: 'Available courses',
                 selectedTitle: 'Selected courses',
