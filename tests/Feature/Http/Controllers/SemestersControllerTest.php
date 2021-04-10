@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Http\Controllers\SemestersController;
 use App\Http\Requests\CreateSemesterRequest;
+use App\Http\Requests\UpdateSemesterRequest;
 use App\Models\Administrator;
 use App\Models\Course;
 use App\Models\Semester;
@@ -204,5 +205,62 @@ class SemestersControllerTest extends TestCase
             ->actingAs(Student::factory()->create())
             ->get(route('semesters.edit', $semester))
             ->assertForbidden();
+    }
+
+    /** @test */
+    public function update_updates_a_semester_and_redirects()
+    {
+        $semester = Semester::factory()->create();
+
+        $this
+            ->actingAs(Administrator::factory()->create())
+            ->patch(route('semesters.update', $semester), [
+                'term' => 'Fall',
+                'year' => 2021,
+                'start_date' => '2021-08-04',
+                'end_date' => '2022-01-03',
+                'courses' => $this->courses->pluck('id')->toArray(),
+            ])
+            ->assertRedirect(route('semesters.index'));
+
+        $this->assertDatabaseHas('semesters', ['name' => 'Fall 2021', 'start_date' => '2021-08-04', 'end_date' => '2022-01-03']);
+    }
+
+    /** @test */
+    public function teachers_cannot_update_semesters()
+    {
+        $semester = Semester::factory()->create();
+
+        $this
+            ->actingAs(Teacher::factory()->create())
+            ->patch(route('semesters.update', $semester), $this->attributes)
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function students_cannot_update_semesters()
+    {
+        $semester = Semester::factory()->create();
+
+        $this
+            ->actingAs(Student::factory()->create())
+            ->patch(route('semesters.update', $semester), $this->attributes)
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function update_redirects_when_unauthenticated()
+    {
+        $semester = Semester::factory()->create();
+
+        $this
+            ->patch(route('semesters.update', $semester), $this->attributes)
+            ->assertRedirect(route('login'));
+    }
+
+    /** @test */
+    public function update_uses_form_request()
+    {
+        $this->assertActionUsesFormRequest(SemestersController::class, 'update', UpdateSemesterRequest::class);
     }
 }
