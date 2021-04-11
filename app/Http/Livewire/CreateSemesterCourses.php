@@ -16,7 +16,7 @@ class CreateSemesterCourses extends Component
     /**
      * List of all courses.
      *
-     * @var [type]
+     * @var array
      */
     public $courses;
 
@@ -53,6 +53,8 @@ class CreateSemesterCourses extends Component
      */
     public function render()
     {
+        $this->dispatchBrowserEvent('initListBox');
+
         return view('livewire.semesters.create-semester-courses', [
             'semesters' => Semester::orderBy('start_date')->pluck('name', 'id')->prepend('Please choose a semester', '0'),
             'semester' => $this->semester,
@@ -69,8 +71,6 @@ class CreateSemesterCourses extends Component
     public function updatedSemesterIdToDuplicate($value)
     {
         if ($value == 0) {
-            $this->dispatchBrowserEvent('livewire:load');
-
             return $this->selectedCourses = [];
         }
 
@@ -92,7 +92,22 @@ class CreateSemesterCourses extends Component
         })->toArray();
 
         $this->selectedCourses = $uniqueCourses->pluck('id')->toArray();
+    }
 
-        $this->dispatchBrowserEvent('livewire:load');
+    public function selectCourse($course)
+    {
+        $this->selectedCourses[] = $course;
+    }
+
+    public function removeCourse($course)
+    {
+        if ($this->semesterIdToDuplicate != 0) {
+            $this->semesterIdToDuplicate = 0;
+        }
+
+        $key = array_search($course, $this->selectedCourses);
+        if (false !== $key) {
+            unset($this->selectedCourses[$key]);
+        }
     }
 }

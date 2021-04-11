@@ -39,6 +39,7 @@ class CreateSemesterCoursesTest extends TestCase
     {
         $semesterToDuplicate = Semester::factory()
                                     ->hasAttached(CourseSection::factory(), ['start_date' => now(), 'end_date' => now()], 'courseSections')
+                                    ->hasAttached(CourseSection::factory(), ['start_date' => now(), 'end_date' => now()], 'courseSections')
                                     ->create();
 
         $duplicatedSemesterCourses = $semesterToDuplicate->courseSections->map(function ($section) {

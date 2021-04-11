@@ -32,10 +32,10 @@
             // init dual listbox
             var dualListBox = new DualListbox(_this, {
                 addEvent: function (value) {
-                    console.log(value);
+                    @this.call('selectCourse', value);
                 },
                 removeEvent: function (value) {
-                    console.log(value);
+                    @this.call('removeCourse', value);
                 },
                 availableTitle: 'Available courses',
                 selectedTitle: 'Selected courses',
@@ -55,6 +55,10 @@
     }();
 
     window.addEventListener('livewire:load', function() {
+        KTDualListbox.init();
+    });
+
+    window.addEventListener('initListBox', function() {
         KTDualListbox.init();
     });
     </script>
