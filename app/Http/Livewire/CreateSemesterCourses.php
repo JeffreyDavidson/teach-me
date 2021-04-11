@@ -8,8 +8,6 @@ use Livewire\Component;
 
 class CreateSemesterCourses extends Component
 {
-    protected $listeners = ['courseRemoved' => 'countRemainingCourses'];
-
     /**
      *  @var App\Models\Semester
      */
@@ -55,6 +53,8 @@ class CreateSemesterCourses extends Component
      */
     public function render()
     {
+        $this->dispatchBrowserEvent('initListBox');
+
         return view('livewire.semesters.create-semester-courses', [
             'semesters' => Semester::orderBy('start_date')->pluck('name', 'id')->prepend('Please choose a semester', '0'),
             'semester' => $this->semester,
@@ -71,37 +71,43 @@ class CreateSemesterCourses extends Component
     public function updatedSemesterIdToDuplicate($value)
     {
         if ($value == 0) {
-            $this->dispatchBrowserEvent('livewire:load');
-        } else {
-            $duplicateSemester = Semester::find($value);
+            return $this->selectedCourses = [];
+        }
 
-            $courses = $duplicateSemester->courseSections->map(function ($section) {
-                return $section->course;
-            });
+        $duplicateSemester = Semester::find($value);
 
-            $uniqueCourses = $courses->unique(function ($course) {
-                return $course->name;
-            });
+        $courses = $duplicateSemester->courseSections->map(function ($section) {
+            return $section->course;
+        });
 
-            $uniqueCourses->map(function ($course) {
-                return [
+        $uniqueCourses = $courses->unique(function ($course) {
+            return $course->name;
+        });
+
+        $uniqueCourses->map(function ($course) {
+            return [
                 'label' => $course->name,
                 'value' => $course->id,
             ];
-            })->toArray();
+        })->toArray();
 
-            $this->selectedCourses = $uniqueCourses->pluck('id')->toArray();
-
-            $this->dispatchBrowserEvent('livewire:load');
-        }
+        $this->selectedCourses = $uniqueCourses->pluck('id')->toArray();
     }
 
-    public function countRemainingCourses()
+    public function selectCourse($course)
     {
-        if ($this->semesterIdToDuplicate != 0 && count($this->selectedCourses) != 0) {
+        $this->selectedCourses[] = $course;
+    }
+
+    public function removeCourse($course)
+    {
+        if ($this->semesterIdToDuplicate != 0) {
             $this->semesterIdToDuplicate = 0;
         }
 
-        $this->dispatchBrowserEvent('livewire:load');
+        $key = array_search($course, $this->selectedCourses);
+        if (false !== $key) {
+            unset($this->selectedCourses[$key]);
+        }
     }
 }
