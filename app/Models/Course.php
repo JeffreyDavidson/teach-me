@@ -64,11 +64,6 @@ class Course extends Model
 
     public static function allForDropdown()
     {
-        return static::orderBy('name')->get()->map(function ($course) {
-            return [
-                'label' => $course->name,
-                'value' => $course->id,
-            ];
-        });
+        return static::orderBy('name')->get()->pluck('name', 'id');
     }
 }
