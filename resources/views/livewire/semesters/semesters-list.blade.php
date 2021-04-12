@@ -44,7 +44,9 @@
                         </x-table.cell>
 
                         <x-table.cell>
-
+                            @if ($semester->start_date->isFuture())
+                                <x-icon.edit link="{{ route('semesters.edit', $semester) }}" />
+                            @endif
                         </x-table.cell>
                     </x-table.row>
                 @empty

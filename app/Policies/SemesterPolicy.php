@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Enums\UserRoleEnum;
+use App\Models\Semester;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -28,6 +29,18 @@ class SemesterPolicy
      * @return mixed
      */
     public function create(User $user)
+    {
+        return $user->role->is(UserRoleEnum::ADMINISTRATOR);
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     *
+     * @param  App\Models\User  $user
+     * @param  App\Models\Semester  $semester
+     * @return mixed
+     */
+    public function update(User $user, Semester $semester)
     {
         return $user->role->is(UserRoleEnum::ADMINISTRATOR);
     }

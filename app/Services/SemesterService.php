@@ -34,6 +34,31 @@ class SemesterService
     }
 
     /**
+     * Update a specific teacher with given data.
+     *
+     * @param  App\Models\Semester $semester
+     * @param  array $data
+     * @return App\Models\Semester $semester
+     */
+    public function update($semester, $data)
+    {
+        $semester->update([
+            'name' => $data['term'].' '.$data['year'],
+            'start_date' => $data['start_date'],
+            'end_date' => $data['end_date'],
+        ]);
+
+        $courseSections = CourseSection::whereIn('course_id', $data['courses'])->get();
+
+        foreach ($courseSections as $section) {
+            $courseSectionDates = $this->generateCourseSectionSemesterDates($section->day, $semester->start_date, $semester->end_date);
+            $semester->courseSections()->attach($section, ['start_date' => $courseSectionDates['startDate'], 'end_date' => $courseSectionDates['endDate']]);
+        }
+
+        return $semester;
+    }
+
+    /**
      * Create course section semester dates from semester start dates.
      *
      * @param  string $dayOfTheWeek

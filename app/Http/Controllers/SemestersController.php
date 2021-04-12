@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateSemesterRequest;
-use App\Models\Course;
+use App\Http\Requests\UpdateSemesterRequest;
 use App\Models\Semester;
 use App\Services\SemesterService;
 
@@ -46,6 +46,34 @@ class SemestersController extends Controller
     public function store(CreateSemesterRequest $request, SemesterService $semesterService)
     {
         $semesterService->create($request->validated());
+
+        return redirect()->route('semesters.index');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  App\Models\Semester
+     * @return \Illuminate\View\View
+     */
+    public function edit(Semester $semester)
+    {
+        $this->authorize('update', $semester);
+
+        return view('semesters.edit', compact('semester'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  App\Http\Requests\UpdateSemesterRequest $request
+     * @param  App\Models\Semester $semester
+     * @param  App\Services\SemesterService $semesterService
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(UpdateSemesterRequest $request, Semester $semester, SemesterService $semesterService)
+    {
+        $semesterService->update($semester, $request->validated());
 
         return redirect()->route('semesters.index');
     }

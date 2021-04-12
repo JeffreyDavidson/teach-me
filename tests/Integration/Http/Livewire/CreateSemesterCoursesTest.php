@@ -44,11 +44,13 @@ class CreateSemesterCoursesTest extends TestCase
 
         $duplicatedSemesterCourses = $semesterToDuplicate->courseSections->map(function ($section) {
             return $section->course;
-        });
+        })->unique(function ($course) {
+            return $course->name;
+        })->pluck('name', 'id')->toArray();
 
         Livewire::test(CreateSemesterCourses::class)
             ->set('semesterIdToDuplicate', $semesterToDuplicate->id)
-            ->assertSet('selectedCourses', $duplicatedSemesterCourses->pluck('id')->toArray())
+            ->assertSet('selectedCourses', $duplicatedSemesterCourses)
             ->set('semesterIdToDuplicate', 0)
             ->assertSet('selectedCourses', []);
     }

@@ -11,12 +11,6 @@ class Semester extends Model
 {
     use HasFactory, HasSlug;
 
-    public static $terms = [
-        'Spring',
-        'Summer',
-        'Fall',
-    ];
-
     /**
      * The attributes that are mass assignable.
      *
@@ -24,6 +18,16 @@ class Semester extends Model
      */
     protected $fillable = [
         'name',
+        'start_date',
+        'end_date',
+    ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
         'start_date',
         'end_date',
     ];
@@ -56,5 +60,15 @@ class Semester extends Model
     public function courseSections()
     {
         return $this->belongsToMany(CourseSection::class)->using(CourseSectionSemester::class)->withTimestamps();
+    }
+
+    public function getTermAttribute()
+    {
+        return substr($this->name, 0, strpos($this->name, ' '));
+    }
+
+    public function getYearAttribute()
+    {
+        return substr($this->name, -4, 4);
     }
 }
