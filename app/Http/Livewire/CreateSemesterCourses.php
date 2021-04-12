@@ -80,18 +80,9 @@ class CreateSemesterCourses extends Component
             return $section->course;
         });
 
-        $uniqueCourses = $courses->unique(function ($course) {
+        $this->selectedCourses = $courses->unique(function ($course) {
             return $course->name;
-        });
-
-        $uniqueCourses->map(function ($course) {
-            return [
-                'label' => $course->name,
-                'value' => $course->id,
-            ];
-        })->toArray();
-
-        $this->selectedCourses = $uniqueCourses->pluck('id')->toArray();
+        })->pluck('name', 'id')->toArray();
     }
 
     public function selectCourse($course)
