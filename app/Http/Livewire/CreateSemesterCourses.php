@@ -44,6 +44,7 @@ class CreateSemesterCourses extends Component
     {
         $this->semester = $semester;
         $this->courses = Course::allForDropdown()->toArray();
+        $this->addSemesterCourses();
     }
 
     /**
@@ -80,9 +81,7 @@ class CreateSemesterCourses extends Component
             return $section->course;
         });
 
-        $this->selectedCourses = $courses->unique(function ($course) {
-            return $course->name;
-        })->pluck('name', 'id')->toArray();
+        $this->getUniqueCoursesForDropdown($courses);
     }
 
     public function selectCourse($course)
@@ -100,5 +99,23 @@ class CreateSemesterCourses extends Component
         if (false !== $key) {
             unset($this->selectedCourses[$key]);
         }
+    }
+
+    public function addSemesterCourses()
+    {
+        $courses = $this->semester->courseSections->map(function ($section) {
+            return $section->course;
+        });
+
+        $this->getUniqueCoursesForDropdown($courses);
+    }
+
+    public function getUniqueCoursesForDropdown($courses)
+    {
+        $uniqueCourses = $courses->unique(function ($course) {
+            return $course->name;
+        });
+
+        $this->selectedCourses = $uniqueCourses->pluck('name', 'id')->toArray();
     }
 }
