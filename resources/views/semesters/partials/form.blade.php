@@ -2,12 +2,22 @@
     <div class="row">
         <div class="col-md-6">
             <x-input.group label="Term" for="term" :error="$errors->first('term')">
-                <x-input.select id="term" name="term" :options="$terms" selectedOption="{{ old('term', $semester->exists ? $semester->term : '') }}" />
+                <x-input.select
+                    id="term"
+                    name="term"
+                    :options="$terms"
+                    selectedOption="{{ old('term', $semester->exists ? $semester->term : '') }}"
+                />
             </x-input.group>
         </div>
         <div class="col-md-6">
             <x-input.group label="Year" for="year" :error="$errors->first('year')">
-                <x-input.select id="year" name="year" :options="$years" selectedOption="{{ old('year', $semester->exists ? $semester->year : '')  }}" />
+                <x-input.select
+                    id="year"
+                    name="year"
+                    :options="$years"
+                    selectedOption="{{ old('year', $semester->exists ? $semester->year : '')  }}"
+                />
             </x-input.group>
         </div>
     </div>
