@@ -16,6 +16,10 @@ class UpdateSemesterRequest extends FormRequest
      */
     public function authorize()
     {
+        if ($this->semester->start_date->isPast()) {
+            return false;
+        }
+
         return auth()->user()->can('update', $this->semester);
     }
 

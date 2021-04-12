@@ -22,6 +22,7 @@
         <!--end::Header-->
         <form method="post" action="{{ route('semesters.update', [$semester]) }}">
             @csrf
+            @method('PUT')
             <!--begin::Body-->
             <div class="card-body">
                 @include('semesters.partials.form', [
@@ -32,7 +33,7 @@
             <!--end::Body-->
             <!--begin::Footer-->
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary font-weight-bold">Submit</button>
+                <button type="submit" class="btn btn-primary font-weight-bold" {{ $semester->exists && $semester->start_date->isPast() ? 'disabled' : '' }}>Submit</button>
                 <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
             </div>
             <!--end::Footer-->
