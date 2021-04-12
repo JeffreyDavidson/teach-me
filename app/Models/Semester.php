@@ -51,4 +51,14 @@ class Semester extends Model
     {
         return $this->belongsToMany(CourseSection::class)->using(CourseSectionSemester::class)->withTimestamps();
     }
+
+    public function getTermAttribute()
+    {
+        return substr($this->name, 0, strpos($this->name, ' '));
+    }
+
+    public function getYearAttribute()
+    {
+        return substr($this->name, -4, 4);
+    }
 }
