@@ -9,13 +9,13 @@
     </x-input.group>
 
     <x-input.group label="Courses" for="courses_listbox" :error="$errors->first('courses')">
-        <x-input.dual-listbox
+        <x-input.select
             id="courses_listbox"
             name="courses[]"
             class="dual-listbox"
             :options="$courses"
             :selectedOptions="$selectedCourses"
-            multiple
+            multiple=true
         />
     </x-input.group>
 </div>
