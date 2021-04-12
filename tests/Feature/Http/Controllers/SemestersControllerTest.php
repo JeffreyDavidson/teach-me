@@ -127,7 +127,7 @@ class SemestersControllerTest extends TestCase
             ])
             ->assertRedirect(route('semesters.index'));
 
-        $this->assertDatabaseHas('semesters', ['name' => 'Fall 2021', 'start_date' => '2021-08-04', 'end_date' => '2022-01-03']);
+        $this->assertDatabaseHas('semesters', ['name' => 'Fall 2021', 'start_date' => Carbon::parse('2021-08-04')->toDateTimeString(), 'end_date' => Carbon::parse('2022-01-03')->toDateTimeString()]);
     }
 
     /** @test */
@@ -223,7 +223,7 @@ class SemestersControllerTest extends TestCase
             ])
             ->assertRedirect(route('semesters.index'));
 
-        $this->assertDatabaseHas('semesters', ['name' => 'Fall 2021', 'start_date' => '2021-08-04', 'end_date' => '2022-01-03']);
+        $this->assertDatabaseHas('semesters', ['name' => 'Fall 2021', 'start_date' => Carbon::parse('2021-08-04')->toDateTimeString(), 'end_date' => Carbon::parse('2022-01-03')->toDateTimeString()]);
     }
 
     /** @test */
