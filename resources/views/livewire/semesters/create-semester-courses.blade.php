@@ -4,18 +4,20 @@
             id="semesterIdToDuplicate"
             wire:model="semesterIdToDuplicate"
             :options="$semesters"
-            :selectedOptions="old('semesterIdToDuplicate', $semester->exists ? [$semester->default] : []) "
+            :selectedOptions="old('semesterIdToDuplicate', $semester->exists ? [$semester->default] : [])"
+            :disabled="$semester->exists && $semester->start_date->isPast()"
         />
     </x-input.group>
 
     <x-input.group label="Courses" for="courses_listbox" :error="$errors->first('courses')">
         <x-input.select
-            id="courses_listbox"
+            :id="$semester->exists && $semester->start_date->isFuture() ? 'courses_listbox' : 'courses'"
             name="courses[]"
-            class="dual-listbox"
+            :class="$semester->exists && $semester->start_date->isFuture() ? 'dual-listbox' : ''"
             :options="$courses"
             :selectedOptions="$selectedCourses"
             multiple=true
+            :disabled="$semester->exists && $semester->start_date->isPast()"
         />
     </x-input.group>
 </div>
