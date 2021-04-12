@@ -6,7 +6,7 @@
                     id="term"
                     name="term"
                     :options="$terms"
-                    selectedOption="{{ old('term', $semester->exists ? $semester->term : '') }}"
+                    :selectedOptions="old('term', $semester->exists ? [$semester->term] : [])"
                 />
             </x-input.group>
         </div>

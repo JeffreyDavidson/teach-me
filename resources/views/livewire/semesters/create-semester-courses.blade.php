@@ -4,7 +4,7 @@
             id="semesterIdToDuplicate"
             wire:model="semesterIdToDuplicate"
             :options="$semesters"
-            selectedOption="{{ old('semesterIdToDuplicate', $semester->exists ? $semester->default : '')  }}"
+            :selectedOptions="old('semesterIdToDuplicate', $semester->exists ? [$semester->default] : []) "
         />
     </x-input.group>
 
