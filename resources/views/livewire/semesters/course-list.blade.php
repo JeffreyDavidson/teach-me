@@ -12,6 +12,7 @@
                     :direction="$sorts['course'] ?? null"
                     class="{{ isset($sorts['course']) ? 'datatable-cell-sorted' : null }}"
                 >Course</x-table.heading>
+                <x-table.heading>Number of Students</x-table.heading>
                 <x-table.heading>Sections</x-table.heading>
             </x-slot>
 
@@ -20,6 +21,10 @@
                     <x-table.row>
                         <x-table.cell>
                             <span style="width: 137px;">{{ $course->name }}</span>
+                        </x-table.cell>
+
+                        <x-table.cell>
+                            <span style="width: 137px;">{{ $course->students_count }}</span>
                         </x-table.cell>
 
                         <x-table.cell>
