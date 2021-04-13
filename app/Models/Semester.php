@@ -23,13 +23,13 @@ class Semester extends Model
     ];
 
     /**
-     * The attributes that should be mutated to dates.
+     * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $dates = [
-        'start_date',
-        'end_date',
+    protected $casts = [
+        'start_date' => 'date',
+        'end_date' => 'date',
     ];
 
     /**
