@@ -65,7 +65,11 @@ class Semester extends Model
 
     public function courses()
     {
-        return $this->hasManyDeepFromRelations($this->courseSections(), (new CourseSection)->course());
+        return $this->hasManyDeep(
+            Course::class,
+            [CourseSectionSemester::class, CourseSection::class],
+            ['semester_id', 'course_id', 'id']
+        );
     }
 
     public function getTermAttribute()
