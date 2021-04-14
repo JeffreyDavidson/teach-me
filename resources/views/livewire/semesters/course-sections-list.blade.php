@@ -20,10 +20,15 @@
                     :direction="$sorts['teacher'] ?? null"
                     class="{{ isset($sorts['teacher']) ? 'datatable-cell-sorted' : null }}"
                 >Teacher</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('students_count')"
+                    :direction="$sorts['students_count'] ?? null"
+                    class="{{ isset($sorts['students_count']) ? 'datatable-cell-sorted' : null }}"
+                >Students Count</x-table.heading>
             </x-slot>
 
             <x-slot name="body">
                 @forelse ($courseSections as $section)
+                    @dd($section)
                     <x-table.row>
                         <x-table.cell>
                             <span style="width: 137px;">{{ $section->day }}</span>
@@ -35,6 +40,10 @@
 
                         <x-table.cell>
                             <span style="width: 137px;">{{ $section->teacher->full_name }}</span>
+                        </x-table.cell>
+
+                        <x-table.cell>
+                            <span style="width: 137px;">{{ $section->students_count }}</span>
                         </x-table.cell>
 
                         <x-table.cell>

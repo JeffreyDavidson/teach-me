@@ -18,6 +18,7 @@
 
             <x-slot name="body">
                 @forelse ($courses as $course)
+                    @dd($course)
                     <x-table.row>
                         <x-table.cell>
                             <span style="width: 137px;">{{ $course->name }}</span>

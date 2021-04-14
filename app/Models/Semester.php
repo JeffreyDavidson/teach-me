@@ -63,13 +63,18 @@ class Semester extends Model
         return $this->belongsToMany(CourseSection::class)->using(CourseSectionSemester::class)->withTimestamps();
     }
 
+    /**
+     * Get the courses for the semester.
+     *
+     * @return \Staudenmeir\EloquentHasManyDeep
+     */
     public function courses()
     {
         return $this->hasManyDeep(
             Course::class,
             [CourseSectionSemester::class, CourseSection::class],
             ['semester_id', 'course_id', 'id']
-        );
+        )->withIntermediate(CourseSectionSemester::class);
     }
 
     public function getTermAttribute()
