@@ -52,6 +52,11 @@ class Course extends Model
         return $this->hasMany(CourseSection::class);
     }
 
+    public function courseSectionSemesters()
+    {
+        return $this->hasManyThrough(CourseSectionSemester::class, CourseSection::class);
+    }
+
     public static function allForDropdown()
     {
         return static::orderBy('name')->get()->pluck('name', 'id');
