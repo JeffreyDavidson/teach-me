@@ -23,6 +23,7 @@
         "staudenmeir/eloquent-has-many-deep": "^1.7"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.5",
         "facade/ignition": "^2.3.6",
         "fakerphp/faker": "^1.13",
         "jasonmccreary/laravel-test-assertions": "^1.0",
