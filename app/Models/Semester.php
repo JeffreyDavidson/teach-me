@@ -60,7 +60,10 @@ class Semester extends Model
      */
     public function courseSections()
     {
-        return $this->belongsToMany(CourseSection::class)->using(CourseSectionSemester::class)->withTimestamps();
+        return $this->belongsToMany(CourseSection::class)
+                    ->using(CourseSectionSemester::class)
+                    ->withTimestamps()
+                    ->withPivot(['start_date', 'end_date']);
     }
 
     public function courseSectionSemesters()
