@@ -28,7 +28,6 @@
 
             <x-slot name="body">
                 @forelse ($courseSections as $section)
-                    @dd($section)
                     <x-table.row>
                         <x-table.cell>
                             <span style="width: 137px;">{{ $section->day }}</span>

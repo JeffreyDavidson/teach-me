@@ -61,4 +61,18 @@ class Course extends Model
     {
         return static::orderBy('name')->get()->pluck('name', 'id');
     }
+
+    public function scopeWithTotalStudentsCountForSemester($query, $semesterId)
+    {
+        return $query->addSelect(['students_count' => CourseSectionSemesterStudent::query()->selectRaw('count(*) as count')
+            ->join(
+                'course_section_semester',
+                'course_section_semester_student.section_semester_id',
+                '=', 'course_section_semester.id'
+            )
+            ->where('course_section_semester.semester_id', '=', $semesterId)
+            ->join('course_sections', 'course_sections.id', '=', 'course_section_semester.course_section_id')
+            ->whereColumn('courses.id', 'course_sections.course_id'),
+        ]);
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Http\Livewire\DataTable\WithPerPagePagination;
 use App\Http\Livewire\DataTable\WithSorting;
+use App\Models\CourseSectionSemesterStudent;
 use App\Models\Semester;
 use Livewire\Component;
 
@@ -99,26 +100,10 @@ class SemesterCourseList extends Component
     {
         $query = $this->semester
             ->courses()
-            ->addSelect(['students_count' => function ($query) {
-                $query->select('name')
-                    ->from('course_section_semester_students')
-                    ->whereColumn('semester_id', 'semesters.id')
-                    ->count();
-            }])
-            ->newQuery()
+            ->withTotalStudentsCountForSemester($this->semester->id)
             ->when($this->filters['search'], function ($query, $search) {
                 $query->where('name', 'like', '%'.$search.'%');
             });
-
-        // $query2 = $this
-        //     ->semester
-        //     ->courseSectionSemesters()
-        //     ->withCount('students')
-        //     ->where('course_section_id', 1)
-        //     ->get()
-        //     ->sum('students_count');
-        // dd($query2);
-        dd($query);
 
         return $this->applySorting($query);
     }

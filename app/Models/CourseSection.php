@@ -85,4 +85,17 @@ class CourseSection extends Model
     {
         return "{$this->day} {$this->start_time } - {$this->end_time}";
     }
+
+    public function scopeWithStudentsCountForCourseSection($query, $semesterId)
+    {
+        return $query->addSelect(['students_count' => CourseSectionSemesterStudent::query()->selectRaw('count(*) as count')
+            ->join(
+                'course_section_semester',
+                'course_section_semester_student.section_semester_id',
+                '=', 'course_section_semester.id'
+            )
+            ->where('course_section_semester.semester_id', '=', $semesterId)
+            ->whereColumn('course_sections.id', 'course_section_semester.course_section_id'),
+        ]);
+    }
 }

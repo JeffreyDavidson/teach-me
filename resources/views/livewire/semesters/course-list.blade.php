@@ -18,7 +18,6 @@
 
             <x-slot name="body">
                 @forelse ($courses as $course)
-                    @dd($course->courseSectionSemesters()->where('semester_id', 1)->get()->sum('students_count'))
                     <x-table.row>
                         <x-table.cell>
                             <span style="width: 137px;">{{ $course->name }}</span>
