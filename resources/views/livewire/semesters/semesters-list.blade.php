@@ -32,11 +32,11 @@
                         </x-table.cell>
 
                         <x-table.cell>
-                            <span style="width: 137px;">{{ $semester->start_date }}</span>
+                            <span style="width: 137px;">{{ $semester->start_date->toDateString() }}</span>
                         </x-table.cell>
 
                         <x-table.cell>
-                            <span style="width: 137px;">{{ $semester->end_date }}</span>
+                            <span style="width: 137px;">{{ $semester->end_date->toDateString() }}</span>
                         </x-table.cell>
 
                         <x-table.cell>

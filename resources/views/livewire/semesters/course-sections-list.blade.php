@@ -12,6 +12,14 @@
                     :direction="$sorts['day'] ?? null"
                     class="{{ isset($sorts['day']) ? 'datatable-cell-sorted' : null }}"
                 >Day</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('start_date')"
+                    :direction="$sorts['start_date'] ?? null"
+                    class="{{ isset($sorts['start_date']) ? 'datatable-cell-sorted' : null }}"
+                >Start Date</x-table.heading>
+                <x-table.heading sortable wire:click="sortBy('end_date')"
+                    :direction="$sorts['end_date'] ?? null"
+                    class="{{ isset($sorts['end_date']) ? 'datatable-cell-sorted' : null }}"
+                >End Date</x-table.heading>
                 <x-table.heading sortable wire:click="sortBy('start_time')"
                     :direction="$sorts['start_time'] ?? null"
                     class="{{ isset($sorts['start_time']) ? 'datatable-cell-sorted' : null }}"
@@ -31,6 +39,14 @@
                     <x-table.row>
                         <x-table.cell>
                             <span style="width: 137px;">{{ $section->day }}</span>
+                        </x-table.cell>
+
+                        <x-table.cell>
+                            <span style="width: 137px;">{{ $section->pivot->start_date }}</span>
+                        </x-table.cell>
+
+                        <x-table.cell>
+                            <span style="width: 137px;">{{ $section->pivot->end_date }}</span>
                         </x-table.cell>
 
                         <x-table.cell>
