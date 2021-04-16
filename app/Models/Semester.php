@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 class Semester extends Model
 {
-    use HasFactory, HasSlug;
+    use HasFactory, HasSlug, HasRelationships;
 
     /**
      * The attributes that are mass assignable.
@@ -23,13 +24,13 @@ class Semester extends Model
     ];
 
     /**
-     * The attributes that should be mutated to dates.
+     * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $dates = [
-        'start_date',
-        'end_date',
+    protected $casts = [
+        'start_date' => 'date',
+        'end_date' => 'date',
     ];
 
     /**
@@ -60,6 +61,25 @@ class Semester extends Model
     public function courseSections()
     {
         return $this->belongsToMany(CourseSection::class)->using(CourseSectionSemester::class)->withTimestamps();
+    }
+
+    public function courseSectionSemesters()
+    {
+        return $this->hasMany(CourseSectionSemester::class, 'semester_id');
+    }
+
+    /**
+     * Get the courses for the semester.
+     *
+     * @return \Staudenmeir\EloquentHasManyDeep
+     */
+    public function courses()
+    {
+        return $this->hasManyDeep(
+            Course::class,
+            [CourseSectionSemester::class, CourseSection::class],
+            ['semester_id', 'course_id', 'id']
+        )->withIntermediate(CourseSectionSemester::class);
     }
 
     public function getTermAttribute()

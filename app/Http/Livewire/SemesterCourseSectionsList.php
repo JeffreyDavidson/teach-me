@@ -109,11 +109,11 @@ class SemesterCourseSectionsList extends Component
      */
     public function getRowsQueryProperty()
     {
-        $query = CourseSection::query()
-            ->whereHas('semesters', function (Builder $query) {
-                $query->where('semester_id', $this->semester->id);
-            })
+        $query = $this->semester
+            ->courseSections()
             ->where('course_id', $this->course->id)
+            ->withStudentsCountForCourseSection($this->semester->id)
+            ->newQuery()
             ->when($this->filters['search'], function ($query, $search) {
                 $query->whereHas('teacher', function ($query) use ($search) {
                     $query->where('first_name', 'like', '%'.$search.'%')->orWhere('last_name', 'like', '%'.$search.'%');

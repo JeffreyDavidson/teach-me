@@ -10,6 +10,13 @@ class CourseSectionSemester extends Pivot
     use HasFactory;
 
     /**
+     * The relationship counts that should be eager loaded on every query.
+     *
+     * @var array
+     */
+    protected $withCount = ['students'];
+
+    /**
      * Indicates if the IDs are auto-incrementing.
      *
      * @var bool

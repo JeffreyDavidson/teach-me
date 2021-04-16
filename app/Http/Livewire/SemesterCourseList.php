@@ -4,9 +4,8 @@ namespace App\Http\Livewire;
 
 use App\Http\Livewire\DataTable\WithPerPagePagination;
 use App\Http\Livewire\DataTable\WithSorting;
-use App\Models\Course;
+use App\Models\CourseSectionSemesterStudent;
 use App\Models\Semester;
-use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 
 class SemesterCourseList extends Component
@@ -99,12 +98,9 @@ class SemesterCourseList extends Component
      */
     public function getRowsQueryProperty()
     {
-        $query = Course::query()
-            ->whereHas('sections', function (Builder $query) {
-                $query->whereHas('semesters', function ($query) {
-                    $query->where('semester_id', $this->semester->id);
-                });
-            })
+        $query = $this->semester
+            ->courses()
+            ->withTotalStudentsCountForSemester($this->semester->id)
             ->when($this->filters['search'], function ($query, $search) {
                 $query->where('name', 'like', '%'.$search.'%');
             });

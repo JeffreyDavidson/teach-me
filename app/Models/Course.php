@@ -52,18 +52,27 @@ class Course extends Model
         return $this->hasMany(CourseSection::class);
     }
 
-    /**
-     * Get semesters for the course.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function semesters()
+    public function courseSectionSemesters()
     {
-        return $this->belongsToMany(Semester::class)->withTimestamps()->withPivot(['start_date', 'end_date']);
+        return $this->hasManyThrough(CourseSectionSemester::class, CourseSection::class);
     }
 
     public static function allForDropdown()
     {
         return static::orderBy('name')->get()->pluck('name', 'id');
+    }
+
+    public function scopeWithTotalStudentsCountForSemester($query, $semesterId)
+    {
+        return $query->addSelect(['students_count' => CourseSectionSemesterStudent::query()->selectRaw('count(*) as count')
+            ->join(
+                'course_section_semester',
+                'course_section_semester_student.section_semester_id',
+                '=', 'course_section_semester.id'
+            )
+            ->where('course_section_semester.semester_id', '=', $semesterId)
+            ->join('course_sections', 'course_sections.id', '=', 'course_section_semester.course_section_id')
+            ->whereColumn('courses.id', 'course_sections.course_id'),
+        ]);
     }
 }
