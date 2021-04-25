@@ -3,10 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Administrator;
-use App\Models\CourseSection;
 use App\Models\CourseSectionSemester;
-use App\Models\CourseSemester;
-use App\Models\Semester;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Foundation\Testing\RefreshDatabase;
