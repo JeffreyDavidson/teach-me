@@ -111,7 +111,7 @@ class SemesterCourseSectionsList extends Component
     {
         $query = $this->semester
             ->courseSections()
-            ->where('course_id', $this->course->id)
+            ->forCourse($this->course)
             ->withStudentsCountForCourseSection($this->semester->id)
             ->newQuery()
             ->when($this->filters['search'], function ($query, $search) {

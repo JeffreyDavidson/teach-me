@@ -98,4 +98,16 @@ class CourseSection extends Model
             ->whereColumn('course_sections.id', 'course_section_semester.course_section_id'),
         ]);
     }
+
+    /**
+     * Scope a query to only include course sections for specific course.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  App\Models\Course $course
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeForCourse($query, $course)
+    {
+        return $query->where('course_id', $course->id);
+    }
 }
