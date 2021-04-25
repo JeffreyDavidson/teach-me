@@ -45,19 +45,27 @@ class SemesterCourseSectionStudentList extends Component
     /**
      * Course section semester to be used for gathering students.
      *
-     * @var App\Models\CourseSectionSemester
+     * @var App\Models\CourseSection
      */
-    public CourseSectionSemester $courseSectionSemester;
+    public CourseSection $courseSection;
+
+    /**
+     * Course section semester to be used for gathering students.
+     *
+     * @var App\Models\Semester
+     */
+    public Semester $semester;
 
     /**
      * Apply properties to the instance.
      *
-     * @param  App\Models\CourseSectionSemester $courseSectionSemester
+     * @param  App\Models\CourseSection $courseSection
      * @return void
      */
-    public function mount(CourseSectionSemester $courseSectionSemester)
+    public function mount(CourseSection $courseSection, Semester $semester)
     {
-        $this->courseSectionSemester = $courseSectionSemester;
+        $this->courseSection = $courseSection;
+        $this->semester = $semester;
     }
 
     /**

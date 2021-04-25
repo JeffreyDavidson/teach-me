@@ -25,7 +25,7 @@
         </div>
         <div class="flex-row-fluid ml-lg-8">
             <x-card title="Course Section Student List">
-                <livewire:semester-course-section-student-list :section="$section" />
+                <livewire:semester-course-section-student-list :courseSection="$section" :semester="$semester" />
             </x-card>
         </div>
     </div>
