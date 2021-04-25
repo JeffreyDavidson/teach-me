@@ -36,11 +36,24 @@ class CourseSection extends Model
     /**
      * Get the semesters of the course section.
      *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function courseSectionSemesters()
+    {
+        return $this->hasMany(CourseSectionSemester::class);
+    }
+
+    /**
+     * Get the semesters of the course section.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function semesters()
     {
-        return $this->belongsToMany(Semester::class);
+        return $this->belongsToMany(Semester::class)
+                ->using(CourseSectionSemester::class)
+                ->withTimestamps()
+                ->withPivot(['start_date', 'end_date']);
     }
 
     /**
