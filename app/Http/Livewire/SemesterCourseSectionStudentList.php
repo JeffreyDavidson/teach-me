@@ -5,9 +5,7 @@ namespace App\Http\Livewire;
 use App\Http\Livewire\DataTable\WithPerPagePagination;
 use App\Http\Livewire\DataTable\WithSorting;
 use App\Models\CourseSection;
-use App\Models\CourseSectionSemester;
-use App\Models\Student;
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Semester;
 use Livewire\Component;
 
 class SemesterCourseSectionStudentList extends Component
