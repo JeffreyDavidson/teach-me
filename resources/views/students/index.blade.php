@@ -1,4 +1,4 @@
-<x-layout>
+<x-app-layout>
     <x-slot name="subheader">
         <x-subheader title="Students">
             <x-slot name="breadcrumb">
@@ -16,4 +16,4 @@
         </x-slot>
         <livewire:students-list />
     </x-card>
-</x-layout>
+</x-app-layout>

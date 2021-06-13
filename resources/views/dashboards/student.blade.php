@@ -1,4 +1,4 @@
-<x-layout>
+<x-app-layout>
     <x-slot name="subheader">
         <x-subheader title="Dashboard" />
     </x-slot>
@@ -10,4 +10,4 @@
     <!--begin::Dashboard-->
     Testing Student Dashboard
     <!--end::Dashboard-->
-</x-layout>
+</x-app-layout>

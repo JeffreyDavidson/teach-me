@@ -1,4 +1,4 @@
-<x-layout>
+<x-app-layout>
     <x-slot name="subheader">
         <x-subheader title="Teachers">
             <x-slot name="breadcrumb">
@@ -22,4 +22,4 @@
             </x-slot>
         </x-card>
     </form>
-</x-layout>
+</x-app-layout>

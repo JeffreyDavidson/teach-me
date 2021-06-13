@@ -1,22 +1,27 @@
-<div id="kt_header" class="header header-fixed">
+<div id="kt_header" class="header align-items-stretch">
     <!--begin::Container-->
     <div class="container-fluid d-flex align-items-stretch justify-content-between">
         <div></div>
-        <!--begin::Topbar-->
-        <div class="topbar">
-            <!--begin::User-->
-            <div class="topbar-item">
-                <div class="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2" id="kt_quick_user_toggle">
-                    <span class="font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
-                    <span class="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">{{ Auth::user()->full_name }}</span>
-                    <span class="symbol symbol-lg-35 symbol-25 symbol-light-success">
-                        <span class="symbol-label font-size-h5 font-weight-bold">{{ Auth::user()->first_name_initial }}</span>
-                    </span>
+        <!--begin::Wrapper-->
+        <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
+            <!--begin::Navbar-->
+            <x-navbar />
+            <!--end::Navbar-->
+            <!--begin::Topbar-->
+            <div class="flex-shrink-0 d-flex align-items-stretch">
+                <!--begin::User-->
+                <div id="kt_header_user_menu_toggle" class="d-flex align-items-center ms-1 ms-lg-3">
+                    <!--begin::Menu Wrapper-->
+                    <div class="curser-pointer symbol symbol-30px symbol-md-40px">
+                        <img src="{{ asset('media/avatars/150-2.jpg') }}" alt="Avavar">
+                    </div>
+                    <!--end::Menu Wrapper-->
                 </div>
+                <!--end::User-->
             </div>
-            <!--end::User-->
+            <!--end::Topbar-->
         </div>
-        <!--end::Topbar-->
+        <!--end::Wrapper-->
     </div>
     <!--end::Container-->
 </div>

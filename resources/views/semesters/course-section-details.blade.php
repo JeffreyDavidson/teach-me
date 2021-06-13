@@ -1,4 +1,4 @@
-<x-layout>
+<x-app-layout>
     <x-slot name="subheader">
         <x-subheader title="Course Sections">
             <x-slot name="breadcrumb">
@@ -29,4 +29,4 @@
             </x-card>
         </div>
     </div>
-</x-layout>
+</x-app-layout>

@@ -1,9 +1,8 @@
-<li class="menu-item @if ($isActive) menu-item-active @endif" aria-haspopup="true">
-    <a href="{{ $route }}" class="menu-link">
-        <span class="svg-icon menu-icon">
-            <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Layers.svg-->
+<div class="menu-item">
+    <a href="{{ $route }}" class="menu-link @if ($isActive) active @endif">
+        <span class="menu-icon">
             {{ $slot }}
         </span>
-        <span class="menu-text">{{ $text }}</span>
+        <span class="menu-title">{{ $text }}</span>
     </a>
-</li>
+</div>

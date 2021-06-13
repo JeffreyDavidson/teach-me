@@ -1,4 +1,5 @@
-<li class="menu-section">
-    <h4 class="menu-text">{{ $heading }}</h4>
-    <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
-</li>
+<div class="menu-item">
+    <div class="pt-8 pb-2 menu-content">
+        <span class="menu-section text-muted text-uppercase fs-8 ls-1">{{ $heading }}</span>
+    </div>
+</div>

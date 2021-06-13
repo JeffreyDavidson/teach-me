@@ -1,4 +1,4 @@
-<x-layout>
+<x-app-layout>
     <x-slot name="subheader">
         <x-subheader title="Semesters">
             <x-slot name="breadcrumb">
@@ -40,4 +40,4 @@
         </form>
     </div>
     <!--end::Card-->
-</x-layout>
+</x-app-layout>

@@ -1,13 +1,13 @@
-<x-layout>
-    <x-slot name="subheader">
+<x-app-layout>
+    <x-slot name="toolbar">
         <x-subheader title="Dashboard" />
     </x-slot>
 
-    <x-slot name="breadcrumb">
+    <x-slot name="breadcrumbs">
         <x-breadcrumb />
     </x-slot>
 
     <!--begin::Dashboard-->
     Testing Admin Dashboard
     <!--end::Dashboard-->
-</x-layout>
+</x-app-layout>

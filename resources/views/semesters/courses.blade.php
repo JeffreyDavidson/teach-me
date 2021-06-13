@@ -1,4 +1,4 @@
-<x-layout>
+<x-app-layout>
     <x-slot name="subheader">
         <x-subheader title="Courses">
             <x-slot name="breadcrumb">
@@ -15,4 +15,4 @@
     <x-card title="Course List">
         <livewire:semester-course-list :semester="$semester" />
     </x-card>
-</x-layout>
+</x-app-layout>
