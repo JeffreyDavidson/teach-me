@@ -35,3 +35,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('semesters/{semester}/courses/{course}/course-sections/{section}', [SemesterCourseSectionsController::class, 'show'])->name('semesters.courses.sections.show');
     Route::get('semesters/{semester}/courses', [SemesterCoursesController::class, 'index'])->name('semesters.courses.index');
 });
+
+require __DIR__.'/auth.php';

@@ -1,76 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Teach Me | Login</title>
-        <meta name="viewport" content="width=device-width, inital-scale=1, shrink-to-fit=no">
-        <!--begin::Fonts-->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
-        <!--end::Fonts-->
-        <!--begin::Page Custom Styles(used by this page)-->
-        <link rel="stylesheet" href="{{ asset('css/pages/login.css') }}">
-        <!--end::Page Custom Styles-->
-        <!--begin::Global Theme Styles(used by all pages)-->
-        <link href="{{ asset('css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
-        <!--end::Global Theme Styles-->
-    </head>
-    <body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
-        <!--begin::Main-->
-        <div class="d-flex flex-column flex-root">
-            <!--begin::Login-->
-            <div class="bg-white login login-1 login-signin-on d-flex flex-column flex-lg-row flex-column-fluid" id="kt_login">
-                <!--begin::Content-->
-                <div class="mx-auto overflow-hidden login-content flex-row-fluid d-flex flex-column justify-content-center position-relative p-7">
-                    <!--begin::Content body-->
-                    <div class="d-flex flex-column-fluid flex-center">
-                        <!--begin::Signin-->
-                        <div class="login-form login-signin">
-                            <!--begin::Form-->
-                            <form class="form" novalidate="novalidate" id="kt_login_signin_form" action="/login" method="post">
-                                @csrf
-                                <!--begin::Title-->
-                                <div class="pt-5 pb-13 pt-lg-0">
-                                    <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Welcome to {{ config('app.name') }}</h3>
-                                </div>
-                                <!--end::Title-->
-                                <!--begin::Form group-->
-                                <x-text-input
-                                    id="email"
-                                    name="email"
-                                    type="text"
-                                    label="Email"
-                                    :required="true"
-                                    placeholder=""
-                                    class="h-auto py-6 rounded-lg form-control-solid"
-                                    value="{{ old('email') }}" />
-                                <!--end::Form group-->
-                                <!--begin::Form group-->
-                                <x-text-input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    label="Password"
-                                    :required="true"
-                                    placeholder=""
-                                    class="h-auto py-6 rounded-lg form-control-solid"
-                                    value="{{ old('password') }}" />
-                                <!--end::Form group-->
-                                <!--begin::Action-->
-                                <div class="pb-5 pb-lg-0">
-                                    <button type="submit" id="kt_login_signin_submit" class="px-8 py-4 my-3 mr-3 btn btn-primary font-weight-bolder font-size-h6">Sign In</button>
-                                </div>
-                                <!--end::Action-->
-                            </form>
-                            <!--end::Form-->
-                        </div>
-                        <!--end::Signin-->
-                    </div>
-                    <!--end::Content body-->
-                </div>
-                <!--end::Content-->
+<x-guest-layout>
+
+    <!--begin::Signin Form-->
+    <form method="POST" action="{{ route('login') }}" class="form w-100" novalidate="novalidate" id="kt_sign_in_form">
+    @csrf
+
+    <!--begin::Heading-->
+        <div class="mb-10 text-center">
+            <!--begin::Title-->
+            <h1 class="mb-3 text-dark">
+                {{ __('Sign In to Metronic') }}
+            </h1>
+            <!--end::Title-->
+
+            <!--begin::Link-->
+            <div class="text-gray-400 fw-bold fs-4">
+                {{ __('New Here?') }}
+
+                <a href="{{ route('register') }}" class="link-primary fw-bolder">
+                    {{ __('Create an Account') }}
+                </a>
             </div>
-            <!--end::Login-->
+            <!--end::Link-->
         </div>
-        <script src="{{ asset('js/app.js') }}"></script>
-    </body>
-</html>
+        <!--begin::Heading-->
+
+        <!--begin::Input group-->
+        <div class="mb-10 fv-row">
+            <!--begin::Label-->
+            <label class="form-label fs-6 fw-bolder text-dark">{{ __('Email') }}</label>
+            <!--end::Label-->
+
+            <!--begin::Input-->
+            <input class="form-control form-control-lg form-control-solid" type="email" name="email" autocomplete="off" value="{{ old('email', 'demo@demo.com') }}" required autofocus/>
+            <!--end::Input-->
+        </div>
+        <!--end::Input group-->
+
+        <!--begin::Input group-->
+        <div class="mb-10 fv-row">
+            <!--begin::Wrapper-->
+            <div class="mb-2 d-flex flex-stack">
+                <!--begin::Label-->
+                <label class="mb-0 form-label fw-bolder text-dark fs-6">{{ __('Password') }}</label>
+                <!--end::Label-->
+
+                <!--begin::Link-->
+                @if (Route::has('password.request'))
+                    <a href="{{ route('password.request') }}" class="link-primary fs-6 fw-bolder">
+                        {{ __('Forgot Password ?') }}
+                    </a>
+                @endif
+                <!--end::Link-->
+            </div>
+            <!--end::Wrapper-->
+
+            <!--begin::Input-->
+            <input class="form-control form-control-lg form-control-solid" type="password" name="password" autocomplete="off" value="demo" required/>
+            <!--end::Input-->
+        </div>
+        <!--end::Input group-->
+
+        <!--begin::Input group-->
+        <div class="mb-10 fv-row">
+            <label class="form-check form-check-custom form-check-solid">
+                <input class="form-check-input" type="checkbox" name="remember"/>
+                <span class="text-gray-700 form-check-label fw-bold fs-6">{{ __('Remember me') }}
+            </span>
+            </label>
+        </div>
+        <!--end::Input group-->
+
+        <!--begin::Actions-->
+        <div class="text-center">
+            <!--begin::Submit button-->
+            <button type="submit" id="kt_sign_in_submit" class="mb-5 btn btn-lg btn-primary w-100">
+                @include('partials.general._button-indicator', ['label' => __('Continue')])
+            </button>
+            <!--end::Submit button-->
+        </div>
+        <!--end::Actions-->
+    </form>
+    <!--end::Signin Form-->
+
+</x-guest-layout>
